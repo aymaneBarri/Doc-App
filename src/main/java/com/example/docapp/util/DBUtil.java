@@ -1,8 +1,7 @@
-package com.example.docapp.dataAccess;
+package com.example.docapp.util;
 
 import com.example.docapp.models.Utilisateur;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.regex.Pattern;
@@ -17,11 +16,9 @@ public class DBUtil {
         String url = "jdbc:mysql://localhost/" + databaseName;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, databaseUser, databasePassword);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -50,51 +47,40 @@ public class DBUtil {
         }
     }
 
-    public String encryptPassword(String password){
-        String encryptedPassword = "";
-        for (int i = 0; i < password.length(); i++) {
-            encryptedPassword += (char) (password.charAt(i) + 1);
-        }
-        return encryptedPassword;
-    }
-    public String decryptPassword(String password){
-        String decryptedPassword = "";
-        for (int i = 0; i < password.length(); i++) {
-            decryptedPassword += (char) (password.charAt(i) - 1);
-        }
-        return decryptedPassword;
-    }
-
-    public static void login(ActionEvent event, String email, String password) {
+    public static int login(ActionEvent event, String email, String password) {
         PreparedStatement psLogin = null;
         ResultSet queryOutput = null;
+        int statusCode = 0;
 
         try {
             Connection connection = DBUtil.getConnection();
 
             psLogin = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
             psLogin.setString(1, email);
-            DBUtil dbUtil = new DBUtil();
             queryOutput = psLogin.executeQuery();
 
             if (queryOutput.isBeforeFirst()) {
                 while (queryOutput.next()) {
-                    if (!(queryOutput.getString("password").equals(dbUtil.encryptPassword(password)))) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("Informations incorrectes!");
-                        alert.show();
+                    if (!(queryOutput.getString("password").equals(password))){
+//                        Alert alert = new Alert(Alert.AlertType.ERROR);
+//                        alert.setContentText("Informations incorrectes!");
+//                        alert.show();
+                        statusCode = 400;
                     } else {
                         Utilisateur utilisateur = new Utilisateur(queryOutput.getInt(1), queryOutput.getString(2), queryOutput.getString(3), queryOutput.getString(4), queryOutput.getString(5), queryOutput.getString(6), queryOutput.getString(7));
 
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setContentText("Bienvenu " + utilisateur.getFirstName() + " " + utilisateur.getLastName());
-                        alert.show();
+//                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                        alert.setContentText("Bienvenu " + utilisateur.getFirstName() + " " + utilisateur.getLastName());
+//                        alert.show();
+
+                        statusCode = 200;
                     }
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Informations incorrectes!");
-                alert.show();
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setContentText("Informations incorrectes!");
+//                alert.show();
+                statusCode = 400;
             }
 
         } catch (Exception e) {
@@ -118,6 +104,24 @@ public class DBUtil {
 
             DBUtil.stopConnection();
         }
+
+        return statusCode;
+    }
+
+    public String encryptPassword(String password){
+        StringBuilder encryptedPassword = new StringBuilder();
+        for (int i = 0; i < password.length(); i++) {
+            encryptedPassword.append((char) (password.charAt(i) + 1));
+        }
+        return encryptedPassword.toString();
+    }
+
+    public String decryptPassword(String password){
+        StringBuilder decryptedPassword = new StringBuilder();
+        for (int i = 0; i < password.length(); i++) {
+            decryptedPassword.append((char) (password.charAt(i) - 1));
+        }
+        return decryptedPassword.toString();
     }
 
 //    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";

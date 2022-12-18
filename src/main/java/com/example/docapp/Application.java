@@ -1,7 +1,5 @@
 package com.example.docapp;
 
-import com.example.docapp.dao.PatientDAO;
-import com.example.docapp.dataAccess.DBUtil;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -23,10 +21,6 @@ public class Application extends javafx.application.Application {
     }
 
     public static void main(String[] args) {
-        DBUtil ff= new DBUtil();
-        System.out.println(ff.encryptPassword("Android123@@"));
-        String hh= ff.encryptPassword("Android123@@");
-        System.out.println(ff.decryptPassword(hh));
         launch();
     }
 }

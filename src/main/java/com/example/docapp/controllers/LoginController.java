@@ -1,6 +1,6 @@
 package com.example.docapp.controllers;
 
-import com.example.docapp.dataAccess.DBUtil;
+import com.example.docapp.util.DBUtil;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,24 +22,32 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                int statusCode = 0;
                 if (emailTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Veuillez remplir tous les champs");
                     alert.show();
-                }
-                else if (!DBUtil.isValid(emailTextField.getText())) {
+                } else if (!DBUtil.isValid(emailTextField.getText())) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Veuillez entrer une adresse email valide");
                     alert.show();
+                } else {
+                    statusCode = DBUtil.login(actionEvent, emailTextField.getText(), passwordTextField.getText());
                 }
 
-                else {
-
-                        DBUtil.login(actionEvent, emailTextField.getText(), passwordTextField.getText());
-
+                if (statusCode == 200) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                    alert.setContentText("Bienvenu " + utilisateur.getFirstName() + " " + utilisateur.getLastName());
+                    alert.setContentText("Bienvenu");
+                    alert.show();
+                } else if (statusCode == 400) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Informations incorrectes!");
+                    alert.show();
                 }
             }
         });

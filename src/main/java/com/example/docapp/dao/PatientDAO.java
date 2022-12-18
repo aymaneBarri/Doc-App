@@ -1,60 +1,52 @@
 package com.example.docapp.dao;
 
-import com.example.docapp.dataAccess.DBUtil;
+import com.example.docapp.util.DBUtil;
 import com.example.docapp.models.Patient;
-import com.example.docapp.models.Utilisateur;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.Vector;
 
 public class PatientDAO {
 
-
     public static int addPatient(ActionEvent event, Patient patient) {
-        PreparedStatement psAddP = null;
+        PreparedStatement psAddPatient = null;
         ResultSet queryOutput = null;
         int statusCode=0;
 
         try {
             Connection connection = DBUtil.getConnection();
 
-            psAddP = connection.prepareStatement("INSERT INTO patient (first_name,last_name,birth_date,cin,phone) VALUES (?, ?, ?, ?, ?)");
-            psAddP.setString(1, patient.getFirstName());
-            psAddP.setString(2, patient.getLastName());
-            psAddP.setDate(3, (Date) patient.getBirthDate());
-            psAddP.setString(4, patient.getCin());
-            psAddP.setString(5, patient.getPhoneNumber());
+            psAddPatient = connection.prepareStatement("INSERT INTO patient (first_name,last_name,birth_date,cin,phone) VALUES (?, ?, ?, ?, ?)");
+            psAddPatient.setString(1, patient.getFirstName());
+            psAddPatient.setString(2, patient.getLastName());
+            psAddPatient.setDate(3, (Date) patient.getBirthDate());
+            psAddPatient.setString(4, patient.getCin());
+            psAddPatient.setString(5, patient.getPhoneNumber());
 
-            psAddP.executeUpdate();
+            psAddPatient.executeUpdate();
             statusCode=201;
         } catch (SQLException e) {
             statusCode = 400;
             throw new RuntimeException(e);
 
         } finally {
-            try {
-                if (psAddP != null) {
-                    psAddP.close();
+            if (psAddPatient != null) {
+                try {
+                    psAddPatient.close();
+                } catch (SQLException e) {
+                    statusCode = 400;
+                    e.printStackTrace();
                 }
-                if (queryOutput != null) {
-                    queryOutput.close();
-                }
-            } catch (SQLException e) {
-
-                statusCode = 400;
-                throw new RuntimeException(e);
             }
+
+            DBUtil.stopConnection();
         }
-        DBUtil.stopConnection();
+
         return statusCode;
     }
 
-
     public int editPatient(ActionEvent event, Patient patient){
-
-
         PreparedStatement psAddP = null;
         ResultSet queryOutput = null;
         int statusCode=0;
@@ -62,7 +54,7 @@ public class PatientDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            psAddP = connection.prepareStatement("UPDATE patient set first_name=?,last_name=?,birth_date=?,cin=?,phone=? WHERE id=?");
+            psAddP = connection.prepareStatement("UPDATE patient SET first_name = ?, last_name = ?, birth_date = ?, cin = ?, phone = ? WHERE id = ?");
             psAddP.setString(1, patient.getFirstName());
             psAddP.setString(2, patient.getLastName());
             psAddP.setDate(3, (Date) patient.getBirthDate());
@@ -76,58 +68,53 @@ public class PatientDAO {
             statusCode = 400;
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (psAddP != null) {
+            if (psAddP != null) {
+                try {
                     psAddP.close();
+                } catch (SQLException e) {
+                    statusCode = 400;
+                    e.printStackTrace();
                 }
-                if (queryOutput != null) {
-                    queryOutput.close();
-                }
-            } catch (SQLException e) {
-                statusCode = 400;
-                throw new RuntimeException(e);
             }
+
+            DBUtil.stopConnection();
         }
-        DBUtil.stopConnection();
+
         return statusCode;
     }
 
+    public int deletePatient(int id){
+        PreparedStatement psAddP = null;
+        ResultSet queryOutput = null;
+        int statusCode=0;
 
-     public int deletePatient(int id){
+        try {
+            Connection connection = DBUtil.getConnection();
 
-         PreparedStatement psAddP = null;
-         ResultSet queryOutput = null;
-         int statusCode=0;
+            psAddP = connection.prepareStatement("DELETE patient WHERE id=?");
 
-         try {
-             Connection connection = DBUtil.getConnection();
+            psAddP.setInt(1, id);
 
-             psAddP = connection.prepareStatement("DELETE patient WHERE id=?");
+            psAddP.executeUpdate();
+            statusCode=200;
+        } catch (SQLException e) {
+            statusCode = 400;
+            throw new RuntimeException(e);
+        } finally {
+            if (psAddP != null) {
+                try {
+                    psAddP.close();
+                } catch (SQLException e) {
+                    statusCode = 400;
+                    e.printStackTrace();
+                }
+            }
 
-             psAddP.setInt(1, id);
+            DBUtil.stopConnection();
+        }
 
-             psAddP.executeUpdate();
-             statusCode=200;
-         } catch (SQLException e) {
-             statusCode = 400;
-             throw new RuntimeException(e);
-         } finally {
-             try {
-                 if (psAddP != null) {
-                     psAddP.close();
-                 }
-                 if (queryOutput != null) {
-                     queryOutput.close();
-                 }
-             } catch (SQLException e) {
-                 statusCode = 400;
-                 throw new RuntimeException(e);
-             }
-         }
-         DBUtil.stopConnection();
-         return statusCode;
+        return statusCode;
     }
-
 
     public Vector <Patient> getPatients(){
         Vector<Patient> patients = new Vector<Patient>();
@@ -173,7 +160,6 @@ public class PatientDAO {
 
             DBUtil.stopConnection();
         }
-
 
         return patients;
     }
