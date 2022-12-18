@@ -14,6 +14,7 @@ public class UtilisateurDAO {
     public int addUtilisateur(Utilisateur utilisateur, Vector<Role> roles, Vector<RolesUtilisateur> rolesUtilisateurs) {
         int statusCode = 0;
         int id=0;
+        DBUtil dbutil= new DBUtil();
         try {
             Connection connection = DBUtil.getConnection();
             String query = "INSERT INTO utilisateur (first_name, last_name, email, password, cin, phone) VALUES (?, ?, ?, ?, ?, ?)";
@@ -21,7 +22,7 @@ public class UtilisateurDAO {
             preparedStatement.setString(1, utilisateur.getFirstName());
             preparedStatement.setString(2, utilisateur.getLastName());
             preparedStatement.setString(3, utilisateur.getEmail());
-            preparedStatement.setString(4, utilisateur.getPassword());
+            preparedStatement.setString(4, dbutil.encryptPassword(utilisateur.getPassword()));
             preparedStatement.setString(5, utilisateur.getCin());
             preparedStatement.setString(6, utilisateur.getPhoneNumber());
             preparedStatement.executeUpdate();

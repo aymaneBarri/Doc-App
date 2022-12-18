@@ -74,11 +74,12 @@ public class DBUtil {
 
             psLogin = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
             psLogin.setString(1, email);
+            DBUtil dbUtil = new DBUtil();
             queryOutput = psLogin.executeQuery();
 
             if (queryOutput.isBeforeFirst()) {
                 while (queryOutput.next()) {
-                    if (!(queryOutput.getString("password").equals(password))){
+                    if (!(queryOutput.getString("password").equals(dbUtil.decryptPassword(password)))) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setContentText("Informations incorrectes!");
                         alert.show();
