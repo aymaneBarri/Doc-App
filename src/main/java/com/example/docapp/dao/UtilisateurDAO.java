@@ -72,4 +72,42 @@ public class UtilisateurDAO {
         return statusCode;
     }
 
+    public int deleteUtilisateur (int id){
+        PreparedStatement psAddP = null;
+        PreparedStatement psAddP2 = null;
+        ResultSet queryOutput = null;
+        int statusCode=0;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            psAddP2 = connection.prepareStatement("DELETE from utilisateur_role WHERE id_utilisateur=?");
+            psAddP = connection.prepareStatement("DELETE from utilisateur WHERE id=?");
+
+            psAddP.setInt(1, id);
+            psAddP2.setInt(1, id);
+
+
+            psAddP2.executeUpdate();
+            psAddP.executeUpdate();
+            statusCode=200;
+        } catch (SQLException e) {
+            statusCode = 400;
+            throw new RuntimeException(e);
+        } finally {
+            if (psAddP != null) {
+                try {
+                    psAddP.close();
+                } catch (SQLException e) {
+                    statusCode = 400;
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return statusCode;
+    }
+
 }

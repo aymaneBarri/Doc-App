@@ -91,7 +91,7 @@ public class PatientDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            psAddP = connection.prepareStatement("DELETE patient WHERE id=?");
+            psAddP = connection.prepareStatement("DELETE from patient WHERE id=?");
 
             psAddP.setInt(1, id);
 
