@@ -23,8 +23,6 @@ public class Application extends javafx.application.Application {
 
     public static void main(String[] args) {
 
-        PatientDAO patientDAO = new PatientDAO();
-        System.out.println(patientDAO.getPatients());
         launch();
     }
 }
