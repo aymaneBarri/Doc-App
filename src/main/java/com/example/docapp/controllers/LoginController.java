@@ -29,8 +29,18 @@ public class LoginController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Veuillez remplir tous les champs");
                     alert.show();
-                } else
-                    DBUtil.login(actionEvent, emailTextField.getText(), passwordTextField.getText());
+                }
+                else if (!DBUtil.isValid(emailTextField.getText())) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Veuillez entrer une adresse email valide");
+                    alert.show();
+                }
+
+                else {
+
+                        DBUtil.login(actionEvent, emailTextField.getText(), passwordTextField.getText());
+
+                }
             }
         });
     }
