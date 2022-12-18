@@ -27,8 +27,7 @@ public class Application extends javafx.application.Application {
     }
 
     public static void main(String[] args) {
-        UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-        System.out.println(utilisateurDAO.getUtilisateurRoles(1));
+
         launch();
     }
 }
