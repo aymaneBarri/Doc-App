@@ -33,6 +33,7 @@ public class UtilisateurDAO {
 
             if (resultSet.next()) {
                 id = resultSet.getInt(1);
+<<<<<<< HEAD
                 for (int i = 0; i < roles.size(); i++) {
                     String insertUserRolequery = "INSERT INTO utilisateur_role (id_role, id_utilisateur,canView,canAdd,canModify,canDelete) VALUES (?, ?,?,?,?,?)";
                     PreparedStatement psAddUserRole = connection.prepareStatement(insertUserRolequery);
@@ -42,6 +43,21 @@ public class UtilisateurDAO {
                     psAddUserRole.setInt(4, rolesUtilisateurs.get(i).isCanAdd() ? 1 : 0);
                     psAddUserRole.setInt(5, rolesUtilisateurs.get(i).isCanModify() ? 1 : 0);
                     psAddUserRole.setInt(5, rolesUtilisateurs.get(i).isCanDelete() ? 1 : 0);
+=======
+               for (int i = 0; i < roles.size(); i++) {
+                    String query2 = "INSERT INTO utilisateur_role (id_role, id_utilisateur,canView,canAdd,canModify,canDelete) VALUES (?, ?,?,?,?,?)";
+                    PreparedStatement preparedStatement2 = connection.prepareStatement(query2);
+                    preparedStatement2.setInt(1, roles.get(i).getId());
+                    preparedStatement2.setInt(2, id);
+                    preparedStatement2.setInt(3, rolesUtilisateurs.get(i).isCanView()?1:0);
+                    preparedStatement2.setInt(4, rolesUtilisateurs.get(i).isCanAdd()?1:0);
+                    preparedStatement2.setInt(5, rolesUtilisateurs.get(i).isCanModify()?1:0);
+                    preparedStatement2.setInt(6, rolesUtilisateurs.get(i).isCanDelete()?1:0);
+                    preparedStatement2.executeUpdate();
+                    if(preparedStatement2!=null){
+                        preparedStatement2.close();
+                    }
+>>>>>>> 5601d1288263c152217c133748fcf25646b8922e
                 }
             }
 

@@ -47,7 +47,20 @@ public class DBUtil {
         }
     }
 
+<<<<<<< HEAD:src/main/java/com/example/docapp/util/DBUtil.java
     public static int login(ActionEvent event, String email, String password) {
+=======
+    public String encryptPassword(String password){
+        String encryptedPassword = "";
+        for (int i = 0; i < password.length(); i++) {
+            encryptedPassword += (char) (password.charAt(i) + 1);
+        }
+        return encryptedPassword;
+    }
+
+
+    public static void login(ActionEvent event, String email, String password) {
+>>>>>>> 5601d1288263c152217c133748fcf25646b8922e:src/main/java/com/example/docapp/dataAccess/DBUtil.java
         PreparedStatement psLogin = null;
         ResultSet queryOutput = null;
         int statusCode = 0;
