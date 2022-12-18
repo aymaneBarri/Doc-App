@@ -57,13 +57,7 @@ public class DBUtil {
         }
         return encryptedPassword;
     }
-    public String decryptPassword(String password){
-        String decryptedPassword = "";
-        for (int i = 0; i < password.length(); i++) {
-            decryptedPassword += (char) (password.charAt(i) - 1);
-        }
-        return decryptedPassword;
-    }
+
 
     public static void login(ActionEvent event, String email, String password) {
         PreparedStatement psLogin = null;

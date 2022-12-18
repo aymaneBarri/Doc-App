@@ -37,7 +37,7 @@ public class UtilisateurDAO {
                     preparedStatement2.setInt(3, rolesUtilisateurs.get(i).isCanView()?1:0);
                     preparedStatement2.setInt(4, rolesUtilisateurs.get(i).isCanAdd()?1:0);
                     preparedStatement2.setInt(5, rolesUtilisateurs.get(i).isCanModify()?1:0);
-                    preparedStatement2.setInt(5, rolesUtilisateurs.get(i).isCanDelete()?1:0);
+                    preparedStatement2.setInt(6, rolesUtilisateurs.get(i).isCanDelete()?1:0);
                     preparedStatement2.executeUpdate();
                     if(preparedStatement2!=null){
                         preparedStatement2.close();

@@ -1,7 +1,11 @@
 package com.example.docapp;
 
 import com.example.docapp.dao.PatientDAO;
+import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.dataAccess.DBUtil;
+import com.example.docapp.models.Role;
+import com.example.docapp.models.RolesUtilisateur;
+import com.example.docapp.models.Utilisateur;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -9,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Vector;
 
 public class Application extends javafx.application.Application {
     @Override
@@ -23,10 +28,7 @@ public class Application extends javafx.application.Application {
     }
 
     public static void main(String[] args) {
-        DBUtil ff= new DBUtil();
-        System.out.println(ff.encryptPassword("Android123@@"));
-        String hh= ff.encryptPassword("Android123@@");
-        System.out.println(ff.decryptPassword(hh));
+
         launch();
     }
 }
