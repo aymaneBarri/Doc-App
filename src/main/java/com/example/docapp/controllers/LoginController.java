@@ -41,7 +41,6 @@ public class LoginController implements Initializable {
 
                 if (statusCode == 200) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//                    alert.setContentText("Bienvenu " + utilisateur.getFirstName() + " " + utilisateur.getLastName());
                     alert.setContentText("Bienvenu");
                     alert.show();
                 } else if (statusCode == 400) {

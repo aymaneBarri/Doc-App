@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import java.sql.*;
 import java.util.regex.Pattern;
 
+import static com.example.docapp.util.Encryptor.encryptString;
+
 public class DBUtil {
     public static Connection connection = null;
 
@@ -47,20 +49,11 @@ public class DBUtil {
         }
     }
 
-<<<<<<< HEAD:src/main/java/com/example/docapp/util/DBUtil.java
+
+
+
+
     public static int login(ActionEvent event, String email, String password) {
-=======
-    public String encryptPassword(String password){
-        String encryptedPassword = "";
-        for (int i = 0; i < password.length(); i++) {
-            encryptedPassword += (char) (password.charAt(i) + 1);
-        }
-        return encryptedPassword;
-    }
-
-
-    public static void login(ActionEvent event, String email, String password) {
->>>>>>> 5601d1288263c152217c133748fcf25646b8922e:src/main/java/com/example/docapp/dataAccess/DBUtil.java
         PreparedStatement psLogin = null;
         ResultSet queryOutput = null;
         int statusCode = 0;
@@ -69,30 +62,23 @@ public class DBUtil {
             Connection connection = DBUtil.getConnection();
 
             psLogin = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
-            psLogin.setString(1, email);
+            psLogin.setString(1, email.toLowerCase().trim());
             queryOutput = psLogin.executeQuery();
-
+            System.out.println(email.toLowerCase().trim());
             if (queryOutput.isBeforeFirst()) {
                 while (queryOutput.next()) {
+                    password = encryptString(password);
+                    System.out.println(password);
                     if (!(queryOutput.getString("password").equals(password))){
-//                        Alert alert = new Alert(Alert.AlertType.ERROR);
-//                        alert.setContentText("Informations incorrectes!");
-//                        alert.show();
                         statusCode = 400;
                     } else {
                         Utilisateur utilisateur = new Utilisateur(queryOutput.getInt(1), queryOutput.getString(2), queryOutput.getString(3), queryOutput.getString(4), queryOutput.getString(5), queryOutput.getString(6), queryOutput.getString(7));
 
-//                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//                        alert.setContentText("Bienvenu " + utilisateur.getFirstName() + " " + utilisateur.getLastName());
-//                        alert.show();
 
                         statusCode = 200;
                     }
                 }
             } else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setContentText("Informations incorrectes!");
-//                alert.show();
                 statusCode = 400;
             }
 
@@ -121,21 +107,9 @@ public class DBUtil {
         return statusCode;
     }
 
-    public String encryptPassword(String password){
-        StringBuilder encryptedPassword = new StringBuilder();
-        for (int i = 0; i < password.length(); i++) {
-            encryptedPassword.append((char) (password.charAt(i) + 1));
-        }
-        return encryptedPassword.toString();
-    }
 
-    public String decryptPassword(String password){
-        StringBuilder decryptedPassword = new StringBuilder();
-        for (int i = 0; i < password.length(); i++) {
-            decryptedPassword.append((char) (password.charAt(i) - 1));
-        }
-        return decryptedPassword.toString();
-    }
+
+
 
 //    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 //    //Connection

@@ -1,14 +1,10 @@
 package com.example.docapp;
 
-<<<<<<< HEAD
-=======
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.UtilisateurDAO;
-import com.example.docapp.dataAccess.DBUtil;
 import com.example.docapp.models.Role;
 import com.example.docapp.models.RolesUtilisateur;
 import com.example.docapp.models.Utilisateur;
->>>>>>> 5601d1288263c152217c133748fcf25646b8922e
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -31,10 +27,6 @@ public class Application extends javafx.application.Application {
     }
 
     public static void main(String[] args) {
-<<<<<<< HEAD
-=======
-
->>>>>>> 5601d1288263c152217c133748fcf25646b8922e
         launch();
     }
 }
