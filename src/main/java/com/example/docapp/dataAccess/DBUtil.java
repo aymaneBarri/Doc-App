@@ -79,7 +79,7 @@ public class DBUtil {
 
             if (queryOutput.isBeforeFirst()) {
                 while (queryOutput.next()) {
-                    if (!(queryOutput.getString("password").equals(dbUtil.decryptPassword(password)))) {
+                    if (!(queryOutput.getString("password").equals(dbUtil.encryptPassword(password)))) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setContentText("Informations incorrectes!");
                         alert.show();
