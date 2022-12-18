@@ -73,4 +73,17 @@ public class RolesUtilisateur {
     public void setCanDelete(boolean canDelete) {
         this.canDelete = canDelete;
     }
+
+
+    @Override
+    public String toString() {
+        return "RolesUtilisateur{" +
+                "idUtilisateur=" + idUtilisateur +
+                ", idRole=" + idRole +
+                ", canView=" + canView +
+                ", canAdd=" + canAdd +
+                ", canModify=" + canModify +
+                ", canDelete=" + canDelete +
+                '}';
+    }
 }

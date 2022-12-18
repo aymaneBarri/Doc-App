@@ -28,7 +28,7 @@ public class Application extends javafx.application.Application {
 
     public static void main(String[] args) {
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-        utilisateurDAO.deleteUtilisateur(5);
+        System.out.println(utilisateurDAO.getUtilisateurRoles(1));
         launch();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.docapp.dao;
 
+import com.example.docapp.models.Patient;
 import com.example.docapp.util.DBUtil;
 import com.example.docapp.models.Role;
 import com.example.docapp.models.RolesUtilisateur;
@@ -109,5 +110,97 @@ public class UtilisateurDAO {
 
         return statusCode;
     }
+
+    public Vector<Utilisateur> getUtilisateurs(){
+        Vector<Utilisateur> utilisateurs = new Vector<Utilisateur>();
+        Utilisateur utilisateur = new Utilisateur();
+        PreparedStatement psLogin = null;
+        ResultSet queryOutput = null;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            psLogin = connection.prepareStatement("SELECT * FROM utilisateur");
+            queryOutput = psLogin.executeQuery();
+
+            while (queryOutput.next()) {
+                utilisateur.setId(queryOutput.getInt("id"));
+                utilisateur.setFirstName(queryOutput.getString("first_name"));
+                utilisateur.setLastName(queryOutput.getString("last_name"));
+                utilisateur.setEmail(queryOutput.getString("email"));
+                utilisateur.setCin(queryOutput.getString("cin"));
+                utilisateur.setPhoneNumber(queryOutput.getString("phone"));
+                utilisateur.setPassword(queryOutput.getString("password"));
+                utilisateurs.add(utilisateur);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (psLogin != null) {
+                try {
+                    psLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+        return utilisateurs;
+
+    }
+     public Vector<RolesUtilisateur> getUtilisateurRoles(int id){
+         Vector<RolesUtilisateur> rolesUtilisateur = new Vector<RolesUtilisateur>();
+         RolesUtilisateur roleUtilisateur = new RolesUtilisateur();
+         PreparedStatement psLogin = null;
+         ResultSet queryOutput = null;
+
+         try {
+             Connection connection = DBUtil.getConnection();
+
+             psLogin = connection.prepareStatement("SELECT * FROM utilisateur_role WHERE id_utilisateur=?");
+                psLogin.setInt(1, id);
+             queryOutput = psLogin.executeQuery();
+
+             while (queryOutput.next()) {
+                    roleUtilisateur.setIdUtilisateur(queryOutput.getInt("id_utilisateur"));
+                    roleUtilisateur.setIdRole(queryOutput.getInt("id_role"));
+                    roleUtilisateur.setCanView(queryOutput.getInt("canView")==1?true:false);
+                    roleUtilisateur.setCanAdd(queryOutput.getInt("canAdd")==1?true:false);
+                    roleUtilisateur.setCanModify(queryOutput.getInt("canModify")==1?true:false);
+                    roleUtilisateur.setCanDelete(queryOutput.getInt("canDelete")==1?true:false);
+                    rolesUtilisateur.add(roleUtilisateur);
+             }
+         } catch (Exception e) {
+             throw new RuntimeException(e);
+         } finally {
+             if (queryOutput != null) {
+                 try {
+                     queryOutput.close();
+                 } catch (SQLException e) {
+                     e.printStackTrace();
+                 }
+             }
+
+             if (psLogin != null) {
+                 try {
+                     psLogin.close();
+                 } catch (SQLException e) {
+                     e.printStackTrace();
+                 }
+             }
+
+             DBUtil.stopConnection();
+         }
+         return rolesUtilisateur;
+     }
 
 }
