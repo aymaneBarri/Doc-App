@@ -1,5 +1,6 @@
 package com.example.docapp;
 
+import com.example.docapp.dao.PatientDAO;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -21,6 +22,9 @@ public class Application extends javafx.application.Application {
     }
 
     public static void main(String[] args) {
+
+        PatientDAO patientDAO = new PatientDAO();
+        System.out.println(patientDAO.getPatients());
         launch();
     }
 }
