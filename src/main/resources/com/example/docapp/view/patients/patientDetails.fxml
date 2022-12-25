@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.patient.PatientDetailsController">
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
+         <children>
+            <Label style="-fx-font-family: Inter; -fx-font-size: 18; -fx-font-weight: bold;" text="Détails du patient">
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006711409395973154">
+                           <color>
+                              <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.3019607961177826" green="0.7058823704719543" blue="0.843137264251709" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+         <padding>
+            <Insets left="50.0" right="50.0" />
+         </padding>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom Complet" />
+                        <Label fx:id="nomLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="BASELINE_LEFT" spacing="20.0">
+                     <children>
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Date de naissance" />
+                        <Label fx:id="birthLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="CIN" />
+                        <Label fx:id="cinLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Téléphone" />
+                        <Label fx:id="phoneLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Note" />
+                        <Label fx:id="noteLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </VBox>
+            <BorderPane style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" VBox.vgrow="ALWAYS">
+               <top>
+                  <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: white; -fx-background-radius: 17; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Ordonnances et prescriptions">
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="0.006711409395973154">
+                                       <color>
+                                          <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.3019607961177826" green="0.7058823704719543" blue="0.843137264251709" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="40.0" />
+                     </padding>
+                  </HBox>
+               </top>
+               <center>
+                  <ListView fx:id="listOrdonnances" focusTraversable="false" maxHeight="1.7976931348623157E308" style="-fx-background-color: transparent;" styleClass="list-cell" stylesheets="@../../css/fx-listcell.css" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </BorderPane.margin>
+                  </ListView>
+               </center>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </BorderPane>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <right>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" VBox.vgrow="ALWAYS">
+               <top>
+                  <HBox alignment="CENTER" prefHeight="60.0" style="-fx-background-color: white; -fx-background-radius: 17; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Liste des visites récentes">
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="0.006711409395973154">
+                                       <color>
+                                          <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.3019607961177826" green="0.7058823704719543" blue="0.843137264251709" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </HBox>
+               </top>
+               <center>
+                  <ListView fx:id="listVisites" focusTraversable="false" minWidth="350.0" style="-fx-background-color: transparent;" styleClass="list-cell" stylesheets="@../../css/fx-listcell.css" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </BorderPane.margin>
+                  </ListView>
+               </center>
+            </BorderPane>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+</BorderPane>

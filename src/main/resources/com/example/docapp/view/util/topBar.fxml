@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="1050.0" spacing="30.0" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.util.TopBarController">
+    <children>
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0" HBox.hgrow="ALWAYS">
+            <children>
+                <JFXButton fx:id="newVisite" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 5; -fx-background-color: linear-gradient(to left, #88E5BE, #41CB91); -fx-font-family: Inter; -jfx-disable-visual-focus: true;" text="Nouvelle visite" textFill="WHITE">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="fth-file-plus" iconSize="15" />
+                    </graphic>
+                    <HBox.margin>
+                        <Insets left="30.0" />
+                    </HBox.margin>
+                </JFXButton>
+                <JFXButton fx:id="newPatient" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 5 5 5 5; -fx-background-color: linear-gradient(to left, #4DB4D7, #0076BE); -fx-font-family: Inter; -jfx-disable-visual-focus: true;" text="Nouveau patient" textFill="WHITE">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="fth-user-plus" iconSize="15" />
+                    </graphic>
+                </JFXButton>
+            </children>
+        </HBox>
+        <Label fx:id="userName" contentDisplay="RIGHT" style="-fx-font-family: Inter;" text="New User">
+            <HBox.margin>
+                <Insets right="20.0" />
+            </HBox.margin>
+            <graphic>
+                <JFXButton contentDisplay="CENTER" style="-fx-background-color: transparent; -jfx-disable-visual-focus: true;" text=" ">
+                    <graphic>
+                        <FontIcon iconLiteral="fth-settings" />
+                    </graphic>
+                </JFXButton>
+            </graphic>
+        </Label>
+    </children>
+</HBox>

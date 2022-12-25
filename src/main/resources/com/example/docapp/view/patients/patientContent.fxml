@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<VBox maxHeight="Infinity" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.patient.PatientsController">
+<children>
+        <fx:include source="../util/topBar.fxml"/>
+      <Label style="-fx-font-family: Inter; -fx-font-size: 20; -fx-font-weight: bold;" text="Patients">
+         <VBox.margin>
+            <Insets bottom="20.0" left="30.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </Label>
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" VBox.vgrow="ALWAYS">
+         <top>
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: white; -fx-background-radius: 17; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
+               <children>
+                  <Label style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Liste des patients">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.006711409395973154">
+                                 <color>
+                                    <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.3019607961177826" green="0.7058823704719543" blue="0.843137264251709" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="40.0" />
+               </padding>
+            </HBox>
+         </top>
+         <center>
+            <ListView fx:id="listPatient" focusTraversable="false" maxHeight="1.7976931348623157E308" style="-fx-background-color: transparent;" styleClass="list-cell" stylesheets="@../../css/fx-listcell.css" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </BorderPane.margin>
+            </ListView>
+         </center>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </BorderPane>
+</children>
+</VBox>

@@ -118,7 +118,7 @@ public class PatientDAO {
 
     public Vector <Patient> getPatients(){
         Vector<Patient> patients = new Vector<Patient>();
-        Patient patient = new Patient();
+        Patient patient;
         PreparedStatement psLogin = null;
         ResultSet queryOutput = null;
 
@@ -129,6 +129,7 @@ public class PatientDAO {
             queryOutput = psLogin.executeQuery();
 
             while (queryOutput.next()) {
+                patient = new Patient();
                 patient.setId(queryOutput.getInt("id"));
                 patient.setFirstName(queryOutput.getString("first_name"));
                 patient.setLastName(queryOutput.getString("last_name"));
@@ -162,6 +163,52 @@ public class PatientDAO {
         }
 
         return patients;
+    }
+
+    public Patient getPatientByID(String id){
+
+        Patient patient = new Patient();
+        PreparedStatement psLogin = null;
+        ResultSet queryOutput = null;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+            psLogin = connection.prepareStatement("SELECT * FROM patient where id = ?");
+            psLogin.setString(1, id);
+            queryOutput = psLogin.executeQuery();
+            if (queryOutput.next()) {
+                patient.setId(queryOutput.getInt("id"));
+                patient.setFirstName(queryOutput.getString("first_name"));
+                patient.setLastName(queryOutput.getString("last_name"));
+                patient.setBirthDate(queryOutput.getDate("birth_date"));
+                patient.setCin(queryOutput.getString("cin"));
+                patient.setPhoneNumber(queryOutput.getString("phone"));
+                patient.setDescription(queryOutput.getString("description"));
+            }
+            System.out.println("Patient retrieved" + patient);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (psLogin != null) {
+                try {
+                    psLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return patient;
     }
 
 }

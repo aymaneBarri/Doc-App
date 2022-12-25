@@ -1,44 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to top, #0076BE, #4DB4D7);;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.LoginController">
-    <children>
-        <Label alignment="CENTER" layoutX="238.0" layoutY="180.0" text="Bienvenue" textFill="WHITE">
-         <font>
-            <Font name="Inter SemiBold" size="24.0" />
-         </font>
-        </Label>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="210.0" prefHeight="60.0" prefWidth="300.0" style="-fx-wrap-text: true;" text="Veuillez vous connecter pour continuer" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-            <font>
-                <Font name="Inter Regular" size="22.0" />
-            </font>
-        </Label>
-        <ImageView fitHeight="150.0" fitWidth="100.0" layoutX="250.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/logo.png" />
-         </image></ImageView>
-        <TextField fx:id="emailTextField" alignment="CENTER" layoutX="175.0" layoutY="300.0" prefHeight="50.0" prefWidth="250.0" promptText="Entrer votre email" style="-fx-background-color: white; -fx-background-radius: 5 5 5 5;">
-         <font>
-            <Font name="Inter Regular" size="15.0" />
-         </font>
-        </TextField>
-        <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="175.0" layoutY="379.0" prefHeight="50.0" prefWidth="250.0" promptText="Entrer votre mot de passe" style="-fx-background-color: white; -fx-background-radius: 5 5 5 5;">
-         <font>
-            <Font name="Inter Regular" size="15.0" />
-         </font>
-        </PasswordField>
-        <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="474.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #4FDA9F; -fx-background-radius: 5 5 5 5; -fx-cursor: hand;" text="Se connecter" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
-            <font>
-                <Font name="Inter Regular" size="15.0" />
-            </font>
-        </Button>
-    </children>
-</Pane>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="600.0" style="-fx-background-color: linear-gradient(to bottom , #4DB4D7, #0076BE);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.LoginController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/logo.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" text="Bienvenue" textFill="WHITE">
+               <font>
+                  <Font name="Inter SemiBold" size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="300.0" style="-fx-wrap-text: true;" text="Veuillez vous connecter pour continuer" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Inter Regular" size="22.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailTextField" alignment="CENTER" maxWidth="300.0" prefHeight="50.0" prefWidth="200.0" promptText="Entrer votre email" style="-fx-background-color: white; -fx-background-radius: 5 5 5 5;" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="Inter Regular" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <PasswordField fx:id="passwordTextField" alignment="CENTER" maxWidth="300.0" prefHeight="50.0" prefWidth="200.0" promptText="Entrer votre mot de passe" style="-fx-background-color: white; -fx-background-radius: 5 5 5 5;">
+               <font>
+                  <Font name="Inter Regular" size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </PasswordField>
+            <JFXButton fx:id="loginButton" graphicTextGap="8.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to left, #88E5BE, #41CB91); -fx-background-radius: 5; -fx-font-size: 15; -fx-font-family: Inter;" text="Se connecter" textFill="WHITE">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fth-log-in" iconSize="15" />
+               </graphic>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
