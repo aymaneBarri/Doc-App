@@ -15,8 +15,6 @@ import java.util.Vector;
 
 public class PatientsController implements Initializable {
 
-    public  JFXButton newVisite;
-    public JFXButton newPatient;
     public ListView<BorderPane> listPatient;
 
     @Override
