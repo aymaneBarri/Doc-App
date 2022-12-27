@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.patient.PatientDetailsController">
    <top>
@@ -51,31 +57,47 @@
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
                      <children>
                         <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom Complet" />
-                        <Label fx:id="nomLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                        <TextField fx:id="nomField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le nom" style="-fx-font-family: Inter; -fx-font-size: 15;">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
                      </children>
                   </HBox>
                   <HBox alignment="BASELINE_LEFT" spacing="20.0">
                      <children>
                         <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Date de naissance" />
-                        <Label fx:id="birthLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                        <DatePicker fx:id="birthField" maxWidth="250.0" prefHeight="50.0" promptText="Entrer la date de naissance" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
                      <children>
                         <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="CIN" />
-                        <Label fx:id="cinLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                        <TextField fx:id="cinField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le numéro de CIN" style="-fx-font-family: Inter; -fx-font-size: 15;">
+                           <font>
+                              <Font name="Inter Regular" size="15.0" />
+                           </font>
+                        </TextField>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
                      <children>
                         <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Téléphone" />
-                        <Label fx:id="phoneLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                        <TextField fx:id="phoneField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer numéro de téléphone">
+                           <font>
+                              <Font name="Inter Regular" size="15.0" />
+                           </font>
+                        </TextField>
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
                      <children>
                         <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Note" />
-                        <Label fx:id="noteLabel" style="-fx-font-family: Inter; -fx-font-size: 15;" text="Label" />
+                        <TextArea fx:id="noteArea" prefHeight="200.0" prefWidth="200.0" promptText="Entrer une note">
+                           <font>
+                              <Font name="Inter Regular" size="15.0" />
+                           </font>
+                        </TextArea>
                      </children>
                   </HBox>
                </children>
@@ -183,4 +205,20 @@
          </BorderPane.margin>
       </VBox>
    </right>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="editBtn" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 5 5 5 5; -fx-background-color: linear-gradient(to left, #4DB4D7, #0076BE); -fx-font-family: Inter;" text="Modifier patient" textFill="WHITE">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fth-plus-circle" iconSize="15" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="cancelBtn" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 5 5 5 5; -fx-background-color: rgba(250,0,0); -fx-font-family: Inter;" text="Annuler" textFill="WHITE">
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="fth-x-circle" iconSize="15" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>
