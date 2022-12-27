@@ -51,4 +51,14 @@ public class RendezVous {
     public void setId_patient(int id_patient) {
         this.id_patient = id_patient;
     }
+
+    @Override
+    public String toString() {
+        return "RendezVous{" +
+                "id=" + id +
+                ", rendezVousDate='" + rendezVousDate + '\'' +
+                ", description='" + description + '\'' +
+                ", id_patient=" + id_patient +
+                '}';
+    }
 }

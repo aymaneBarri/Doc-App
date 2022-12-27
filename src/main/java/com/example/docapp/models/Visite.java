@@ -95,4 +95,18 @@ public class Visite {
     public void setId_patient(int id_patient) {
         this.id_patient = id_patient;
     }
+
+    @Override
+    public String toString() {
+        return "Visite{" +
+                "id=" + id +
+                ", visit_date='" + visit_date + '\'' +
+                ", description='" + description + '\'' +
+                ", assurance='" + assurance + '\'' +
+                ", illness='" + illness + '\'' +
+                ", amount=" + amount +
+                ", prescription='" + prescription + '\'' +
+                ", id_patient=" + id_patient +
+                '}';
+    }
 }
