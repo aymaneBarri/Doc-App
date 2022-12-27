@@ -1,16 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <fx:include source="../util/topBar.fxml"/>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS" />
+      <fx:include source="../util/topBar.fxml" />
+      <BorderPane style="-fx-background-color: red;" VBox.vgrow="ALWAYS">
+         <top>
+            <Label contentDisplay="RIGHT" text="Bienvenue, " BorderPane.alignment="CENTER_LEFT">
+               <font>
+                  <Font name="Inter Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <Label contentDisplay="RIGHT" text="user">
+                     <font>
+                        <Font name="Inter Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </graphic>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="50.0" right="10.0" top="20.0" />
+               </BorderPane.margin>
+            </Label>
+         </top>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Pane maxHeight="150.0" prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 20;" />
+                  <Pane prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 20;" GridPane.columnIndex="2" />
+                  <Pane prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: white; -fx-background-radius: 20;" />
+                  <Pane prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 20;" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </center>
+      </BorderPane>
    </children>
 </VBox>
