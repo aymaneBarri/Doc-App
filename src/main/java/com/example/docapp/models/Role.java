@@ -29,4 +29,12 @@ public class Role {
     public void setSubject(String subject) {
         this.subject = subject;
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", subject='" + subject + '\'' +
+                '}';
+    }
 }

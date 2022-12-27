@@ -203,4 +203,100 @@ public class UtilisateurDAO {
          return rolesUtilisateur;
      }
 
+
+        public int updateUtilisateur (Utilisateur utilisateur, Vector<RolesUtilisateur> rolesUtilisateurs){
+            PreparedStatement psAddUser = null;
+            PreparedStatement psAddUser2 = null;
+            ResultSet queryOutput = null;
+            int statusCode=0;
+
+            try {
+                Connection connection = DBUtil.getConnection();
+
+                psAddUser = connection.prepareStatement("UPDATE utilisateur SET first_name=?, last_name=?, email=?, cin=?, phone=?, password=? WHERE id=?");
+                psAddUser2 = connection.prepareStatement("UPDATE utilisateur_role SET canView=?, canAdd=?, canModify=?, canDelete=? WHERE id_utilisateur=? AND id_role=?");
+
+                psAddUser.setString(1, utilisateur.getFirstName());
+                psAddUser.setString(2, utilisateur.getLastName());
+                psAddUser.setString(3, utilisateur.getEmail());
+                psAddUser.setString(4, utilisateur.getCin());
+                psAddUser.setString(5, utilisateur.getPhoneNumber());
+                psAddUser.setString(6, utilisateur.getPassword());
+                psAddUser.setInt(7, utilisateur.getId());
+
+                for(int i=0; i<rolesUtilisateurs.size(); i++){
+                    psAddUser2.setInt(1, rolesUtilisateurs.get(i).isCanView()?1:0);
+                    psAddUser2.setInt(2, rolesUtilisateurs.get(i).isCanAdd()?1:0);
+                    psAddUser2.setInt(3, rolesUtilisateurs.get(i).isCanModify()?1:0);
+                    psAddUser2.setInt(4, rolesUtilisateurs.get(i).isCanDelete()?1:0);
+                    psAddUser2.setInt(5, rolesUtilisateurs.get(i).getIdUtilisateur());
+                    psAddUser2.setInt(6, rolesUtilisateurs.get(i).getIdRole());
+                    psAddUser2.executeUpdate();
+                }
+
+                psAddUser.executeUpdate();
+                statusCode=200;
+            } catch (SQLException e) {
+                statusCode = 400;
+                throw new RuntimeException(e);
+            } finally {
+                if (psAddUser != null) {
+                    try {
+                        psAddUser.close();
+                    } catch (SQLException e) {
+                        statusCode = 400;
+                        e.printStackTrace();
+                    }
+                }
+
+                DBUtil.stopConnection();
+            }
+
+            return statusCode;
+
+}
+
+public Role getRole(int id){
+    Role role = new Role();
+    PreparedStatement psLogin = null;
+    ResultSet queryOutput = null;
+
+    try {
+        Connection connection = DBUtil.getConnection();
+
+        psLogin = connection.prepareStatement("SELECT * FROM role WHERE id=?");
+        psLogin.setInt(1, id);
+        queryOutput = psLogin.executeQuery();
+
+        while (queryOutput.next()) {
+            role.setId(queryOutput.getInt("id"));
+            role.setSubject(queryOutput.getString("subject"));
+        }
+
+
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    } finally {
+        if (queryOutput != null) {
+            try {
+                queryOutput.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (psLogin != null) {
+            try {
+                psLogin.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        DBUtil.stopConnection();
+    }
+    return role;
+}
+
+
 }
