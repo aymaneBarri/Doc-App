@@ -10,7 +10,7 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 
-<VBox maxHeight="Infinity" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.utilisateurs.UtilisateursController">
+<VBox maxHeight="Infinity" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.utilisateurs.UtilisateursController">
     <children>
      <fx:include source="../util/topBar.fxml" />
       <Label style="-fx-font-family: Inter; -fx-font-size: 20; -fx-font-weight: bold;" text="Utilisateurs" VBox.vgrow="ALWAYS">

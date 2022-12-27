@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -10,11 +9,10 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox maxHeight="Infinity" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.patient.PatientsController">
+<VBox maxHeight="Infinity" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.patient.PatientsController">
 <children>
-        <fx:include source="../util/topBar.fxml"/>
+        <fx:include source="../util/topBar.fxml" />
       <Label style="-fx-font-family: Inter; -fx-font-size: 20; -fx-font-weight: bold;" text="Patients">
          <VBox.margin>
             <Insets bottom="20.0" left="30.0" right="20.0" top="20.0" />
