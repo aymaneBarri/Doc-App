@@ -13,7 +13,7 @@
 <VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <fx:include source="../util/topBar.fxml" />
-      <BorderPane style="-fx-background-color: red;" VBox.vgrow="ALWAYS">
+      <BorderPane style="-fx-background-color: #F3F3F3;" VBox.vgrow="ALWAYS">
          <top>
             <Label contentDisplay="RIGHT" text="Bienvenue, " BorderPane.alignment="CENTER_LEFT">
                <font>
@@ -32,22 +32,53 @@
             </Label>
          </top>
          <center>
-            <GridPane BorderPane.alignment="CENTER">
+            <GridPane alignment="CENTER" style="-fx-background-color: #F3F3F3;" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Pane maxHeight="150.0" prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 20;" />
-                  <Pane prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 20;" GridPane.columnIndex="2" />
-                  <Pane prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: white; -fx-background-radius: 20;" />
-                  <Pane prefWidth="300.0" style="-fx-background-color: white; -fx-background-radius: 20;" GridPane.columnIndex="1" />
+                  <GridPane hgap="40.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                    </rowConstraints>
+                     <children>
+                        <Pane style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                        <Pane style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" left="35.0" right="35.0" top="20.0" />
+                     </padding>
+                  </GridPane>
+                  <GridPane alignment="CENTER" hgap="20.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                    </rowConstraints>
+                     <children>
+                        <Pane maxHeight="200.0" maxWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" GridPane.halignment="CENTER" />
+                        <Pane maxHeight="200.0" maxWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Pane maxHeight="200.0" maxWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                  </GridPane>
                </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
+               </padding>
             </GridPane>
          </center>
       </BorderPane>
