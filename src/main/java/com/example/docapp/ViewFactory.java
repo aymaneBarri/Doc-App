@@ -105,7 +105,6 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-            System.out.println("current patientID: " + id );
             pd.setData(id);
             s.setTitle("Détails du patient");
             s.getIcons().add(appIcon);

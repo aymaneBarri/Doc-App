@@ -10,6 +10,9 @@ import javafx.scene.layout.*;
 import com.jfoenix.controls.JFXButton;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -23,7 +26,7 @@ public class PatientsController implements Initializable {
         PatientDAO patientDAO = new PatientDAO();
         Vector<Patient> patientList = patientDAO.getPatients();
         for (Patient patient : patientList) {
-            BorderPane bp = createCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate().toString(), patient.getPhoneNumber(), patient.getId());
+            BorderPane bp = createCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getPhoneNumber(), patient.getId());
             listPatient.getItems().add(bp);
         }
 
@@ -37,8 +40,9 @@ public class PatientsController implements Initializable {
                             "/com/example/docapp/view/patients/patientItem.fxml"
                     )
             );
-            root = (BorderPane) loader.load();
-            PatientItemController pc = (PatientItemController) loader.getController();
+
+            root = loader.load();
+            PatientItemController pc = loader.getController();
             pc.setNomPatient(lastName);
             pc.setBirthPatient(date);
             pc.setPrenomPatient(firstName);
@@ -52,6 +56,16 @@ public class PatientsController implements Initializable {
 
         return root;
 
+    }
+
+
+    public void refresh() {
+        PatientDAO patientDAO = new PatientDAO();
+        Vector<Patient> patientList = patientDAO.getPatients();
+        for (Patient patient : patientList) {
+            BorderPane bp = createCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getPhoneNumber(), patient.getId());
+            listPatient.getItems().add(bp);
+        }
     }
 
 }

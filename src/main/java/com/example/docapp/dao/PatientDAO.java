@@ -5,6 +5,7 @@ import com.example.docapp.models.Patient;
 import javafx.event.ActionEvent;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Vector;
 
 public class PatientDAO {
@@ -17,12 +18,13 @@ public class PatientDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            psAddPatient = connection.prepareStatement("INSERT INTO patient (first_name,last_name,birth_date,cin,phone) VALUES (?, ?, ?, ?, ?)");
+            psAddPatient = connection.prepareStatement("INSERT INTO patient (first_name,last_name,birth_date,cin,phone,description) VALUES (?, ?, ?, ?, ?,?)");
             psAddPatient.setString(1, patient.getFirstName());
             psAddPatient.setString(2, patient.getLastName());
-            psAddPatient.setDate(3, (Date) patient.getBirthDate());
+            psAddPatient.setString(3,  patient.getBirthDate());
             psAddPatient.setString(4, patient.getCin());
             psAddPatient.setString(5, patient.getPhoneNumber());
+            psAddPatient.setString(6, patient.getDescription());
 
             psAddPatient.executeUpdate();
             statusCode=201;
@@ -46,7 +48,7 @@ public class PatientDAO {
         return statusCode;
     }
 
-    public int editPatient(ActionEvent event, Patient patient){
+    public static int editPatient(ActionEvent event, Patient patient){
         PreparedStatement psAddP = null;
         ResultSet queryOutput = null;
         int statusCode=0;
@@ -54,13 +56,14 @@ public class PatientDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            psAddP = connection.prepareStatement("UPDATE patient SET first_name = ?, last_name = ?, birth_date = ?, cin = ?, phone = ? WHERE id = ?");
+            psAddP = connection.prepareStatement("UPDATE patient SET first_name = ?, last_name = ?, birth_date = ?, cin = ?, phone = ?,description=? WHERE id = ?");
             psAddP.setString(1, patient.getFirstName());
             psAddP.setString(2, patient.getLastName());
-            psAddP.setDate(3, (Date) patient.getBirthDate());
+            psAddP.setString(3,  patient.getBirthDate().toString());
             psAddP.setString(4, patient.getCin());
             psAddP.setString(5, patient.getPhoneNumber());
-            psAddP.setInt(6, patient.getId());
+            psAddP.setString(6, patient.getDescription());
+            psAddP.setInt(7, patient.getId());
 
             psAddP.executeUpdate();
             statusCode=201;
@@ -83,7 +86,7 @@ public class PatientDAO {
         return statusCode;
     }
 
-    public int deletePatient(int id){
+    public static int deletePatient(int id){
         PreparedStatement psAddP = null;
         ResultSet queryOutput = null;
         int statusCode=0;
@@ -125,7 +128,7 @@ public class PatientDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            psLogin = connection.prepareStatement("SELECT * FROM patient");
+            psLogin = connection.prepareStatement("SELECT * FROM patient order by id DESC ");
             queryOutput = psLogin.executeQuery();
 
             while (queryOutput.next()) {
@@ -133,7 +136,7 @@ public class PatientDAO {
                 patient.setId(queryOutput.getInt("id"));
                 patient.setFirstName(queryOutput.getString("first_name"));
                 patient.setLastName(queryOutput.getString("last_name"));
-                patient.setBirthDate(queryOutput.getDate("birth_date"));
+                patient.setBirthDate(queryOutput.getString("birth_date"));
                 patient.setCin(queryOutput.getString("cin"));
                 patient.setPhoneNumber(queryOutput.getString("phone"));
                 patient.setDescription(queryOutput.getString("description"));
@@ -180,7 +183,7 @@ public class PatientDAO {
                 patient.setId(queryOutput.getInt("id"));
                 patient.setFirstName(queryOutput.getString("first_name"));
                 patient.setLastName(queryOutput.getString("last_name"));
-                patient.setBirthDate(queryOutput.getDate("birth_date"));
+               patient.setBirthDate(queryOutput.getString("birth_date"));
                 patient.setCin(queryOutput.getString("cin"));
                 patient.setPhoneNumber(queryOutput.getString("phone"));
                 patient.setDescription(queryOutput.getString("description"));

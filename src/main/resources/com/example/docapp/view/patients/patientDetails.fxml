@@ -56,8 +56,24 @@
                <children>
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
                      <children>
-                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom Complet" />
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom " />
                         <TextField fx:id="nomField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le nom" style="-fx-font-family: Inter; -fx-font-size: 15;">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+
+                        <TextField fx:id="idP" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le nom" style="-fx-font-family: Inter; -fx-font-size: 15;">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Prenom " />
+                        <TextField fx:id="prenomField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le prenom" style="-fx-font-family: Inter; -fx-font-size: 15;">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -213,7 +229,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="fth-plus-circle" iconSize="15" />
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="cancelBtn" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 5 5 5 5; -fx-background-color: rgba(250,0,0); -fx-font-family: Inter;" text="Annuler" textFill="WHITE">
+            <JFXButton fx:id="deleteBtn" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 5 5 5 5; -fx-background-color: rgba(250,0,0); -fx-font-family: Inter;" text="Supprimer" textFill="WHITE">
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fth-x-circle" iconSize="15" />
                </graphic>
