@@ -1,9 +1,9 @@
 package com.example.docapp.models;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Patient extends Personne {
-    private Date birthDate;
+    private String birthDate;
     private String description;
 
     public Patient() {
@@ -12,17 +12,17 @@ public class Patient extends Personne {
         description = "";
     }
 
-    public Patient(int id, String firstName, String lastName, String cin, String phoneNumber, Date birthDate, String description) {
+    public Patient(int id, String firstName, String lastName, String cin, String phoneNumber, String birthDate, String description) {
         super(id, firstName, lastName, cin, phoneNumber);
         this.birthDate = birthDate;
         this.description = description;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 

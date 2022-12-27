@@ -2,31 +2,33 @@ package com.example.docapp.controllers.patient;
 
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Patient;
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class PatientDetailsController implements Initializable {
 
     @FXML
     public Label idPatient;
-    @FXML
-    public Label nomLabel;
-    @FXML
-    private Label birthLabel;
-    @FXML
-    private Label cinLabel;
-    @FXML
-    private Label phoneLabel;
-    @FXML
-    private Label noteLabel;
+    public TextField nomField;
+    public DatePicker birthField;
+    public TextField cinField;
+    public TextField phoneField;
+    public TextArea noteArea;
+    public JFXButton editBtn;
+    public JFXButton cancelBtn;
+    public TextField prenomField;
     @FXML
     private ListView<BorderPane> listOrdonnances;
     @FXML
@@ -35,19 +37,32 @@ public class PatientDetailsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        editBtn.setOnAction(actionEvent -> {
+            Patient patient = new Patient();
+            patient.setLastName(nomField.getText());
+            patient.setFirstName(prenomField.getText());
+            patient.setBirthDate(birthField.getValue().toString());
+            patient.setPhoneNumber(phoneField.getText());
+            patient.setDescription(noteArea.getText());
+            patient.setCin(cinField.getText());
+        });
+
     }
 
     public void setData(String id){
+
         BorderPane root = null;
         PatientDAO dao = new PatientDAO();
         try {
-            Patient pt = dao.getPatientByID(id);
-            if (pt!= null) {
-                this.setNomLabel(pt.getFirstName() +" "+ pt.getLastName());
-                this.setBirthLabel(pt.getBirthDate().toString());
-                this.setCinLabel(pt.getCin());
-                this.setPhoneLabel(pt.getPhoneNumber());
-                this.setNoteLabel(pt.getDescription());
+            Patient patient = dao.getPatientByID(id);
+            if (patient!= null) {
+                nomField.setText(patient.getLastName());
+                prenomField.setText(patient.getFirstName());
+                birthField.setValue(LocalDate.parse(patient.getBirthDate()));
+                cinField.setText(patient.getCin());
+                phoneField.setText(patient.getPhoneNumber());
+                noteArea.setText(patient.getDescription());
+
             }
 
         } catch (Exception e) {
@@ -55,24 +70,6 @@ public class PatientDetailsController implements Initializable {
         }
     }
 
-    public void setBirthLabel(String text) {
-        birthLabel.setText(text);
-    }
-    public void setCinLabel(String text) {
-        cinLabel.setText(text);
-    }
-
-    public void setPhoneLabel(String text) {
-        phoneLabel.setText(text);
-    }
-
-    public void setNoteLabel(String text) {
-        noteLabel.setText(text);
-    }
-
-    public void setNomLabel( String text) {
-        nomLabel.setText(text);
-    }
 
 
 
