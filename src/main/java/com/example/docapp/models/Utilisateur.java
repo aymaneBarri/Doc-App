@@ -3,6 +3,7 @@ package com.example.docapp.models;
 public class Utilisateur extends Personne {
     private String email;
     private String password;
+    public static Utilisateur currentUser;
 
     public Utilisateur() {
         super();
@@ -30,5 +31,14 @@ public class Utilisateur extends Personne {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+
+                "Utilisateur{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

@@ -64,16 +64,14 @@ public class DBUtil {
             psLogin = connection.prepareStatement("SELECT * FROM utilisateur WHERE email = ?");
             psLogin.setString(1, email.toLowerCase().trim());
             queryOutput = psLogin.executeQuery();
-            System.out.println(email.toLowerCase().trim());
             if (queryOutput.isBeforeFirst()) {
                 while (queryOutput.next()) {
                     password = encryptString(password);
-                    System.out.println(password);
                     if (!(queryOutput.getString("password").equals(password))){
                         statusCode = 400;
                     } else {
                         Utilisateur utilisateur = new Utilisateur(queryOutput.getInt(1), queryOutput.getString(2), queryOutput.getString(3), queryOutput.getString(4), queryOutput.getString(5), queryOutput.getString(6), queryOutput.getString(7));
-
+                        Utilisateur.currentUser = utilisateur;
 
                         statusCode = 200;
                     }

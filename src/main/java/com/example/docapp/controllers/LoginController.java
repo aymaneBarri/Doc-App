@@ -1,6 +1,9 @@
 package com.example.docapp.controllers;
 
+import com.example.docapp.ViewFactory;
+import com.example.docapp.models.ViewModel;
 import com.example.docapp.util.DBUtil;
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,11 +21,13 @@ public class LoginController implements Initializable {
     @FXML
     private TextField passwordTextField;
     @FXML
-    private Button loginButton;
+    private JFXButton loginButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        emailTextField.setText("admin@gmail.com");
+        passwordTextField.setText("admin");
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -41,8 +46,9 @@ public class LoginController implements Initializable {
 
                 if (statusCode == 200) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setContentText("Bienvenu");
+                    alert.setContentText("Bienvenue");
                     alert.show();
+                    ViewModel.getInstance().getViewFactory().showDashboard();
                 } else if (statusCode == 400) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Informations incorrectes!");

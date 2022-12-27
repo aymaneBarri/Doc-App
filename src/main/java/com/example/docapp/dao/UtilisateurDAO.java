@@ -113,7 +113,7 @@ public class UtilisateurDAO {
 
     public Vector<Utilisateur> getUtilisateurs(){
         Vector<Utilisateur> utilisateurs = new Vector<Utilisateur>();
-        Utilisateur utilisateur = new Utilisateur();
+        Utilisateur utilisateur = null;
         PreparedStatement psLogin = null;
         ResultSet queryOutput = null;
 
@@ -124,6 +124,7 @@ public class UtilisateurDAO {
             queryOutput = psLogin.executeQuery();
 
             while (queryOutput.next()) {
+                utilisateur = new Utilisateur();
                 utilisateur.setId(queryOutput.getInt("id"));
                 utilisateur.setFirstName(queryOutput.getString("first_name"));
                 utilisateur.setLastName(queryOutput.getString("last_name"));
@@ -299,4 +300,48 @@ public Role getRole(int id){
 }
 
 
+    public Utilisateur getUserByID(String id) {
+
+        Utilisateur user = new Utilisateur();
+        PreparedStatement psLogin = null;
+        ResultSet queryOutput = null;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+            psLogin = connection.prepareStatement("SELECT * FROM utilisateur where id = ?");
+            psLogin.setString(1, id);
+            queryOutput = psLogin.executeQuery();
+            if (queryOutput.next()) {
+                user.setId(queryOutput.getInt("id"));
+                user.setFirstName(queryOutput.getString("first_name"));
+                user.setLastName(queryOutput.getString("last_name"));
+                user.setEmail(queryOutput.getString("email"));
+                user.setCin(queryOutput.getString("cin"));
+                user.setPhoneNumber(queryOutput.getString("phone"));
+            }
+            System.out.println("User retrieved" + user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (psLogin != null) {
+                try {
+                    psLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return user;
+    }
 }
