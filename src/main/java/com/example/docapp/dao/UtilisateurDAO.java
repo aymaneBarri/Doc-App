@@ -71,7 +71,7 @@ public class UtilisateurDAO {
         return statusCode;
     }
 
-    public static int editUtilisateur(Utilisateur utilisateur){
+    public static int editUtilisateur(Utilisateur utilisateur , boolean isPasswordChanged) {
 
         PreparedStatement psEditUtilisateur = null;
         ResultSet queryOutput = null;
@@ -79,17 +79,30 @@ public class UtilisateurDAO {
 
         try {
             Connection connection = DBUtil.getConnection();
+            String query = "";
+            if(!isPasswordChanged){
+                System.out.println("password not changed");
+                query = "UPDATE utilisateur SET first_name = ?, last_name = ?, email = ?, cin = ?, phone = ? WHERE id = ?";
+                psEditUtilisateur = connection.prepareStatement(query);
+                psEditUtilisateur.setString(1, utilisateur.getFirstName());
+                psEditUtilisateur.setString(2, utilisateur.getLastName());
+                psEditUtilisateur.setString(3, utilisateur.getEmail());
+                psEditUtilisateur.setString(4, utilisateur.getCin());
+                psEditUtilisateur.setString(5, utilisateur.getPhoneNumber());
+                psEditUtilisateur.setInt(6, utilisateur.getId());
+            }else {
+                System.out.println("password changed");
+                psEditUtilisateur = connection.prepareStatement("UPDATE utilisateur SET first_name = ? , last_name = ? , email = ? , password = ? , cin = ? , phone = ? WHERE id = ?");
+                psEditUtilisateur.setString(1, utilisateur.getFirstName());
+                psEditUtilisateur.setString(2, utilisateur.getLastName());
+                psEditUtilisateur.setString(3, utilisateur.getEmail());
+                psEditUtilisateur.setString(4, utilisateur.getPassword());
+                psEditUtilisateur.setString(5, utilisateur.getCin());
+                psEditUtilisateur.setString(6, utilisateur.getPhoneNumber());
+                psEditUtilisateur.setInt(7, utilisateur.getId());
 
-            psEditUtilisateur = connection.prepareStatement("UPDATE utilisateur SET first_name = ? , last_name = ? , email = ? , password = ? , cin = ? , phone = ? WHERE id = ?");
-            psEditUtilisateur.setString(1, utilisateur.getFirstName());
-            psEditUtilisateur.setString(2, utilisateur.getLastName());
-            psEditUtilisateur.setString(3,  utilisateur.getEmail());
-            psEditUtilisateur.setString(4,  utilisateur.getPassword());
-            psEditUtilisateur.setString(5,  utilisateur.getCin());
-            psEditUtilisateur.setString(6,  utilisateur.getPhoneNumber());
-            psEditUtilisateur.setInt(7,  utilisateur.getId());
+            }
             psEditUtilisateur.executeUpdate();
-
             psEditUtilisateur = connection.prepareStatement("INSERT INTO action (id_utilisateur, action, action_time) VALUES (?, ?, ?)");
             System.out.println(Utilisateur.currentUser.getId());
             psEditUtilisateur.setInt(1, Utilisateur.currentUser.getId());
