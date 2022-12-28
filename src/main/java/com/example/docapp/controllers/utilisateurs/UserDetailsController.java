@@ -78,7 +78,7 @@ public class UserDetailsController implements Initializable {
         rolesBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ViewModel.getInstance().getViewFactory().showUserRoles(idField.getText());
+                ViewModel.getInstance().getViewFactory().showUserRoles();
             }
         });
     }

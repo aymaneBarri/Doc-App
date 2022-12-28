@@ -54,7 +54,6 @@ public class UtilisateursController implements Initializable {
             uc.setEmail(email);
             uc.setPhone(phone);
             uc.setId(id.toString());
-
         } catch (Exception e) {
             e.printStackTrace();
         }

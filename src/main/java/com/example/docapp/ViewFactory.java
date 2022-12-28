@@ -133,7 +133,7 @@ public class ViewFactory {
         }
     }
 
-    public void showUserRoles(String text) {
+    public void showUserRoles() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/userRoles.fxml"));
         try{
             BorderPane root = loader.load();

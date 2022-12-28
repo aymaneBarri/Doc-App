@@ -58,6 +58,8 @@ public class NewPatientController implements Initializable {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("good");
                         alert.show();
+                        Stage s = (Stage) cancelBtn.getScene().getWindow();
+                        s.close();
 
                         ViewModel.getInstance().getViewFactory().showPatient();
                     }else{

@@ -64,7 +64,7 @@
                               <Font name="Inter Regular" size="14.0" />
                            </font>
                         </TextField>
-                        <JFXButton contentDisplay="CENTER" text=" ">
+                        <JFXButton  fx:id="searchBtn" contentDisplay="CENTER" text=" ">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

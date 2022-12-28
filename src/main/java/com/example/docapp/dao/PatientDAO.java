@@ -1,11 +1,13 @@
 package com.example.docapp.dao;
 
+import com.example.docapp.models.Utilisateur;
 import com.example.docapp.util.DBUtil;
 import com.example.docapp.models.Patient;
 import javafx.event.ActionEvent;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Vector;
 
 public class PatientDAO {
@@ -27,6 +29,13 @@ public class PatientDAO {
             psAddPatient.setString(6, patient.getDescription());
 
             psAddPatient.executeUpdate();
+
+            psAddPatient = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
+            psAddPatient.setInt(1, Utilisateur.currentUser.getId());
+            psAddPatient.setString(2, "Ajout d'un patient");
+            psAddPatient.setString(3, LocalDateTime.now().toString());
+            psAddPatient.executeUpdate();
+
             statusCode=201;
         } catch (SQLException e) {
             statusCode = 400;
@@ -47,6 +56,62 @@ public class PatientDAO {
 
         return statusCode;
     }
+    public static Vector<Patient> searchPatients(String search) {
+
+        Vector<Patient> patients = new Vector<Patient>();
+        Patient patient;
+        PreparedStatement psLogin = null;
+        ResultSet queryOutput = null;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            psLogin = connection.prepareStatement("SELECT * FROM patient where first_name like ? or last_name like ? or cin like ? or phone like ? order by id DESC  ");
+              psLogin.setString(1, "%"+search+"%");
+                psLogin.setString(2, "%"+search+"%");
+                psLogin.setString(3, "%"+search+"%");
+                psLogin.setString(4, "%"+search+"%");
+
+            queryOutput = psLogin.executeQuery();
+
+            while (queryOutput.next()) {
+                patient = new Patient();
+                patient.setId(queryOutput.getInt("id"));
+                patient.setFirstName(queryOutput.getString("first_name"));
+                patient.setLastName(queryOutput.getString("last_name"));
+                patient.setBirthDate(queryOutput.getString("birth_date"));
+                patient.setCin(queryOutput.getString("cin"));
+                patient.setPhoneNumber(queryOutput.getString("phone"));
+                patient.setDescription(queryOutput.getString("description"));
+
+
+                patients.add(patient);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (psLogin != null) {
+                try {
+                    psLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return patients;
+    }
+
 
     public static int editPatient(ActionEvent event, Patient patient){
         PreparedStatement psAddP = null;
@@ -64,6 +129,13 @@ public class PatientDAO {
             psAddP.setString(5, patient.getPhoneNumber());
             psAddP.setString(6, patient.getDescription());
             psAddP.setInt(7, patient.getId());
+
+            psAddP.executeUpdate();
+
+            psAddP = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
+            psAddP.setInt(1, Utilisateur.currentUser.getId());
+            psAddP.setString(2, "Modification d'un patient id : "+patient.getId());
+            psAddP.setString(3, LocalDateTime.now().toString());
 
             psAddP.executeUpdate();
             statusCode=201;
@@ -99,6 +171,14 @@ public class PatientDAO {
             psAddP.setInt(1, id);
 
             psAddP.executeUpdate();
+
+            psAddP = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
+            psAddP.setInt(1, Utilisateur.currentUser.getId());
+            psAddP.setString(2, "Suppression d'un patient id : "+id);
+            psAddP.setString(3, LocalDateTime.now().toString());
+            psAddP.executeUpdate();
+
+
             statusCode=200;
         } catch (SQLException e) {
             statusCode = 400;

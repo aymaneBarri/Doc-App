@@ -25,6 +25,8 @@ public class PatientsController implements Initializable {
     public ListView<BorderPane> listPatient;
     public TextField searchField;
     public JFXButton newPatient;
+    public JFXButton searchBtn;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,7 +45,21 @@ public class PatientsController implements Initializable {
             }
         });
 
+        searchBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String search = searchField.getText();
+                listPatient.getItems().clear();
+                Vector<Patient> patientList = PatientDAO.searchPatients(search);
+                for (Patient patient : patientList) {
+                    BorderPane bp = createCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getPhoneNumber(), patient.getId());
+                    listPatient.getItems().add(bp);
+                }
+            }
+        });
+
     }
+
 
     public BorderPane createCard(String firstName, String lastName, String date, String phone, Integer id) {
         BorderPane root = null;
@@ -70,6 +86,7 @@ public class PatientsController implements Initializable {
         return root;
 
     }
+
 
 
     public void refresh() {

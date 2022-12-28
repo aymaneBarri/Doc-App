@@ -1,6 +1,7 @@
 package com.example.docapp.dao;
 
 import com.example.docapp.models.RendezVous;
+import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.Visite;
 import com.example.docapp.util.DBUtil;
 
@@ -13,7 +14,7 @@ import java.util.Vector;
 
 public class VisiteDAO {
     
-        public static int addVisite(Visite visite,int user_id) {
+        public static int addVisite(Visite visite) {
             PreparedStatement pasAddVisite = null;
             ResultSet queryOutput = null;
             int statusCode=0;
@@ -33,7 +34,7 @@ public class VisiteDAO {
 
                 pasAddVisite.executeUpdate();
                 pasAddVisite = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
-                pasAddVisite.setInt(1, user_id);
+                pasAddVisite.setInt(1,  Utilisateur.currentUser.getId());
                 pasAddVisite.setString(2, "Ajout d'une visite");
                 pasAddVisite.setString(3, LocalDateTime.now().toString());
                 pasAddVisite.executeUpdate();
@@ -60,7 +61,7 @@ public class VisiteDAO {
             
         }
 
-        public static int editVisite(Visite visite,int user_id){
+        public static int editVisite(Visite visite){
 
             PreparedStatement psEditR = null;
             ResultSet queryOutput = null;
@@ -81,7 +82,7 @@ public class VisiteDAO {
 
                 psEditR.executeUpdate();
                 psEditR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
-                psEditR.setInt(1, user_id);
+                psEditR.setInt(1,  Utilisateur.currentUser.getId());
                 psEditR.setString(2, "Modification de la visite id = "+visite.getId());
                 psEditR.setString(3, LocalDateTime.now().toString());
                 psEditR.executeUpdate();
@@ -107,7 +108,7 @@ public class VisiteDAO {
             return statusCode;
         }
 
-        public static int deleteVisite(Visite visite , int user_id){
+        public static int deleteVisite(Visite visite ){
             PreparedStatement psDeleteR = null;
             ResultSet queryOutput = null;
             int statusCode=0;
@@ -121,7 +122,7 @@ public class VisiteDAO {
                 psDeleteR.executeUpdate();
                 
                 psDeleteR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
-                psDeleteR.setInt(1, user_id);
+                psDeleteR.setInt(1,  Utilisateur.currentUser.getId());
                 psDeleteR.setString(2, "Suppression de la visite id = "+visite.getId());
                 psDeleteR.setString(3, LocalDateTime.now().toString());
                 psDeleteR.executeUpdate();

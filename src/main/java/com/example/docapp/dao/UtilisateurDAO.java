@@ -28,6 +28,13 @@ public class UtilisateurDAO {
             psAddUser.setString(6, utilisateur.getPhoneNumber());
             psAddUser.executeUpdate();
 
+            psAddUser = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
+            psAddUser.setInt(1,  Utilisateur.currentUser.getId());
+            psAddUser.setString(2, "Ajout d'un utilisateur");
+            psAddUser.setString(3, LocalDateTime.now().toString());
+            psAddUser.executeUpdate();
+
+
             ResultSet resultSet = psAddUser.getGeneratedKeys();
 
             if (resultSet.next()) {
@@ -104,7 +111,6 @@ public class UtilisateurDAO {
             }
             psEditUtilisateur.executeUpdate();
             psEditUtilisateur = connection.prepareStatement("INSERT INTO action (id_utilisateur, action, action_time) VALUES (?, ?, ?)");
-            System.out.println(Utilisateur.currentUser.getId());
             psEditUtilisateur.setInt(1, Utilisateur.currentUser.getId());
             psEditUtilisateur.setString(2, "Modification de l'utilisateur id = " + utilisateur.getId());
             psEditUtilisateur.setString(3, LocalDateTime.now().toString());
@@ -149,6 +155,15 @@ public class UtilisateurDAO {
 
             psAddP2.executeUpdate();
             psAddP.executeUpdate();
+
+
+psAddP = connection.prepareStatement("INSERT INTO action (id_utilisateur, action, action_time) VALUES (?, ?, ?)");
+
+            psAddP.setInt(1, Utilisateur.currentUser.getId());
+            psAddP.setString(2, "Suppression de l'utilisateur id = " + id);
+            psAddP.setString(3, LocalDateTime.now().toString());
+            psAddP.executeUpdate();
+
             statusCode=200;
         } catch (SQLException e) {
             statusCode = 400;

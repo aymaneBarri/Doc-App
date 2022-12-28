@@ -22,5 +22,13 @@ public class UserRoleController implements Initializable {
                 s.hide();
             }
         });
+
+        saveBtn.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+
+            }
+        });
+
     }
 }

@@ -102,8 +102,8 @@
                   <Font name="Inter Regular" size="15.0" />
                </font>
             </TextField>
-            <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="267.0" layoutY="394.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Roles" visible="false" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <JFXButton fx:id="rolesBtn" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 5 5 5 5; -fx-background-color: linear-gradient(to left, #4DB4D7, #0076BE); -fx-font-family: Inter;" text="Voir les roles attribués" textFill="WHITE" visible="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+            <Label alignment="CENTER" contentDisplay="RIGHT" layoutX="267.0" layoutY="394.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Roles"  GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <JFXButton fx:id="rolesBtn" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 5 5 5 5; -fx-background-color: linear-gradient(to left, #4DB4D7, #0076BE); -fx-font-family: Inter;" text="Voir les roles attribués" textFill="WHITE" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fth-external-link" iconSize="15" />
                </graphic>

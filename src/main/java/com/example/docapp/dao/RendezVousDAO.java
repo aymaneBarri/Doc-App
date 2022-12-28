@@ -2,6 +2,7 @@ package com.example.docapp.dao;
 
 import com.example.docapp.models.Patient;
 import com.example.docapp.models.RendezVous;
+import com.example.docapp.models.Utilisateur;
 import com.example.docapp.util.DBUtil;
 import javafx.event.ActionEvent;
 
@@ -14,7 +15,7 @@ import java.util.Vector;
 
 public class RendezVousDAO {
 
-        public static int addRendezVous(RendezVous rendezVous , int user_id) {
+        public static int addRendezVous(RendezVous rendezVous ) {
             PreparedStatement psAddRendezVous = null;
             ResultSet queryOutput = null;
             int statusCode=0;
@@ -30,7 +31,7 @@ public class RendezVousDAO {
                 psAddRendezVous.executeUpdate();
 
                 psAddRendezVous = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
-                psAddRendezVous.setInt(1, user_id);
+                psAddRendezVous.setInt(1,  Utilisateur.currentUser.getId());
                 psAddRendezVous.setString(2, "Ajout d'un rendez vous");
                 psAddRendezVous.setString(3, LocalDateTime.now().toString());
                 psAddRendezVous.executeUpdate();
@@ -57,7 +58,7 @@ public class RendezVousDAO {
 
             return statusCode;
         }
-    public static int editRendezVous( RendezVous rendezVous ,int user_id){
+    public static int editRendezVous( RendezVous rendezVous ){
         PreparedStatement psEditR = null;
         ResultSet queryOutput = null;
         int statusCode=0;
@@ -76,7 +77,7 @@ public class RendezVousDAO {
             psEditR.executeUpdate();
 
             psEditR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
-            psEditR.setInt(1, user_id);
+            psEditR.setInt(1,  Utilisateur.currentUser.getId());
             psEditR.setString(2, "Edit Rendez Vous "+rendezVous.getId());
             psEditR.setString(3,  LocalDateTime.now().toString());
             psEditR.executeUpdate();
@@ -179,7 +180,7 @@ public class RendezVousDAO {
         return rendezVous.get(0);
     }
 
-    public static int deleteRendezVous(RendezVous rendezVous,int user_id){
+    public static int deleteRendezVous(RendezVous rendezVous){
         PreparedStatement psDeleteR = null;
         ResultSet queryOutput = null;
         int statusCode=0;
@@ -193,7 +194,7 @@ public class RendezVousDAO {
             psDeleteR.executeUpdate();
 
             psDeleteR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
-            psDeleteR.setInt(1, user_id);
+            psDeleteR.setInt(1, Utilisateur.currentUser.getId());
             psDeleteR.setString(2, "Delete Rendez Vous id =  "+rendezVous.getId());
             psDeleteR.setString(3,  LocalDateTime.now().toString());
             psDeleteR.executeUpdate();
