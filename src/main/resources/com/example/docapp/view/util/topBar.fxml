@@ -16,7 +16,7 @@
                   <Font name="Inter Bold" size="18.0" />
                </font>
                <graphic>
-                  <Label text="User">
+                  <Label fx:id="currentUserNameLabel" text="User">
                      <font>
                         <Font name="Inter Regular" size="18.0" />
                      </font>
