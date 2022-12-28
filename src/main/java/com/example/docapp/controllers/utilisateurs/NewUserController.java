@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,6 +44,14 @@ public class NewUserController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 ViewModel.getInstance().getViewFactory().showUserRoles();
+            }
+        });
+
+        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage s = (Stage) cancelBtn.getScene().getWindow();
+                s.hide();
             }
         });
 

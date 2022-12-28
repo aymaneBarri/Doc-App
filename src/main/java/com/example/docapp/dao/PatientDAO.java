@@ -199,7 +199,7 @@ public class PatientDAO {
         return statusCode;
     }
 
-    public Vector <Patient> getPatients(){
+    public static Vector <Patient> getPatients(){
         Vector<Patient> patients = new Vector<Patient>();
         Patient patient;
         PreparedStatement psLogin = null;
@@ -248,7 +248,7 @@ public class PatientDAO {
         return patients;
     }
 
-    public Patient getPatientByID(String id){
+    public static Patient getPatientByID(String id){
 
         Patient patient = new Patient();
         PreparedStatement psLogin = null;
