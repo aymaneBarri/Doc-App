@@ -11,10 +11,10 @@
    <center>
       <HBox alignment="CENTER_LEFT" spacing="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="nom" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Nom" textOverrun="CLIP" />
-            <Label fx:id="prenom" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Prénom" textOverrun="CLIP" />
-            <Label fx:id="email" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Email" textOverrun="CLIP" />
-            <Label fx:id="phone" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Téléphone" textOverrun="CLIP" />
+            <Label fx:id="nom" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Nom" />
+            <Label fx:id="prenom" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Prénom" />
+            <Label fx:id="email" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Email" />
+            <Label fx:id="phone" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Téléphone" />
             <Label fx:id="id" text="ID" visible="false" />
          </children>
       </HBox>

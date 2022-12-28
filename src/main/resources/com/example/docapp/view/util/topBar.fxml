@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -31,16 +32,19 @@
             <HBox.margin>
                 <Insets right="20.0" />
             </HBox.margin>
-            <graphic>
-                <JFXButton contentDisplay="CENTER" style="-fx-background-color: transparent; -jfx-disable-visual-focus: true;" text=" ">
-                    <graphic>
-                        <FontIcon iconLiteral="fth-settings" />
-                    </graphic>
-                </JFXButton>
-            </graphic>
          <font>
             <Font size="14.0" />
          </font>
+         <graphic>
+            <JFXButton contentDisplay="CENTER" style="-fx-background-color: transparent; -jfx-disable-visual-focus: true;" text=" ">
+               <graphic>
+                  <FontIcon fx:id="profileBtn" iconLiteral="fth-user" iconSize="20" />
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </graphic>
         </Label>
     </children>
 </HBox>

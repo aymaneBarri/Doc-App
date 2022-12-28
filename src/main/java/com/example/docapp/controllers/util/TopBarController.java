@@ -17,7 +17,7 @@ public class TopBarController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        currentUserNameLabel.setText(Utilisateur.currentUser.getLastName() + " " + Utilisateur.currentUser.getFirstName());
+        currentUserNameLabel.setText(Utilisateur.currentUser.getLastName());
 
         userName.setText(Utilisateur.currentUser.getLastName() + " " + Utilisateur.currentUser.getFirstName());
     }

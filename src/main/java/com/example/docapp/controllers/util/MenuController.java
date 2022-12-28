@@ -17,6 +17,7 @@ public class MenuController implements Initializable {
     public JFXButton visiteBtn;
     public JFXButton userBtn;
     public JFXButton rdvBtn;
+    public JFXButton logoutBtn;
 
 
     @Override

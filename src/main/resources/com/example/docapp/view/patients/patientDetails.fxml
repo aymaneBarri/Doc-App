@@ -5,10 +5,12 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
@@ -52,75 +54,59 @@
    <center>
       <VBox alignment="TOP_CENTER" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                  <GridPane alignment="CENTER_LEFT" hgap="50.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" vgap="15.0" HBox.hgrow="ALWAYS">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.0" minWidth="10.0" prefWidth="154.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="632.0" minWidth="10.0" prefWidth="606.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                     </rowConstraints>
                      <children>
-                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom " />
-                        <TextField fx:id="nomField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le nom" style="-fx-font-family: Inter; -fx-font-size: 15;">
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom " GridPane.halignment="LEFT" />
+                        <TextField fx:id="nomField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le nom" style="-fx-font-family: Inter; -fx-font-size: 15;" GridPane.columnIndex="1" GridPane.halignment="LEFT">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextField>
-
-                        <TextField fx:id="idP" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le nom" style="-fx-font-family: Inter; -fx-font-size: 15;">
+                        <TextField fx:id="idP" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le nom" style="-fx-font-family: Inter; -fx-font-size: 15;" visible="false" GridPane.columnIndex="1">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" spacing="20.0">
-                     <children>
-                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Prenom " />
-                        <TextField fx:id="prenomField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le prenom" style="-fx-font-family: Inter; -fx-font-size: 15;">
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Prenom " GridPane.rowIndex="1" />
+                        <TextField fx:id="prenomField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le prenom" style="-fx-font-family: Inter; -fx-font-size: 15;" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="BASELINE_LEFT" spacing="20.0">
-                     <children>
-                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Date de naissance" />
-                        <DatePicker fx:id="birthField" maxWidth="250.0" prefHeight="50.0" promptText="Entrer la date de naissance" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" spacing="20.0">
-                     <children>
-                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="CIN" />
-                        <TextField fx:id="cinField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le numéro de CIN" style="-fx-font-family: Inter; -fx-font-size: 15;">
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Date de naissance" GridPane.rowIndex="2" />
+                        <DatePicker fx:id="birthField" maxWidth="250.0" prefHeight="50.0" promptText="Entrer la date de naissance" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="CIN" GridPane.rowIndex="3" />
+                        <TextField fx:id="cinField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le numéro de CIN" style="-fx-font-family: Inter; -fx-font-size: 15;" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Inter Regular" size="15.0" />
+                           </font>
+                        </TextField>
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Téléphone" GridPane.rowIndex="4" />
+                        <TextField fx:id="phoneField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer numéro de téléphone" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                            <font>
                               <Font name="Inter Regular" size="15.0" />
                            </font>
                         </TextField>
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" spacing="20.0">
-                     <children>
-                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Téléphone" />
-                        <TextField fx:id="phoneField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer numéro de téléphone">
-                           <font>
-                              <Font name="Inter Regular" size="15.0" />
-                           </font>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" spacing="20.0">
-                     <children>
-                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Note" />
-                        <TextArea fx:id="noteArea" prefHeight="200.0" prefWidth="200.0" promptText="Entrer une note">
-                           <font>
-                              <Font name="Inter Regular" size="15.0" />
-                           </font>
-                        </TextArea>
-                     </children>
-                  </HBox>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </GridPane>
                </children>
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin>
-            </VBox>
+            </HBox>
             <BorderPane style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" VBox.vgrow="ALWAYS">
                <top>
                   <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: white; -fx-background-radius: 17; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">

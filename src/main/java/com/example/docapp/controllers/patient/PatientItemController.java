@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PatientItemController implements Initializable {
+    public JFXButton newVisite;
     @FXML
     private Label patientID;
     @FXML

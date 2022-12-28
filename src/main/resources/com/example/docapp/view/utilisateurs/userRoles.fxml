@@ -83,7 +83,7 @@
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Patients" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="49.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Utilisateurs" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="49.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Visites" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="49.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Paiements" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="49.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Rendez-vous" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <HBox alignment="CENTER" prefHeight="118.0" prefWidth="929.0" spacing="60.0" GridPane.columnIndex="1">
                <children>
                   <CheckBox mnemonicParsing="false" text="Consulter">
