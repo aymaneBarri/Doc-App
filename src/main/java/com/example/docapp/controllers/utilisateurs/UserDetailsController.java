@@ -46,11 +46,20 @@ public class UserDetailsController implements Initializable {
                 } else {
                     try {
                         Utilisateur utilisateur = new Utilisateur(Integer.parseInt(idField.getText().trim()), prenomField.getText().trim(), nomField.getText().trim(), emailField.getText().trim(), passField.getText().trim(), cinField.getText().trim(), phoneField.getText().trim());
-                        UtilisateurDAO.editUtilisateur(utilisateur);
+                        if (passField.getText().isEmpty()){
+                            UtilisateurDAO.editUtilisateur(utilisateur,false);
+                        }
+                        else {
+                            UtilisateurDAO.editUtilisateur(utilisateur,true);
+                        }
+
+
 
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("Utilisateur modifié avec succès!");
                         alert.show();
+                        Stage s = (Stage) cancelBtn.getScene().getWindow();
+                        s.close();
                     } catch (NoSuchAlgorithmException e) {
                         throw new RuntimeException(e);
                     }
@@ -117,7 +126,7 @@ public class UserDetailsController implements Initializable {
     }
 
     public boolean formIsValid() {
-        if(nomField.getText().trim().isEmpty() || prenomField.getText().trim().isEmpty() || emailField.getText().trim().isEmpty() || passField.getText().trim().isEmpty() || cinField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()){
+        if(nomField.getText().trim().isEmpty() || prenomField.getText().trim().isEmpty() || emailField.getText().trim().isEmpty() ||  cinField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()){
             errorMessage = "Veuillez remplir tous les champs!";
             return false;
         }
