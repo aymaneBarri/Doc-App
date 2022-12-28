@@ -1,14 +1,12 @@
 package com.example.docapp.dao;
 
-import com.example.docapp.models.Patient;
+import com.example.docapp.models.*;
 import com.example.docapp.util.DBUtil;
-import com.example.docapp.models.Role;
-import com.example.docapp.models.RolesUtilisateur;
-import com.example.docapp.models.Utilisateur;
 import com.example.docapp.util.Encryptor;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.Vector;
 
 public class UtilisateurDAO {
@@ -63,6 +61,53 @@ public class UtilisateurDAO {
                 try {
                     psAddUser.close();
                 } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return statusCode;
+    }
+
+    public static int editUtilisateur(Utilisateur utilisateur){
+
+        PreparedStatement psEditUtilisateur = null;
+        ResultSet queryOutput = null;
+        int statusCode=0;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            psEditUtilisateur = connection.prepareStatement("UPDATE utilisateur SET first_name = ? , last_name = ? , email = ? , password = ? , cin = ? , phone = ? WHERE id = ?");
+            psEditUtilisateur.setString(1, utilisateur.getFirstName());
+            psEditUtilisateur.setString(2, utilisateur.getLastName());
+            psEditUtilisateur.setString(3,  utilisateur.getEmail());
+            psEditUtilisateur.setString(4,  utilisateur.getPassword());
+            psEditUtilisateur.setString(5,  utilisateur.getCin());
+            psEditUtilisateur.setString(6,  utilisateur.getPhoneNumber());
+            psEditUtilisateur.setInt(7,  utilisateur.getId());
+            psEditUtilisateur.executeUpdate();
+
+            psEditUtilisateur = connection.prepareStatement("INSERT INTO action (id_utilisateur, action, action_time) VALUES (?, ?, ?)");
+            System.out.println(Utilisateur.currentUser.getId());
+            psEditUtilisateur.setInt(1, Utilisateur.currentUser.getId());
+            psEditUtilisateur.setString(2, "Modification de l'utilisateur id = " + utilisateur.getId());
+            psEditUtilisateur.setString(3, LocalDateTime.now().toString());
+            psEditUtilisateur.executeUpdate();
+
+            statusCode=201;
+        } catch (SQLException e) {
+            statusCode = 400;
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            if (psEditUtilisateur != null) {
+                try {
+                    psEditUtilisateur.close();
+                } catch (SQLException e) {
+                    statusCode = 400;
                     e.printStackTrace();
                 }
             }

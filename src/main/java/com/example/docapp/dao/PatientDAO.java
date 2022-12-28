@@ -59,7 +59,7 @@ public class PatientDAO {
             psAddP = connection.prepareStatement("UPDATE patient SET first_name = ?, last_name = ?, birth_date = ?, cin = ?, phone = ?,description=? WHERE id = ?");
             psAddP.setString(1, patient.getFirstName());
             psAddP.setString(2, patient.getLastName());
-            psAddP.setString(3,  patient.getBirthDate().toString());
+            psAddP.setString(3,  patient.getBirthDate());
             psAddP.setString(4, patient.getCin());
             psAddP.setString(5, patient.getPhoneNumber());
             psAddP.setString(6, patient.getDescription());

@@ -1,5 +1,10 @@
 package com.example.docapp.models;
 
+import com.example.docapp.util.DBUtil;
+import com.example.docapp.util.Encryptor;
+
+import java.security.NoSuchAlgorithmException;
+
 public class Utilisateur extends Personne {
     private String email;
     private String password;
@@ -11,10 +16,10 @@ public class Utilisateur extends Personne {
         password = "";
     }
 
-    public Utilisateur(int id, String firstName, String lastName, String email, String password, String cin, String phoneNumber) {
+    public Utilisateur(int id, String firstName, String lastName, String email, String password, String cin, String phoneNumber) throws NoSuchAlgorithmException {
         super(id, firstName, lastName, cin, phoneNumber);
         this.email = email;
-        this.password = password;
+        this.password = Encryptor.encryptString(password);
     }
 
     public String getEmail() {
