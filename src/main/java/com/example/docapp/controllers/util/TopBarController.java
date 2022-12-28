@@ -11,18 +11,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TopBarController implements Initializable {
-    public JFXButton newVisite;
-    public JFXButton newPatient;
     public Label userName;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        newPatient.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ViewModel.getInstance().getViewFactory().showNewPatient();
-            }
-        });
+
     }
 
 }

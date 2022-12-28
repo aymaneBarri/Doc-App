@@ -3,9 +3,14 @@ package com.example.docapp.controllers.utilisateurs;
 import com.example.docapp.controllers.patient.PatientItemController;
 import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.models.Utilisateur;
+import com.example.docapp.models.ViewModel;
+import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
@@ -14,6 +19,8 @@ import java.util.Vector;
 
 public class UtilisateursController implements Initializable {
     public ListView<BorderPane> listUser;
+    public TextField searchField;
+    public JFXButton newUser;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -23,6 +30,13 @@ public class UtilisateursController implements Initializable {
             BorderPane bp = createCard(user.getFirstName(),user.getLastName(), user.getEmail(), user.getPhoneNumber(), user.getId());
             listUser.getItems().add(bp);
         }
+
+        newUser.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ViewModel.getInstance().getViewFactory().showNewUser();
+            }
+        });
     }
 
     public BorderPane createCard(String firstName, String lastName, String email, String phone, Integer id) {

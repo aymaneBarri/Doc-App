@@ -16,7 +16,7 @@ public class MenuController implements Initializable {
     public JFXButton patientBtn;
     public JFXButton visiteBtn;
     public JFXButton userBtn;
-    public JFXButton moneyBtn;
+    public JFXButton rdvBtn;
 
 
     @Override
@@ -40,6 +40,22 @@ public class MenuController implements Initializable {
                 ViewModel.getInstance().getViewFactory().showUser();
             }
         });
+
+        visiteBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ViewModel.getInstance().getViewFactory().showVisite();
+            }
+        });
+
+        rdvBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+            }
+        });
+
+
     }
 
 

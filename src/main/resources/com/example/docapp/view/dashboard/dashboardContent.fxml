@@ -22,19 +22,12 @@
       <fx:include source="../util/topBar.fxml" />
       <BorderPane style="-fx-background-color: #F3F3F3;" VBox.vgrow="ALWAYS">
          <top>
-            <Label contentDisplay="RIGHT" text="Bienvenue, " BorderPane.alignment="CENTER_LEFT">
+            <Label contentDisplay="RIGHT" text="Acceuil" BorderPane.alignment="CENTER_LEFT">
                <font>
                   <Font name="Inter Bold" size="20.0" />
                </font>
-               <graphic>
-                  <Label contentDisplay="RIGHT" text="user">
-                     <font>
-                        <Font name="Inter Bold" size="20.0" />
-                     </font>
-                  </Label>
-               </graphic>
                <BorderPane.margin>
-                  <Insets bottom="10.0" left="50.0" right="10.0" top="20.0" />
+                  <Insets left="50.0" right="10.0" top="20.0" />
                </BorderPane.margin>
             </Label>
          </top>

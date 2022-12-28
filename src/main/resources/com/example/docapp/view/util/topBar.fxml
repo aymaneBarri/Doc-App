@@ -4,11 +4,29 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="1050.0" spacing="30.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.util.TopBarController">
     <children>
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0" HBox.hgrow="ALWAYS" />
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label contentDisplay="RIGHT" text="Bienvenue, ">
+               <font>
+                  <Font name="Inter Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <Label text="User">
+                     <font>
+                        <Font name="Inter Regular" size="18.0" />
+                     </font>
+                  </Label>
+               </graphic>
+            </Label>
+         </children>
+         <HBox.margin>
+            <Insets left="30.0" />
+         </HBox.margin></HBox>
         <Label fx:id="userName" contentDisplay="RIGHT" style="-fx-font-family: Inter;" text="New User">
             <HBox.margin>
                 <Insets right="20.0" />
@@ -20,6 +38,9 @@
                     </graphic>
                 </JFXButton>
             </graphic>
+         <font>
+            <Font size="14.0" />
+         </font>
         </Label>
     </children>
 </HBox>

@@ -149,4 +149,32 @@ public class ViewFactory {
             e.printStackTrace();
         }
     }
+
+    public void showVisite() {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/visites/visites.fxml"));
+        try{
+            Scene oldScene = stage.getScene();
+            scene = new Scene(loader.load(), oldScene.getWidth(), oldScene.getHeight());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        stage.setScene(scene);
+        stage.setTitle("Visites - DocAssistant");
+    }
+    public void showNewUser(){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/newUser.fxml"));
+        try{
+            BorderPane root = loader.load();
+            Scene sc = new Scene(root);
+            Stage s = new Stage();
+            s.setScene(sc);
+            s.setTitle("Nouveau utilisateur");
+            s.getIcons().add(appIcon);
+            s.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 }

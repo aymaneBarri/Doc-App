@@ -3,9 +3,13 @@ package com.example.docapp.controllers.patient;
 import com.example.docapp.controllers.patient.PatientItemController;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Patient;
+import com.example.docapp.models.ViewModel;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import com.jfoenix.controls.JFXButton;
 
@@ -19,6 +23,8 @@ import java.util.Vector;
 public class PatientsController implements Initializable {
 
     public ListView<BorderPane> listPatient;
+    public TextField searchField;
+    public JFXButton newPatient;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -29,6 +35,13 @@ public class PatientsController implements Initializable {
             BorderPane bp = createCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getPhoneNumber(), patient.getId());
             listPatient.getItems().add(bp);
         }
+
+        newPatient.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ViewModel.getInstance().getViewFactory().showNewPatient();
+            }
+        });
 
     }
 
