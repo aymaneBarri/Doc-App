@@ -2,6 +2,7 @@ package com.example.docapp.controllers.patient;
 
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Patient;
+import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -59,6 +60,8 @@ public class PatientDetailsController implements Initializable {
                 alert.setContentText("good");
                 alert.show();
 
+                  ViewModel.getInstance().getViewFactory().showPatient();
+
                   Stage s = (Stage) editBtn.getScene().getWindow();
                   s.close();
               }else{
@@ -88,10 +91,9 @@ public class PatientDetailsController implements Initializable {
                     System.out.println(PatientDAO.deletePatient( Integer.parseInt(idP.getText())));
                     Stage s = (Stage) editBtn.getScene().getWindow();
                     s.close();
-                    }
-                else {
 
-                }
+                    ViewModel.getInstance().getViewFactory().showPatient();
+                    }
             });
         });
     }

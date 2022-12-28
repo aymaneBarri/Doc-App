@@ -2,6 +2,7 @@ package com.example.docapp.controllers.patient;
 
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Patient;
+import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -57,6 +58,8 @@ public class NewPatientController implements Initializable {
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("good");
                         alert.show();
+
+                        ViewModel.getInstance().getViewFactory().showPatient();
                     }else{
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setContentText("not good");
