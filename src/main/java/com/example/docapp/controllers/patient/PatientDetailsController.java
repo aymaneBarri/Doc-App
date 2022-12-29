@@ -86,9 +86,8 @@ public class PatientDetailsController implements Initializable {
             alert.getButtonTypes().setAll(okButton, cancelButton);
             alert.showAndWait().ifPresent(type -> {
                 if (type == okButton) {
-                    System.out.println(okButton.getText());
-                    System.out.println("nononon");
-                    System.out.println(PatientDAO.deletePatient( Integer.parseInt(idP.getText())));
+
+                   PatientDAO.deletePatient( Integer.parseInt(idP.getText()));
                     Stage s = (Stage) editBtn.getScene().getWindow();
                     s.close();
 

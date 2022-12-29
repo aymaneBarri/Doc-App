@@ -108,7 +108,7 @@ public class VisiteDAO {
             return statusCode;
         }
 
-        public static int deleteVisite(Visite visite ){
+        public static int deleteVisite(String id ){
             PreparedStatement psDeleteR = null;
             ResultSet queryOutput = null;
             int statusCode=0;
@@ -117,13 +117,13 @@ public class VisiteDAO {
                 Connection connection = DBUtil.getConnection();
 
                 psDeleteR = connection.prepareStatement("DELETE FROM visite WHERE id = ?");
-                psDeleteR.setInt(1, visite.getId());
+                psDeleteR.setString(1, id);
 
                 psDeleteR.executeUpdate();
                 
                 psDeleteR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
                 psDeleteR.setInt(1,  Utilisateur.currentUser.getId());
-                psDeleteR.setString(2, "Suppression de la visite id = "+visite.getId());
+                psDeleteR.setString(2, "Suppression de la visite id = "+id);
                 psDeleteR.setString(3, LocalDateTime.now().toString());
                 psDeleteR.executeUpdate();
                 
@@ -157,7 +157,7 @@ public class VisiteDAO {
             try {
                 Connection connection = DBUtil.getConnection();
 
-                psGetAllVisites = connection.prepareStatement("SELECT * FROM visite");
+                psGetAllVisites = connection.prepareStatement("SELECT * FROM visite ORDER BY id DESC");
                 queryOutput = psGetAllVisites.executeQuery();
 
                 while (queryOutput.next()) {
@@ -189,7 +189,7 @@ public class VisiteDAO {
 
             return visites;
         }
-      public  static  Visite getVisiteById( Visite vs) {
+      public  static  Visite getVisiteById( String id) {
             PreparedStatement psGetAllVisites = null;
             ResultSet queryOutput = null;
             Vector<Visite> visites = new Vector<Visite>();
@@ -198,7 +198,7 @@ public class VisiteDAO {
                 Connection connection = DBUtil.getConnection();
 
                 psGetAllVisites = connection.prepareStatement("SELECT * FROM visite WHERE id = ?");
-                psGetAllVisites.setInt(1, vs.getId());
+                psGetAllVisites.setString(1, id);
                 queryOutput = psGetAllVisites.executeQuery();
 
                 while (queryOutput.next()) {

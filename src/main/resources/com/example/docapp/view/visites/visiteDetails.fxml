@@ -93,7 +93,17 @@
                </rowConstraints>
                <children>
                   <Label contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom patient" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <TextField fx:id="cinField" disable="true" layoutX="650.0" layoutY="260.0" maxWidth="250.0" prefHeight="40.0" promptText="Nom patient" style="-fx-font-family: Inter; -fx-font-size: 15;" GridPane.columnIndex="1">
+                  <TextField fx:id="fullname" disable="true" layoutX="650.0" layoutY="260.0" maxWidth="250.0" prefHeight="40.0" promptText="Nom patient" style="-fx-font-family: Inter; -fx-font-size: 15;" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Inter Regular" size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="visiteId" disable="true" layoutX="650.0" layoutY="260.0" maxWidth="250.0" prefHeight="40.0" visible="false" promptText="Nom patient" style="-fx-font-family: Inter; -fx-font-size: 15;" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Inter Regular" size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="patientId" disable="true" layoutX="650.0" layoutY="260.0" maxWidth="250.0" prefHeight="40.0" visible="false" promptText="Nom patient" style="-fx-font-family: Inter; -fx-font-size: 15;" GridPane.columnIndex="1">
                      <font>
                         <Font name="Inter Regular" size="15.0" />
                      </font>
@@ -121,14 +131,14 @@
                         <Font name="Inter Regular" size="15.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="montantField1" layoutX="550.0" layoutY="238.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le type d'assurance" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <TextField fx:id="assurance" layoutX="550.0" layoutY="238.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le type d'assurance" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font name="Inter Regular" size="15.0" />
                      </font>
                   </TextField>
                   <Label contentDisplay="RIGHT" layoutX="249.0" layoutY="238.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Assurance" GridPane.rowIndex="3" />
-                  <Label contentDisplay="RIGHT" layoutX="109.0" layoutY="82.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Date de visite" GridPane.rowIndex="2" />
-                  <TextField fx:id="montantField11" layoutX="308.0" layoutY="218.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer l'heure" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label contentDisplay="RIGHT" layoutX="109.0" layoutY="82.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Heure de visite" GridPane.rowIndex="2" />
+                  <TextField fx:id="heureField" layoutX="308.0" layoutY="218.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer l'heure" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font name="Inter Regular" size="15.0" />
                      </font>
@@ -140,7 +150,7 @@
                   <HBox alignment="CENTER" prefHeight="60.0" style="-fx-background-color: white; -fx-background-radius: 17; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
                      <children>
                         <Label alignment="CENTER" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Prescription">
-                           <textFill>
+                           <textFill >
                               <LinearGradient endX="1.0" endY="1.0">
                                  <stops>
                                     <Stop>
@@ -169,7 +179,7 @@
                   </HBox>
                </top>
                <center>
-                  <TextArea wrapText="true" BorderPane.alignment="CENTER">
+                  <TextArea fx:id="prescriptionField" wrapText="true" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </BorderPane.margin>

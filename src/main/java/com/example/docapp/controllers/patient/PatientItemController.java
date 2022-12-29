@@ -41,8 +41,14 @@ public class PatientItemController implements Initializable {
                 ViewModel.getInstance().getViewFactory().showPatientDetails(patientID.getText());
             }
         });
-
+        newVisite.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ViewModel.getInstance().getViewFactory().showNewVisite(patientID.getText());
+            }
+        });
     }
+
 
     public void setNomPatient(String nomPatient) {
         this.nomPatient.setText(nomPatient);

@@ -81,62 +81,92 @@
          <children>
             <GridPane vgap="20.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+                  <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS"/>
                </rowConstraints>
-               <children>
-                  <Label contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom patient" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <TextField fx:id="cinField" disable="true" layoutX="650.0" layoutY="260.0" maxWidth="250.0" prefHeight="40.0" promptText="Nom patient" style="-fx-font-family: Inter; -fx-font-size: 15;" GridPane.columnIndex="1">
-                     <font>
-                        <Font name="Inter Regular" size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Date de visite" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                  <DatePicker fx:id="datePicker" maxWidth="250.0" prefHeight="40.0" promptText="Entrer la date de visite" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Maladie" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-                  <TextField fx:id="illnessField" layoutX="620.0" layoutY="340.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer la maladie" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <font>
-                        <Font name="Inter Regular" size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Note" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS" />
-                  <TextArea fx:id="noteArea" prefWidth="200.0" promptText="Entrer une note" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                     <font>
-                        <Font name="Inter Regular" size="15.0" />
-                     </font>
-                  </TextArea>
-                  <Label contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Montant" GridPane.rowIndex="4" />
-                  <TextField fx:id="montantField" layoutX="550.0" layoutY="288.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le montant" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="Inter Regular" size="15.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="assuranceField" layoutX="550.0" layoutY="238.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le type d'assurance" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="Inter Regular" size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label contentDisplay="RIGHT" layoutX="249.0" layoutY="238.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Assurance" GridPane.rowIndex="3" />
-                  <Label contentDisplay="RIGHT" layoutX="109.0" layoutY="82.0" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Date de visite" GridPane.rowIndex="2" />
-                  <TextField fx:id="hourField" layoutX="308.0" layoutY="218.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer l'heure" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="Inter Regular" size="15.0" />
-                     </font>
-                  </TextField>
-               </children>
+               <Label contentDisplay="RIGHT" prefHeight="40.0"
+                      style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom complet "
+                      GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS"/>
+               <TextField fx:id="fullName" disable="true" layoutX="650.0" layoutY="260.0" maxWidth="250.0"
+                          prefHeight="40.0" promptText="Nom patient" style="-fx-font-family: Inter; -fx-font-size: 15;"
+                          GridPane.columnIndex="1">
+                  <font>
+                     <Font name="Inter Regular" size="15.0"/>
+                  </font>
+               </TextField>
+
+               <TextField fx:id="idPatient" disable="true" layoutX="650.0" layoutY="260.0" maxWidth="250.0"
+                          prefHeight="40.0" promptText="Nom patient" style="-fx-font-family: Inter; -fx-font-size: 15;"
+                          visible="false" GridPane.columnIndex="1">
+                  <font>
+                     <Font name="Inter Regular" size="15.0"/>
+                  </font>
+               </TextField>
+               <Label contentDisplay="RIGHT" prefHeight="40.0"
+                      style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Date de visite"
+                      GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS"/>
+               <DatePicker fx:id="datePicker" maxWidth="250.0" prefHeight="40.0" promptText="Entrer la date de visite"
+                           GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+               <Label contentDisplay="RIGHT" prefHeight="40.0"
+                      style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Maladie"
+                      GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER"
+                      GridPane.vgrow="ALWAYS"/>
+               <TextField fx:id="illnessField" layoutX="620.0" layoutY="340.0" maxWidth="250.0" prefHeight="40.0"
+                          promptText="Entrer la maladie" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <font>
+                     <Font name="Inter Regular" size="15.0"/>
+                  </font>
+               </TextField>
+               <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="40.0"
+                      style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Note"
+                      GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.vgrow="ALWAYS"/>
+               <TextArea fx:id="noteArea" prefWidth="200.0" promptText="Entrer une note" wrapText="true"
+                         GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                         GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <GridPane.margin>
+                     <Insets/>
+                  </GridPane.margin>
+                  <font>
+                     <Font name="Inter Regular" size="15.0"/>
+                  </font>
+               </TextArea>
+               <Label contentDisplay="RIGHT" prefHeight="40.0"
+                      style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Montant"
+                      GridPane.rowIndex="4"/>
+               <TextField fx:id="montantField" layoutX="550.0" layoutY="288.0" maxWidth="250.0" prefHeight="40.0"
+                          promptText="Entrer le montant" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <font>
+                     <Font name="Inter Regular" size="15.0"/>
+                  </font>
+               </TextField>
+               <TextField fx:id="assuranceField" layoutX="550.0" layoutY="238.0" maxWidth="250.0" prefHeight="40.0"
+                          promptText="Entrer le type d'assurance" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <font>
+                     <Font name="Inter Regular" size="15.0"/>
+                  </font>
+               </TextField>
+               <Label contentDisplay="RIGHT" layoutX="249.0" layoutY="238.0" prefHeight="40.0"
+                      style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Assurance"
+                      GridPane.rowIndex="3"/>
+               <Label contentDisplay="RIGHT" layoutX="109.0" layoutY="82.0" prefHeight="40.0"
+                      style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Heure de visite"
+                      GridPane.rowIndex="2"/>
+               <TextField fx:id="hourField" layoutX="308.0" layoutY="218.0" maxWidth="250.0" prefHeight="40.0"
+                          promptText="Entrer l'heure" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <font>
+                     <Font name="Inter Regular" size="15.0"/>
+                  </font>
+               </TextField>
             </GridPane>
             <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" GridPane.columnIndex="1">
                <top>

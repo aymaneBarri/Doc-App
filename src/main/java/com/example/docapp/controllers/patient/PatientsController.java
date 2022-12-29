@@ -45,6 +45,8 @@ public class PatientsController implements Initializable {
             }
         });
 
+
+
         searchBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

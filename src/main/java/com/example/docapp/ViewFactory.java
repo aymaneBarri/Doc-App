@@ -3,6 +3,8 @@ package com.example.docapp;
 import com.example.docapp.controllers.patient.PatientDetailsController;
 import com.example.docapp.controllers.utilisateurs.UserDetailsController;
 import com.example.docapp.controllers.utilisateurs.UserRoleController;
+import com.example.docapp.controllers.visites.NewVisiteController;
+import com.example.docapp.controllers.visites.VisiteDetailsController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -170,6 +172,40 @@ public class ViewFactory {
             Stage s = new Stage();
             s.setScene(sc);
             s.setTitle("Nouveau utilisateur");
+            s.getIcons().add(appIcon);
+            s.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    public void showNewVisite(String id){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/visites/newVisite.fxml"));
+        try{
+            BorderPane root = loader.load();
+            Scene sc = new Scene(root);
+            Stage s = new Stage();
+            NewVisiteController nv = loader.getController();
+            nv.setData(id);
+            s.setScene(sc);
+            s.setTitle("Nouveau utilisateur");
+            s.getIcons().add(appIcon);
+            s.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    public void showVisiteDetail(String patientId, String visiteId){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/visites/visiteDetails.fxml"));
+        try{
+            BorderPane root = loader.load();
+            Scene sc = new Scene(root);
+            Stage s = new Stage();
+            VisiteDetailsController nv = loader.getController();
+            nv.setData(patientId, visiteId);
+            s.setScene(sc);
+            s.setTitle("visite detail");
             s.getIcons().add(appIcon);
             s.show();
         }catch (Exception e){

@@ -16,6 +16,7 @@
             <Label fx:id="patientLabel" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Patient" textOverrun="CLIP" />
             <Label fx:id="montantLabel" maxWidth="150.0" prefWidth="150.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Montant" textOverrun="CLIP" />
             <Label fx:id="patientID" text="ID" visible="false" />
+            <Label fx:id="visitID" text="ID" visible="false" />
          </children>
       </HBox>
    </center>
