@@ -1,9 +1,6 @@
 package com.example.docapp.controllers.utilisateurs;
 
-import com.example.docapp.controllers.patient.PatientItemController;
-import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.UtilisateurDAO;
-import com.example.docapp.models.Patient;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
