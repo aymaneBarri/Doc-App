@@ -24,10 +24,15 @@ public class Patient extends Personne {
         Patient.patientList = patientList;
     }
 
-    public Patient(int id, String firstName, String lastName, String cin, String phoneNumber, String birthDate, String description) {
-        super(id, firstName, lastName, cin, phoneNumber);
+    public Patient(String firstName, String lastName, String cin, String phoneNumber, String birthDate, String description) {
+        super(firstName, lastName, cin, phoneNumber);
         this.birthDate = birthDate;
         this.description = description;
+    }
+
+    public Patient(int id, String firstName, String lastName, String cin, String phoneNumber, String birthDate, String description) {
+        this(firstName, lastName, cin, phoneNumber, birthDate, description);
+        this.setId(id);
     }
 
     public String getBirthDate() {

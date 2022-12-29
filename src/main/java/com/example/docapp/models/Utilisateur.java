@@ -16,10 +16,15 @@ public class Utilisateur extends Personne {
         password = "";
     }
 
-    public Utilisateur(int id, String firstName, String lastName, String email, String password, String cin, String phoneNumber) throws NoSuchAlgorithmException {
-        super(id, firstName, lastName, cin, phoneNumber);
+    public Utilisateur(String firstName, String lastName, String email, String password, String cin, String phoneNumber) throws NoSuchAlgorithmException {
+        super(firstName, lastName, cin, phoneNumber);
         this.email = email;
-        this.password = Encryptor.encryptString(password);
+        this.password = password;
+    }
+
+    public Utilisateur(int id, String firstName, String lastName, String email, String password, String cin, String phoneNumber) throws NoSuchAlgorithmException {
+        this(firstName, lastName, email, password, cin, phoneNumber);
+        this.setId(id);
     }
 
     public String getEmail() {

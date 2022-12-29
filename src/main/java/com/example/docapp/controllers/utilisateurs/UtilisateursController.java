@@ -1,7 +1,9 @@
 package com.example.docapp.controllers.utilisateurs;
 
 import com.example.docapp.controllers.patient.PatientItemController;
+import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.UtilisateurDAO;
+import com.example.docapp.models.Patient;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
@@ -21,6 +23,7 @@ public class UtilisateursController implements Initializable {
     public ListView<BorderPane> listUser;
     public TextField searchField;
     public JFXButton newUser;
+    public JFXButton searchBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -35,6 +38,19 @@ public class UtilisateursController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 ViewModel.getInstance().getViewFactory().showNewUser();
+            }
+        });
+
+        searchBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String search = searchField.getText();
+                listUser.getItems().clear();
+                Vector<Utilisateur> userList = UtilisateurDAO.searchUtilisateurs(search);
+                for (Utilisateur utilisateur : userList) {
+                    BorderPane bp = createCard(utilisateur.getFirstName(),utilisateur.getLastName(), utilisateur.getEmail(), utilisateur.getPhoneNumber(), utilisateur.getId());
+                    listUser.getItems().add(bp);
+                }
             }
         });
     }

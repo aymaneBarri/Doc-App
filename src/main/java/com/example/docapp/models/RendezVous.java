@@ -13,11 +13,15 @@ public class RendezVous {
         id_patient = 0;
     }
 
-    public RendezVous(int id, String rendezVousDate, String description, int id_patient) {
-        this.id = id;
+    public RendezVous(String rendezVousDate, String description, int id_patient) {
         this.rendezVousDate = rendezVousDate;
         this.description = description;
         this.id_patient = id_patient;
+    }
+
+    public RendezVous(int id, String rendezVousDate, String description, int id_patient) {
+        this(rendezVousDate, description, id_patient);
+        this.id = id;
     }
 
     public int getId() {
