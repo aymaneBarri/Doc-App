@@ -10,8 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -29,13 +28,24 @@ public class UserDetailsController implements Initializable {
     public TextField cinField;
     public JFXButton rolesBtn;
     public JFXButton saveBtn;
-    public JFXButton cancelBtn;
     public TextField idField;
+    public ComboBox<String> typeUser;
+    public JFXButton deleteBtn;
 
     String errorMessage = "";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        typeUser.getItems().clear();
+        rolesBtn.setDisable(true);
+
+        typeUser.getItems().addAll(
+                "admin",
+                "utilisateur");
+        typeUser.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            rolesBtn.setDisable(newValue.equals("admin"));
+        });
+
         saveBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -53,12 +63,12 @@ public class UserDetailsController implements Initializable {
                             UtilisateurDAO.editUtilisateur(utilisateur,true);
                         }
 
-
+                        ViewModel.getInstance().getViewFactory().showUser();
 
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("Utilisateur modifié avec succès!");
                         alert.show();
-                        Stage s = (Stage) cancelBtn.getScene().getWindow();
+                        Stage s = (Stage) deleteBtn.getScene().getWindow();
                         s.close();
                     } catch (NoSuchAlgorithmException e) {
                         throw new RuntimeException(e);
@@ -67,11 +77,26 @@ public class UserDetailsController implements Initializable {
             }
         });
 
-        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
+        deleteBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage s = (Stage) cancelBtn.getScene().getWindow();
-                s.hide();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Current project is modified");
+                alert.setContentText("Cet utilisateur va être supprimé, continuer?");
+                ButtonType okButton = new ButtonType("Oui", ButtonBar.ButtonData.YES);
+                ButtonType cancelButton = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
+                alert.getButtonTypes().setAll(okButton, cancelButton);
+                alert.showAndWait().ifPresent(type -> {
+                    if (type == okButton) {
+                        System.out.println(okButton.getText());
+                        System.out.println("nononon");
+                        System.out.println(UtilisateurDAO.deleteUtilisateur(Integer.parseInt(idField.getText())));
+                        Stage s = (Stage) deleteBtn.getScene().getWindow();
+                        s.close();
+
+                        ViewModel.getInstance().getViewFactory().showUser();
+                    }
+                });
             }
         });
 
@@ -142,36 +167,6 @@ public class UserDetailsController implements Initializable {
             errorMessage = "Veuillez entrer un numéro de téléphone valide!";
             return false;
         }
-
-//        if (nomField.getText().isEmpty()) {
-//            errorMessage += " Nom est obligatoire";
-//        }
-//        if (prenomField.getText().isEmpty()) {
-//            errorMessage += " Prenom est obligatoire";
-//        }
-//        if (cinField.getText().isEmpty()) {
-//            errorMessage += " CIN est obligatoire";
-//        }
-//        if (phoneField.getText().isEmpty()) {
-//            errorMessage += " Phone est obligatoire";
-//        }
-//        if (birthField.getValue() == null) {
-//            errorMessage += " Date de naissance est obligatoire";
-//        }
-//        try{
-//            if (birthField.getValue().isAfter(LocalDate.now())) {
-//                errorMessage += " Date de naissance est invalide";
-//            }
-//        } catch (Exception e) {
-//            errorMessage += " Date de naissance est invalide";
-//        }
-//        try {
-//
-//            Integer.parseInt(phoneField.getText().trim());
-//        } catch (Exception e) {
-//            errorMessage += " Numero de telephone est invalide";
-//        }
-//        return errorMessage;
 
         return true;
     }

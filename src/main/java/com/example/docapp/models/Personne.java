@@ -15,12 +15,16 @@ abstract public class Personne {
         phoneNumber = "";
     }
 
-    public Personne(int id, String firstName, String lastName, String cin, String phoneNumber) {
-        this.id = id;
+    public Personne(String firstName, String lastName, String cin, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.cin = cin;
         this.phoneNumber = phoneNumber;
+    }
+
+    public Personne(int id, String firstName, String lastName, String cin, String phoneNumber) {
+        this(firstName, lastName, cin, phoneNumber);
+        this.id = id;
     }
 
     public int getId() {

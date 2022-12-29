@@ -1,29 +1,33 @@
 package com.example.docapp.models;
 
-public class RolesUtilisateur {
+public class Permission {
     private int idUtilisateur;
-    private int idRole;
+    private String subject;
     private boolean canView;
     private boolean canAdd;
     private boolean canModify;
     private boolean canDelete;
 
-    public RolesUtilisateur() {
+    public Permission() {
         idUtilisateur = 0;
-        idRole = 0;
+        subject = "";
         canView = false;
         canAdd = false;
         canModify = false;
         canDelete = false;
     }
 
-    public RolesUtilisateur(int idUtilisateur, int idRole, boolean canView, boolean canAdd, boolean canModify, boolean canDelete) {
-        this.idUtilisateur = idUtilisateur;
-        this.idRole = idRole;
+    public Permission(String subject, boolean canView, boolean canAdd, boolean canModify, boolean canDelete) {
+        this.subject = subject;
         this.canView = canView;
         this.canAdd = canAdd;
         this.canModify = canModify;
         this.canDelete = canDelete;
+    }
+
+    public Permission(int idUtilisateur, String subject, boolean canView, boolean canAdd, boolean canModify, boolean canDelete) {
+        this(subject, canView, canAdd, canModify, canDelete);
+        this.idUtilisateur = idUtilisateur;
     }
 
     public int getIdUtilisateur() {
@@ -34,12 +38,12 @@ public class RolesUtilisateur {
         this.idUtilisateur = idUtilisateur;
     }
 
-    public int getIdRole() {
-        return idRole;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setIdRole(int idRole) {
-        this.idRole = idRole;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public boolean isCanView() {
@@ -79,7 +83,7 @@ public class RolesUtilisateur {
     public String toString() {
         return "RolesUtilisateur{" +
                 "idUtilisateur=" + idUtilisateur +
-                ", idRole=" + idRole +
+                ", subject=" + subject +
                 ", canView=" + canView +
                 ", canAdd=" + canAdd +
                 ", canModify=" + canModify +
