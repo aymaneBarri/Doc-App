@@ -17,4 +17,5 @@ module com.example.docapp {
     exports com.example.docapp.controllers.utilisateurs;
     opens com.example.docapp.controllers.utilisateurs to javafx.fxml;
     opens com.example.docapp.controllers.visites to javafx.fxml;
+    opens com.example.docapp.controllers.rendezvous to javafx.fxml;
 }

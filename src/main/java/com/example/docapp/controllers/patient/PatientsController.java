@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import com.jfoenix.controls.JFXButton;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
@@ -26,10 +27,17 @@ public class PatientsController implements Initializable {
     public TextField searchField;
     public JFXButton newPatient;
     public JFXButton searchBtn;
+    public VBox vbox;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            HBox root = FXMLLoader.load(getClass().getResource("/com/example/docapp/view/util/topBar.fxml"));
+            vbox.getChildren().add(0,root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         PatientDAO patientDAO = new PatientDAO();
         Vector<Patient> patientList = patientDAO.getPatients();

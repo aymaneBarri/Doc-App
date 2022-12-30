@@ -57,7 +57,7 @@ public class PatientDetailsController implements Initializable {
               System.out.println(status);
               if(status == 201){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("good");
+                alert.setContentText("Patient edité avec succés");
                 alert.show();
 
                   ViewModel.getInstance().getViewFactory().showPatient();
@@ -66,7 +66,7 @@ public class PatientDetailsController implements Initializable {
                   s.close();
               }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("bad");
+                alert.setContentText("Erreur, veuillez réessayer");
                 alert.show();
               }
 
@@ -79,10 +79,10 @@ public class PatientDetailsController implements Initializable {
         });
         deleteBtn.setOnAction(actionEvent -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Current project is modified");
-            alert.setContentText("Save?");
-            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-            ButtonType cancelButton = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.setTitle("Supprimer");
+            alert.setContentText("Voulez-vous vraiment supprimer le patient?");
+            ButtonType okButton = new ButtonType("Oui", ButtonBar.ButtonData.YES);
+            ButtonType cancelButton = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(okButton, cancelButton);
             alert.showAndWait().ifPresent(type -> {
                 if (type == okButton) {

@@ -14,7 +14,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -24,9 +27,17 @@ public class UtilisateursController implements Initializable {
     public TextField searchField;
     public JFXButton newUser;
     public JFXButton searchBtn;
+    public VBox vbox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            HBox root = FXMLLoader.load(getClass().getResource("/com/example/docapp/view/util/topBar.fxml"));
+            vbox.getChildren().add(0,root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         UtilisateurDAO userDao = new UtilisateurDAO();
         Vector<Utilisateur> userList = userDao.getUtilisateurs();
         for (Utilisateur user : userList) {

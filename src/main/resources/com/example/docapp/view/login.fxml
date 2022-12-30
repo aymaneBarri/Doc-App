@@ -48,7 +48,7 @@
                   <Insets />
                </VBox.margin>
             </PasswordField>
-            <JFXButton fx:id="loginButton" graphicTextGap="8.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to left, #88E5BE, #41CB91); -fx-background-radius: 5; -fx-font-size: 15; -fx-font-family: Inter;" text="Se connecter" textFill="WHITE">
+            <JFXButton fx:id="loginButton" graphicTextGap="8.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to left, #88E5BE, #41CB91); -fx-background-radius: 5; -fx-font-size: 15; -fx-font-family: Inter; -jfx-disable-visual-focus: true;" text="Se connecter" textFill="WHITE">
                <graphic>
                   <FontIcon iconColor="WHITE" iconLiteral="fth-log-in" iconSize="15" />
                </graphic>

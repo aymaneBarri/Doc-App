@@ -3,27 +3,56 @@ package com.example.docapp.controllers.visites;
 
 import com.example.docapp.controllers.patient.PatientItemController;
 import com.example.docapp.dao.PatientDAO;
+import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.dao.VisiteDAO;
 import com.example.docapp.models.Patient;
+import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.Visite;
+import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
 public class VisitesController implements Initializable {
     public ListView<BorderPane> listVisite;
+    public TextField searchField;
+    public JFXButton searchBtn;
+    public VBox vbox;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        try {
+            HBox root = FXMLLoader.load(getClass().getResource("/com/example/docapp/view/util/topBar.fxml"));
+            vbox.getChildren().add(0,root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         Vector<Visite> visiteList = VisiteDAO.getAllVisites();
         for (Visite visite : visiteList) {
             BorderPane bp = createCard(visite.getVisit_date(),visite.getId()+"",visite.getAmount()+"", visite.getIllness(), visite.getId_patient());
             listVisite.getItems().add(bp);
         }
+
+
+        searchBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+            }
+        });
 
 
     }
@@ -39,15 +68,15 @@ public class VisitesController implements Initializable {
             );
 
             root = loader.load();
-            VisiteItemController pc = loader.getController();
+            VisiteItemController vc = loader.getController();
 
-            pc.maladieLabel.setText(maladie);
-            pc.dateLabel.setText(date);
-            pc.montantLabel.setText(amount);
-            pc.patientID.setText(id.toString());
-            pc.visitID.setText(visiteId.toString());
+            vc.maladieLabel.setText(maladie);
+            vc.dateLabel.setText(date);
+            vc.montantLabel.setText(amount);
+            vc.patientID.setText(id.toString());
+            vc.visitID.setText(visiteId.toString());
             Patient patient =PatientDAO.getPatientByID(id.toString());
-            pc.patientLabel.setText(patient.getFirstName()+" "+patient.getLastName());
+            vc.patientLabel.setText(patient.getFirstName()+" "+patient.getLastName());
         } catch (Exception e) {
             e.printStackTrace();
         }
