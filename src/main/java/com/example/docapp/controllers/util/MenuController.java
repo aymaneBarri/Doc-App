@@ -58,6 +58,13 @@ public class MenuController implements Initializable {
         rdvBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                ViewModel.getInstance().getViewFactory().showRdv();
+            }
+        });
+
+        logoutBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
 
             }
         });

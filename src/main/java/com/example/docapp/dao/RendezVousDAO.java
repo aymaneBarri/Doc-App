@@ -140,14 +140,14 @@ public class RendezVousDAO {
         }
         return rendezVous;
     }
-    public static RendezVous getRendezVousById(RendezVous rendezVousOne){
+    public static RendezVous getRendezVousById(Integer id){
         Vector<RendezVous> rendezVous = new Vector<RendezVous>();
         PreparedStatement psGetAllRendezVous = null;
         ResultSet queryOutput = null;
         try {
             Connection connection = DBUtil.getConnection();
             psGetAllRendezVous = connection.prepareStatement("SELECT * FROM rendez_vous WHERE id = ?");
-            psGetAllRendezVous.setInt(1,rendezVousOne.getId() );
+            psGetAllRendezVous.setInt(1,id );
 
             queryOutput = psGetAllRendezVous.executeQuery();
             while (queryOutput.next()) {
@@ -180,7 +180,7 @@ public class RendezVousDAO {
         return rendezVous.get(0);
     }
 
-    public static int deleteRendezVous(RendezVous rendezVous){
+    public static int deleteRendezVous(Integer id){
         PreparedStatement psDeleteR = null;
         ResultSet queryOutput = null;
         int statusCode=0;
@@ -189,13 +189,13 @@ public class RendezVousDAO {
             Connection connection = DBUtil.getConnection();
 
             psDeleteR = connection.prepareStatement("DELETE FROM rendez_vous WHERE id = ?");
-            psDeleteR.setInt(1, rendezVous.getId());
+            psDeleteR.setInt(1, id);
 
             psDeleteR.executeUpdate();
 
             psDeleteR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
             psDeleteR.setInt(1, Utilisateur.currentUser.getId());
-            psDeleteR.setString(2, "Delete Rendez Vous id =  "+rendezVous.getId());
+            psDeleteR.setString(2, "Delete Rendez Vous id =  "+id);
             psDeleteR.setString(3,  LocalDateTime.now().toString());
             psDeleteR.executeUpdate();
 
@@ -219,5 +219,6 @@ public class RendezVousDAO {
 
         return statusCode;
     }
+
 
 }
