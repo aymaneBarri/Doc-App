@@ -4,7 +4,7 @@ import com.example.docapp.controllers.patient.PatientDetailsController;
 import com.example.docapp.controllers.rendezvous.NewRdvController;
 import com.example.docapp.controllers.rendezvous.RdvDetailsController;
 import com.example.docapp.controllers.utilisateurs.UserDetailsController;
-import com.example.docapp.controllers.utilisateurs.UserRoleController;
+import com.example.docapp.controllers.utilisateurs.UserPermissionController;
 import com.example.docapp.controllers.visites.NewVisiteController;
 import com.example.docapp.controllers.visites.VisiteDetailsController;
 import javafx.application.Platform;
@@ -147,10 +147,10 @@ public class ViewFactory {
     }
 
     public void showUserRoles() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/userRoles.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/userPermission.fxml"));
         try{
             BorderPane root = loader.load();
-            UserRoleController ur = loader.getController();
+            UserPermissionController ur = loader.getController();
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);

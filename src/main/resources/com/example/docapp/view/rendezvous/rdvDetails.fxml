@@ -44,7 +44,7 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <TextField fx:id="idField" disable="true" prefHeight="40.0" promptText="id">
+            <TextField fx:id="idField" disable="true" prefHeight="40.0" promptText="id" visible="false">
                <font>
                   <Font name="Inter Regular" size="15.0" />
                </font>
