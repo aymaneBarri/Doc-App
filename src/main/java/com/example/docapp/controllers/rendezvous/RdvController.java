@@ -48,26 +48,26 @@ public class RdvController implements Initializable {
             }
         });
 
-        Vector<RendezVous> rdvList = RendezVousDAO.getAllRendezVous();
+        Vector<RendezVous> rdvList = RendezVousDAO.getAllRendezVous("");
         for (RendezVous rdv : rdvList) {
             BorderPane bp = createCard(rdv.getRendezVousDate(),String.valueOf(rdv.getId()), rdv.getId_patient());
             listRdv.getItems().add(bp);
         }
 
-   /*     searchBtn.setOnAction(new EventHandler<ActionEvent>() {
+        searchBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 String search = searchField.getText();
                 if(!search.isEmpty()){
                     listRdv.getItems().clear();
-                    Vector<RendezVous> rdvList = RendezVousDAO.getAllRendezVous();
+                    Vector<RendezVous> rdvList = RendezVousDAO.getAllRendezVous(search);
                     for (RendezVous rdv : rdvList) {
                         BorderPane bp = createCard(rdv.getRendezVousDate(),String.valueOf(rdv.getId()), rdv.getId_patient());
                         listRdv.getItems().add(bp);
                     }
                 }
             }
-        });*/
+        });
 
 
 

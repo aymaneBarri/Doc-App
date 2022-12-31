@@ -157,7 +157,7 @@ public class VisiteDAO {
             try {
                 Connection connection = DBUtil.getConnection();
 
-                psGetAllVisites = connection.prepareStatement("SELECT * FROM visite  where visit_date like ? or description like ? or assurance like ? or illness like ? or amount like ?  or prescription like ? or id_patient =(select id from patient where first_name like ? or last_name like ?) ");
+                psGetAllVisites = connection.prepareStatement("SELECT * FROM visite  where visit_date like ? or description like ? or assurance like ? or illness like ? or amount like ?  or prescription like ? or id_patient in (select id from patient where first_name like ? or last_name like ?) ");
                 psGetAllVisites.setString(1, "%"+search+"%");
                 psGetAllVisites.setString(2, "%"+search+"%");
                 psGetAllVisites.setString(3, "%"+search+"%");

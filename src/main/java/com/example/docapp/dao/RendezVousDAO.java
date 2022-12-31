@@ -103,13 +103,20 @@ public class RendezVousDAO {
         return statusCode;
     }
 
-    public static Vector<RendezVous> getAllRendezVous(){
+    public static Vector<RendezVous> getAllRendezVous(String search){
         Vector<RendezVous> rendezVous = new Vector<RendezVous>();
         PreparedStatement psGetAllRendezVous = null;
         ResultSet queryOutput = null;
         try {
             Connection connection = DBUtil.getConnection();
-            psGetAllRendezVous = connection.prepareStatement("SELECT * FROM rendez_vous");
+            psGetAllRendezVous = connection.prepareStatement("SELECT * FROM rendez_vous WHERE rendez_vous_date LIKE ? OR id_patient LIKE ? OR description LIKE ? or id_patient in (select id from patient where first_name LIKE ? or last_name LIKE ?) ");
+            psGetAllRendezVous.setString(1, "%"+search+"%");
+            psGetAllRendezVous.setString(2, "%"+search+"%");
+            psGetAllRendezVous.setString(3, "%"+search+"%");
+            psGetAllRendezVous.setString(4, "%"+search+"%");
+            psGetAllRendezVous.setString(5, "%"+search+"%");
+
+
             queryOutput = psGetAllRendezVous.executeQuery();
             while (queryOutput.next()) {
                 RendezVous rendezVous1 = new RendezVous();
