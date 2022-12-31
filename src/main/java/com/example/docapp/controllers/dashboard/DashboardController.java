@@ -1,4 +1,4 @@
-package com.example.docapp.controllers;
+package com.example.docapp.controllers.dashboard;
 
 import javafx.fxml.Initializable;
 
@@ -9,6 +9,8 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
 
     }
 }

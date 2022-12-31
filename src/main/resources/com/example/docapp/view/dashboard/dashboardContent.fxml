@@ -17,7 +17,8 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.ListView?>
+<VBox prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.dashboard.DashboardContentController">
    <children>
       <fx:include source="../util/topBar.fxml" />
       <BorderPane style="-fx-background-color: #F3F3F3;" VBox.vgrow="ALWAYS">
@@ -262,27 +263,11 @@
                               <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: white; -fx-background-radius: 17; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
                                  <children>
                                     <Label style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Visites prochaines">
-                                       <textFill>
-                                          <LinearGradient endX="1.0" endY="1.0">
-                                             <stops>
-                                                <Stop>
-                                                   <color>
-                                                      <Color green="0.4627451002597809" blue="0.7450980544090271" />
-                                                   </color>
-                                                </Stop>
-                                                <Stop offset="0.006711409395973154">
-                                                   <color>
-                                                      <Color green="0.4627451002597809" blue="0.7450980544090271" />
-                                                   </color>
-                                                </Stop>
-                                                <Stop offset="1.0">
-                                                   <color>
-                                                      <Color red="0.3019607961177826" green="0.7058823704719543" blue="0.843137264251709" />
-                                                   </color>
-                                                </Stop>
-                                             </stops>
-                                          </LinearGradient>
-                                       </textFill>
+                                       <ListView fx:id="listVisite" focusTraversable="false" maxHeight="1.7976931348623157E308" style="-fx-background-color: transparent;" styleClass="list-cell" stylesheets="@../../css/fx-listcell.css" BorderPane.alignment="CENTER">
+                                          <BorderPane.margin>
+                                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                          </BorderPane.margin>
+                                       </ListView>
                                     </Label>
                                  </children>
                                  <padding>

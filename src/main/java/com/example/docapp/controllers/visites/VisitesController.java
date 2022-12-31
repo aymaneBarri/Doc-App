@@ -40,7 +40,7 @@ public class VisitesController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        Vector<Visite> visiteList = VisiteDAO.getAllVisites();
+        Vector<Visite> visiteList = VisiteDAO.getAllVisites("");
         for (Visite visite : visiteList) {
             BorderPane bp = createCard(visite.getVisit_date(),visite.getId()+"",visite.getAmount()+"", visite.getIllness(), visite.getId_patient());
             listVisite.getItems().add(bp);
@@ -51,6 +51,17 @@ public class VisitesController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
+            }
+        });
+        searchBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                listVisite.getItems().clear();
+                Vector<Visite> visiteList = VisiteDAO.getAllVisites(searchField.getText());
+                for (Visite visite : visiteList) {
+                    BorderPane bp = createCard(visite.getVisit_date(),visite.getId()+"",visite.getAmount()+"", visite.getIllness(), visite.getId_patient());
+                    listVisite.getItems().add(bp);
+                }
             }
         });
 
