@@ -67,7 +67,7 @@ public class MenuController implements Initializable {
             public void handle(ActionEvent event) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Déconnexion");
-                alert.setContentText("Voulez-vous vraiment se déconnecter?");
+                alert.setContentText("Voulez vous vraiment se déconnecter?");
                 ButtonType okButton = new ButtonType("Oui", ButtonBar.ButtonData.YES);
                 ButtonType cancelButton = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
                 alert.getButtonTypes().setAll(okButton, cancelButton);
