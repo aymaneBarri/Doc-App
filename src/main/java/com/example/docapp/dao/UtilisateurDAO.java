@@ -6,11 +6,12 @@ import com.example.docapp.util.Encryptor;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Vector;
 
 public class UtilisateurDAO {
-    public static int addUtilisateur(Utilisateur utilisateur, Vector<Permission> permissions) {
+    public static int addUtilisateur(Utilisateur utilisateur) {
         int statusCode;
         int id;
         PreparedStatement psAddUser = null;
@@ -43,7 +44,7 @@ public class UtilisateurDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            String insertUserQuery = "INSERT INTO utilisateur (first_name, last_name, email, password, cin, phone) VALUES (?, ?, ?, ?, ?, ?)";
+            String insertUserQuery = "INSERT INTO utilisateur (first_name, last_name, email, password, cin, phone, id_role) VALUES (?, ?, ?, ?, ?, ?, ?)";
             psAddUser = connection.prepareStatement(insertUserQuery, Statement.RETURN_GENERATED_KEYS);
             psAddUser.setString(1, utilisateur.getFirstName());
             psAddUser.setString(2, utilisateur.getLastName());
@@ -51,6 +52,8 @@ public class UtilisateurDAO {
             psAddUser.setString(4, Encryptor.encryptString(utilisateur.getPassword()));
             psAddUser.setString(5, utilisateur.getCin());
             psAddUser.setString(6, utilisateur.getPhoneNumber());
+            psAddUser.setLong(7, utilisateur.getIdRole());
+//            System.out.println(utilisateur+"\n"+role);
             int affectedRows = psAddUser.executeUpdate();
 
             if (affectedRows == 0) {
@@ -59,30 +62,27 @@ public class UtilisateurDAO {
 
             try (ResultSet generatedKeys = psAddUser.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    utilisateur.setId(generatedKeys.getInt(1));
+//                    utilisateur.setId(generatedKeys.getInt(1));
+//
+//                    for (Permission permission : permissions) {
+//                        String query2 = "INSERT INTO permission VALUES (?, ?, ?, ?, ?, ?)";
+//                        PreparedStatement psAddUserRole = connection.prepareStatement(query2);
+//                        psAddUserRole.setInt(1, utilisateur.getId());
+//                        psAddUserRole.setString(2, permission.getSubject());
+//                        psAddUserRole.setInt(3, permission.isCanView() ? 1 : 0);
+//                        psAddUserRole.setInt(4, permission.isCanAdd() ? 1 : 0);
+//                        psAddUserRole.setInt(5, permission.isCanModify() ? 1 : 0);
+//                        psAddUserRole.setInt(6, permission.isCanDelete() ? 1 : 0);
+//                        psAddUserRole.executeUpdate();
+//                        psAddUserRole.close();
+//                    }
 
-                    for (Permission permission : permissions) {
-                        String query2 = "INSERT INTO permission VALUES (?, ?, ?, ?, ?, ?)";
-                        PreparedStatement psAddUserRole = connection.prepareStatement(query2);
-                        psAddUserRole.setInt(1, utilisateur.getId());
-                        psAddUserRole.setString(2, permission.getSubject());
-                        psAddUserRole.setInt(3, permission.isCanView() ? 1 : 0);
-                        psAddUserRole.setInt(4, permission.isCanAdd() ? 1 : 0);
-                        psAddUserRole.setInt(5, permission.isCanModify() ? 1 : 0);
-                        psAddUserRole.setInt(6, permission.isCanDelete() ? 1 : 0);
-                        psAddUserRole.executeUpdate();
-                        psAddUserRole.close();
-                    }
+                    Action action = new Action("Ajout d'un nouveau utilisateur, son id est " + generatedKeys.getInt(1), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+                    ActionDAO.addAction(action);
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
                 }
             }
-
-            psAddUser = connection.prepareStatement("insert into action (id_utilisateur,action,action_time) values (?,?,?)");
-            psAddUser.setInt(1, Utilisateur.currentUser.getId());
-            psAddUser.setString(2, "Ajout d'un utilisateur");
-            psAddUser.setString(3, LocalDateTime.now().toString());
-            psAddUser.executeUpdate();
 
 
 //            ResultSet resultSet = psAddUser.getGeneratedKeys();
@@ -137,32 +137,32 @@ public class UtilisateurDAO {
             String query = "";
             if (!isPasswordChanged) {
                 System.out.println("password not changed");
-                query = "UPDATE utilisateur SET first_name = ?, last_name = ?, email = ?, cin = ?, phone = ? WHERE id = ?";
+                query = "UPDATE utilisateur SET first_name = ?, last_name = ?, email = ?, cin = ?, phone = ?, id_role = ? WHERE id = ?";
                 psEditUtilisateur = connection.prepareStatement(query);
                 psEditUtilisateur.setString(1, utilisateur.getFirstName());
                 psEditUtilisateur.setString(2, utilisateur.getLastName());
                 psEditUtilisateur.setString(3, utilisateur.getEmail());
                 psEditUtilisateur.setString(4, utilisateur.getCin());
                 psEditUtilisateur.setString(5, utilisateur.getPhoneNumber());
-                psEditUtilisateur.setInt(6, utilisateur.getId());
+                psEditUtilisateur.setInt(6, utilisateur.getIdRole());
+                psEditUtilisateur.setInt(7, utilisateur.getId());
             } else {
                 System.out.println("password changed");
-                psEditUtilisateur = connection.prepareStatement("UPDATE utilisateur SET first_name = ? , last_name = ? , email = ? , password = ? , cin = ? , phone = ? WHERE id = ?");
+                psEditUtilisateur = connection.prepareStatement("UPDATE utilisateur SET first_name = ? , last_name = ? , email = ? , password = ? , cin = ? , phone = ?, id_role = ? WHERE id = ?");
                 psEditUtilisateur.setString(1, utilisateur.getFirstName());
                 psEditUtilisateur.setString(2, utilisateur.getLastName());
                 psEditUtilisateur.setString(3, utilisateur.getEmail());
                 psEditUtilisateur.setString(4, Encryptor.encryptString(utilisateur.getPassword()));
                 psEditUtilisateur.setString(5, utilisateur.getCin());
                 psEditUtilisateur.setString(6, utilisateur.getPhoneNumber());
-                psEditUtilisateur.setInt(7, utilisateur.getId());
+                psEditUtilisateur.setInt(7, utilisateur.getIdRole());
+                psEditUtilisateur.setInt(8, utilisateur.getId());
 
             }
             psEditUtilisateur.executeUpdate();
-            psEditUtilisateur = connection.prepareStatement("INSERT INTO action (id_utilisateur, action, action_time) VALUES (?, ?, ?)");
-            psEditUtilisateur.setInt(1, Utilisateur.currentUser.getId());
-            psEditUtilisateur.setString(2, "Modification de l'utilisateur id = " + utilisateur.getId());
-            psEditUtilisateur.setString(3, LocalDateTime.now().toString());
-            psEditUtilisateur.executeUpdate();
+
+            Action action = new Action("Modification de l'utilisateur id = " + utilisateur.getId(), LocalDate.now().toString(), Utilisateur.currentUser.getId());
+            ActionDAO.addAction(action);
 
             statusCode = 201;
         } catch (SQLException e) {
@@ -188,40 +188,28 @@ public class UtilisateurDAO {
     }
 
     public static int deleteUtilisateur(int id) {
-        PreparedStatement psAddP = null;
+        PreparedStatement psDeleteUser = null;
         PreparedStatement psAddP2 = null;
-        ResultSet queryOutput = null;
         int statusCode = 0;
 
         try {
             Connection connection = DBUtil.getConnection();
 
-            psAddP2 = connection.prepareStatement("DELETE from permission WHERE id_utilisateur=?");
-            psAddP = connection.prepareStatement("DELETE from utilisateur WHERE id=?");
+            psDeleteUser = connection.prepareStatement("DELETE from utilisateur WHERE id = ?");
+            psDeleteUser.setInt(1, id);
+            psDeleteUser.executeUpdate();
 
-            psAddP.setInt(1, id);
-            psAddP2.setInt(1, id);
-
-
-            psAddP2.executeUpdate();
-            psAddP.executeUpdate();
-
-
-            psAddP = connection.prepareStatement("INSERT INTO action (id_utilisateur, action, action_time) VALUES (?, ?, ?)");
-
-            psAddP.setInt(1, Utilisateur.currentUser.getId());
-            psAddP.setString(2, "Suppression de l'utilisateur id = " + id);
-            psAddP.setString(3, LocalDateTime.now().toString());
-            psAddP.executeUpdate();
+            Action action = new Action("Suppression de l'utilisateur id = " + id, LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+            ActionDAO.addAction(action);
 
             statusCode = 200;
         } catch (SQLException e) {
             statusCode = 400;
             throw new RuntimeException(e);
         } finally {
-            if (psAddP != null) {
+            if (psDeleteUser != null) {
                 try {
-                    psAddP.close();
+                    psDeleteUser.close();
                 } catch (SQLException e) {
                     statusCode = 400;
                     e.printStackTrace();
@@ -236,7 +224,7 @@ public class UtilisateurDAO {
 
     public Vector<Utilisateur> getUtilisateurs() {
         Vector<Utilisateur> utilisateurs = new Vector<Utilisateur>();
-        Utilisateur utilisateur = null;
+        Utilisateur utilisateur;
         PreparedStatement psLogin = null;
         ResultSet queryOutput = null;
 
@@ -255,6 +243,7 @@ public class UtilisateurDAO {
                 utilisateur.setCin(queryOutput.getString("cin"));
                 utilisateur.setPhoneNumber(queryOutput.getString("phone"));
                 utilisateur.setPassword(queryOutput.getString("password"));
+                utilisateur.setIdRole(queryOutput.getInt("id_role"));
                 utilisateurs.add(utilisateur);
             }
         } catch (Exception e) {
@@ -278,56 +267,56 @@ public class UtilisateurDAO {
 
             DBUtil.stopConnection();
         }
+
         return utilisateurs;
-
     }
 
-    public static Vector<Permission> getUserPermissions(int id) {
-        Vector<Permission> permissions = new Vector<Permission>();
-        Permission permission;
-        PreparedStatement psGetUserPermissions = null;
-        ResultSet queryOutput = null;
-
-        try {
-            Connection connection = DBUtil.getConnection();
-
-            psGetUserPermissions = connection.prepareStatement("SELECT * FROM permission WHERE id_role = ?");
-            psGetUserPermissions.setInt(1, id);
-            queryOutput = psGetUserPermissions.executeQuery();
-
-            while (queryOutput.next()) {
-                permission = new Permission();
-                permission.setIdUtilisateur(queryOutput.getInt("id_utilisateur"));
-                permission.setSubject(queryOutput.getString("subject"));
-                permission.setCanView(queryOutput.getInt("canView") == 1);
-                permission.setCanAdd(queryOutput.getInt("canAdd") == 1);
-                permission.setCanModify(queryOutput.getInt("canModify") == 1);
-                permission.setCanDelete(queryOutput.getInt("canDelete") == 1);
-                permissions.add(permission);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (queryOutput != null) {
-                try {
-                    queryOutput.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (psGetUserPermissions != null) {
-                try {
-                    psGetUserPermissions.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            DBUtil.stopConnection();
-        }
-        return permissions;
-    }
+//    public static Vector<Permission> getUserPermissions(int id) {
+//        Vector<Permission> permissions = new Vector<Permission>();
+//        Permission permission;
+//        PreparedStatement psGetUserPermissions = null;
+//        ResultSet queryOutput = null;
+//
+//        try {
+//            Connection connection = DBUtil.getConnection();
+//
+//            psGetUserPermissions = connection.prepareStatement("SELECT * FROM permission WHERE id_role = ?");
+//            psGetUserPermissions.setInt(1, id);
+//            queryOutput = psGetUserPermissions.executeQuery();
+//
+//            while (queryOutput.next()) {
+//                permission = new Permission();
+//                permission.setIdRole(queryOutput.getInt("id_utilisateur"));
+//                permission.setSubject(queryOutput.getString("subject"));
+//                permission.setCanView(queryOutput.getInt("canView") == 1);
+//                permission.setCanAdd(queryOutput.getInt("canAdd") == 1);
+//                permission.setCanModify(queryOutput.getInt("canModify") == 1);
+//                permission.setCanDelete(queryOutput.getInt("canDelete") == 1);
+//                permissions.add(permission);
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        } finally {
+//            if (queryOutput != null) {
+//                try {
+//                    queryOutput.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            if (psGetUserPermissions != null) {
+//                try {
+//                    psGetUserPermissions.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            DBUtil.stopConnection();
+//        }
+//        return permissions;
+//    }
 
 
     public int updateUtilisateur(Utilisateur utilisateur, Vector<Permission> rolesUtilisateurs) {
@@ -355,7 +344,7 @@ public class UtilisateurDAO {
                 psAddUser2.setInt(2, rolesUtilisateurs.get(i).isCanAdd() ? 1 : 0);
                 psAddUser2.setInt(3, rolesUtilisateurs.get(i).isCanModify() ? 1 : 0);
                 psAddUser2.setInt(4, rolesUtilisateurs.get(i).isCanDelete() ? 1 : 0);
-                psAddUser2.setInt(5, rolesUtilisateurs.get(i).getIdUtilisateur());
+                psAddUser2.setInt(5, rolesUtilisateurs.get(i).getIdRole());
                 psAddUser2.setString(6, rolesUtilisateurs.get(i).getSubject());
                 psAddUser2.executeUpdate();
             }
@@ -382,7 +371,7 @@ public class UtilisateurDAO {
 
     }
 
-    public Utilisateur getUserByID(String id) {
+    public static Utilisateur getUserByID(int id) {
 
         Utilisateur user = new Utilisateur();
         PreparedStatement psLogin = null;
@@ -391,7 +380,7 @@ public class UtilisateurDAO {
         try {
             Connection connection = DBUtil.getConnection();
             psLogin = connection.prepareStatement("SELECT * FROM utilisateur where id = ?");
-            psLogin.setString(1, id);
+            psLogin.setInt(1, id);
             queryOutput = psLogin.executeQuery();
             if (queryOutput.next()) {
                 user.setId(queryOutput.getInt("id"));
@@ -400,6 +389,7 @@ public class UtilisateurDAO {
                 user.setEmail(queryOutput.getString("email"));
                 user.setCin(queryOutput.getString("cin"));
                 user.setPhoneNumber(queryOutput.getString("phone"));
+                user.setIdRole(queryOutput.getInt("id_role"));
             }
             System.out.println("User retrieved" + user);
         } catch (Exception e) {
@@ -481,6 +471,47 @@ public class UtilisateurDAO {
         }
 
         return utilisateurs;
+    }
+
+    public static Role getUserRole(Utilisateur utilisateur) {
+        Role role = new Role();
+        PreparedStatement psGetRole = null;
+        ResultSet queryOutput = null;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+            psGetRole = connection.prepareStatement("SELECT * FROM role where id = ?");
+            psGetRole.setInt(1, utilisateur.getIdRole());
+            queryOutput = psGetRole.executeQuery();
+
+            if (queryOutput.next()) {
+                role.setId(queryOutput.getInt("id"));
+                role.setName(queryOutput.getString("name"));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (psGetRole != null) {
+                try {
+                    psGetRole.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return role;
     }
 
     public static int editPermissions(Utilisateur utilisateur, Vector<Permission> permissions) {

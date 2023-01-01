@@ -118,7 +118,7 @@
                   </HBox>
                </children>
             </GridPane>
-            <ListView prefHeight="660.0" prefWidth="323.0" />
+            <ListView fx:id="listRole" prefHeight="660.0" prefWidth="323.0" />
          </children>
       </GridPane>
    </center>

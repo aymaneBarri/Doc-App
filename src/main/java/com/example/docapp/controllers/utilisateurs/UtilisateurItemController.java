@@ -36,7 +36,7 @@ public class UtilisateurItemController implements Initializable {
         editBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ViewModel.getInstance().getViewFactory().showUserDetails(id.getText());
+                ViewModel.getInstance().getViewFactory().showUserDetails(UtilisateurDAO.getUserByID(Integer.parseInt(id.getText())));
             }
         });
     }

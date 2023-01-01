@@ -1,11 +1,9 @@
 package com.example.docapp.controllers.utilisateurs;
 
 import com.example.docapp.dao.PatientDAO;
+import com.example.docapp.dao.RoleDAO;
 import com.example.docapp.dao.UtilisateurDAO;
-import com.example.docapp.models.Patient;
-import com.example.docapp.models.Permission;
-import com.example.docapp.models.Utilisateur;
-import com.example.docapp.models.ViewModel;
+import com.example.docapp.models.*;
 import com.example.docapp.util.DBUtil;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -31,6 +29,7 @@ public class UserDetailsController implements Initializable {
     public JFXButton saveBtn;
     public TextField idField;
     public JFXButton deleteBtn;
+    public ComboBox<Role> rolesComboBox;
 
     String errorMessage = "";
 
@@ -44,6 +43,12 @@ public class UserDetailsController implements Initializable {
                     deleteBtn.setDisable(true);
             }
         }
+
+        rolesComboBox.getItems().clear();
+        for (Role role : RoleDAO.getRoles()){
+            rolesComboBox.getItems().add(role);
+        }
+        rolesComboBox.getSelectionModel().select(0);
 
 //        typeUser.getItems().clear();
 ////        rolesBtn.setDisable(true);
@@ -63,25 +68,21 @@ public class UserDetailsController implements Initializable {
                     alert.setContentText(errorMessage);
                     alert.show();
                 } else {
-                    try {
-                        Utilisateur utilisateur = new Utilisateur(Integer.parseInt(idField.getText().trim()), prenomField.getText().trim(), nomField.getText().trim(), emailField.getText().trim(), passField.getText().trim(), cinField.getText().trim(), phoneField.getText().trim());
-                        if (passField.getText().isEmpty()){
-                            UtilisateurDAO.editUtilisateur(utilisateur,false);
-                        }
-                        else {
-                            UtilisateurDAO.editUtilisateur(utilisateur,true);
-                        }
-
-                        ViewModel.getInstance().getViewFactory().showUser();
-
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setContentText("Utilisateur modifié avec succès!");
-                        alert.show();
-                        Stage s = (Stage) deleteBtn.getScene().getWindow();
-                        s.close();
-                    } catch (NoSuchAlgorithmException e) {
-                        throw new RuntimeException(e);
+                    Utilisateur utilisateur = new Utilisateur(Integer.parseInt(idField.getText().trim()), prenomField.getText().trim(), nomField.getText().trim(), emailField.getText().trim(), passField.getText().trim(), cinField.getText().trim(), phoneField.getText().trim(), rolesComboBox.getSelectionModel().getSelectedItem().getId());
+                    if (passField.getText().isEmpty()){
+                        UtilisateurDAO.editUtilisateur(utilisateur,false);
                     }
+                    else {
+                        UtilisateurDAO.editUtilisateur(utilisateur,true);
+                    }
+
+                    ViewModel.getInstance().getViewFactory().showUser();
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Utilisateur modifié avec succès!");
+                    alert.show();
+                    Stage s = (Stage) deleteBtn.getScene().getWindow();
+                    s.close();
                 }
             }
         });
@@ -112,24 +113,22 @@ public class UserDetailsController implements Initializable {
         rolesBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ViewModel.getInstance().getViewFactory().showUserRoles(Integer.parseInt(idField.getText()));
+                ViewModel.getInstance().getViewFactory().showUserRoles();
             }
         });
     }
 
-    public void setData(String id){
+    public void setData(Utilisateur user){
         BorderPane root = null;
-        UtilisateurDAO dao = new UtilisateurDAO();
         try {
-            Utilisateur user = dao.getUserByID(id);
-            if (user!= null) {
-                this.setIdField(String.valueOf(user.getId()));
-                this.setNomField(user.getFirstName());
-                this.setPrenomField(user.getLastName());
-                this.setEmailField(user.getEmail());
-                this.setCinField(user.getCin());
-                this.setPhoneField(user.getPhoneNumber());
-            }
+//            Utilisateur user = UtilisateurDAO.getUserByID(id);
+            this.setIdField(String.valueOf(user.getId()));
+            this.setNomField(user.getFirstName());
+            this.setPrenomField(user.getLastName());
+            this.setEmailField(user.getEmail());
+            this.setCinField(user.getCin());
+            this.setPhoneField(user.getPhoneNumber());
+            this.setRolesComboBox(RoleDAO.getRoleById(user.getIdRole()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,7 +138,6 @@ public class UserDetailsController implements Initializable {
     public void setIdField(String id) {
         this.idField.setText(id);
     }
-
     public void setNomField(String text){
         this.nomField.setText(text);
     }
@@ -157,6 +155,9 @@ public class UserDetailsController implements Initializable {
     }
     public void setCinField(String text){
         this.cinField.setText(text);
+    }
+    public void setRolesComboBox(Role role){
+        this.rolesComboBox.getSelectionModel().select(role);;
     }
 
     public boolean formIsValid() {

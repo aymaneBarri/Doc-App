@@ -16,6 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
+<?import javafx.scene.control.PasswordField?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.utilisateurs.NewUserController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
@@ -84,11 +85,11 @@
                </font>
             </TextField>
             <Label contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Mot de passe" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <TextField fx:id="passField" alignment="CENTER" layoutX="650.0" layoutY="485.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le mot de passe" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <PasswordField fx:id="passField" alignment="CENTER" layoutX="650.0" layoutY="485.0" maxWidth="250.0" prefHeight="40.0" promptText="Entrer le mot de passe" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font name="Inter Regular" size="15.0" />
                </font>
-            </TextField>
+            </PasswordField>
             <Label contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Téléphone" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
             <TextField fx:id="phoneField" alignment="CENTER" maxWidth="250.0" prefHeight="40.0" promptText="Entrer numéro de téléphone" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>

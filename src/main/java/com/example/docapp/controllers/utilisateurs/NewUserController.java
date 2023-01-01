@@ -32,7 +32,7 @@ public class NewUserController implements Initializable {
     public JFXButton rolesBtn;
     public JFXButton saveBtn;
     public JFXButton cancelBtn;
-    public ComboBox<Role> rolesComboBox;
+    public ComboBox<String> rolesComboBox;
     String errorMessage = "";
     int statusCode = 0;
     static Vector<Permission> permissions = new Vector<Permission>();
@@ -47,8 +47,9 @@ public class NewUserController implements Initializable {
 
         rolesComboBox.getItems().clear();
         for (Role role : RoleDAO.getRoles()){
-            rolesComboBox.getItems().add(role);
+            rolesComboBox.getItems().add(role.getName());
         }
+        rolesComboBox.getSelectionModel().select(0);
 
 //        typeUser.getItems().clear();
 //        rolesBtn.setDisable(true);
@@ -110,26 +111,23 @@ public class NewUserController implements Initializable {
 //                            alert.show();
 //                        }
                 } else {
-                    try {
-                        Utilisateur utilisateur = new Utilisateur(prenomField.getText().trim(), nomField.getText().trim(), emailField.getText().trim(), passField.getText().trim(), cinField.getText().trim(), phoneField.getText().trim());
+                    int idRole = RoleDAO.getRoleIdByName(rolesComboBox.getSelectionModel().getSelectedItem());
+                    Utilisateur utilisateur = new Utilisateur(prenomField.getText().trim(), nomField.getText().trim(), emailField.getText().trim(), passField.getText().trim(), cinField.getText().trim(), phoneField.getText().trim(), idRole);
+                    Role role = new Role(idRole, rolesComboBox.getSelectionModel().getSelectedItem());
+                    statusCode = UtilisateurDAO.addUtilisateur(utilisateur);
 
-                        statusCode = UtilisateurDAO.addUtilisateur(utilisateur, permissions);
+                    if (statusCode == 201) {
+                        ViewModel.getInstance().getViewFactory().showUser();
 
-                        if (statusCode == 201) {
-                            ViewModel.getInstance().getViewFactory().showUser();
-
-                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert.setContentText("Utilisateur ajouté avec succès!");
-                            alert.show();
-                            Stage s = (Stage) cancelBtn.getScene().getWindow();
-                            s.close();
-                        } else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setContentText("Erreur lors de l'ajout d'utilisateur!");
-                            alert.show();
-                        }
-                    } catch (NoSuchAlgorithmException e) {
-                        throw new RuntimeException(e);
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setContentText("Utilisateur ajouté avec succès!");
+                        alert.show();
+                        Stage s = (Stage) cancelBtn.getScene().getWindow();
+                        s.close();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Erreur lors de l'ajout d'utilisateur!");
+                        alert.show();
                     }
                 }
             }

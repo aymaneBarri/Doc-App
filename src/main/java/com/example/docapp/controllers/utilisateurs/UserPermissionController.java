@@ -1,12 +1,20 @@
 package com.example.docapp.controllers.utilisateurs;
 
+import com.example.docapp.controllers.visites.VisiteItemController;
+import com.example.docapp.dao.PatientDAO;
+import com.example.docapp.dao.PermissionDAO;
+import com.example.docapp.dao.RoleDAO;
 import com.example.docapp.dao.UtilisateurDAO;
+import com.example.docapp.models.Patient;
 import com.example.docapp.models.Permission;
+import com.example.docapp.models.Role;
+import com.example.docapp.models.Utilisateur;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
@@ -38,9 +46,24 @@ public class UserPermissionController implements Initializable {
     public CheckBox addRdv;
     public CheckBox editRdv;
     public CheckBox deleteRdv;
+    public JFXButton deleteBtn;
+    public static Role currentRole;
+    public ListView<Role> listRole;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        for (Role role : RoleDAO.getRoles()) {
+            listRole.getItems().add(role);
+        }
+
+        listRole.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Role>() {
+            @Override
+            public void changed(ObservableValue<? extends Role> observableValue, Role role, Role t1) {
+                currentRole = t1;
+                setData(t1.getId());
+            }
+        });
+
         viewPatient.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
@@ -193,10 +216,10 @@ public class UserPermissionController implements Initializable {
             }
         });
 
-        cancelBtn.setOnAction(new EventHandler<ActionEvent>() {
+        deleteBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage s = (Stage) cancelBtn.getScene().getWindow();
+                Stage s = (Stage) deleteBtn.getScene().getWindow();
                 s.hide();
             }
         });
@@ -204,26 +227,31 @@ public class UserPermissionController implements Initializable {
         saveBtn.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
+                Vector<Permission> permissions = new Vector<Permission>();
                 Permission permissionPatient = new Permission("patient", viewPatient.isSelected(), addPatient.isSelected(), editPatient.isSelected(), deletePatient.isSelected());
-                Permission permissionUtilisateur = new Permission("utilisateur", viewUser.isSelected(), addUser.isSelected(), editUser.isSelected(), deleteUser.isSelected());
                 Permission permissionVisite = new Permission("visite", viewVisite.isSelected(), addVisite.isSelected(), editVisite.isSelected(), deleteVisite.isSelected());
+                Permission permissionUtilisateur = new Permission("utilisateur", viewUser.isSelected(), addUser.isSelected(), editUser.isSelected(), deleteUser.isSelected());
                 Permission permissionRdv = new Permission("rendez_vous", viewRdv.isSelected(), addRdv.isSelected(), editRdv.isSelected(), deleteRdv.isSelected());
+                permissions.add(permissionPatient);
+                permissions.add(permissionVisite);
+                permissions.add(permissionUtilisateur);
+                permissions.add(permissionRdv);
 
-                NewUserController.permissions.clear();
-                NewUserController.permissions.add(permissionPatient);
-                NewUserController.permissions.add(permissionUtilisateur);
-                NewUserController.permissions.add(permissionVisite);
-                NewUserController.permissions.add(permissionRdv);
+                RoleDAO.editRolePermissions(currentRole, permissions);
 
-                Stage s = (Stage) cancelBtn.getScene().getWindow();
+                Stage s = (Stage) saveBtn.getScene().getWindow();
                 s.hide();
             }
         });
     }
 
-    public void setData(int id, Vector<Permission> permissions) {
-        if(id != 0)
-            permissions = UtilisateurDAO.getUserPermissions(id);
+    public void setData(int idRole) {
+        viewPatient.setSelected(false);
+        viewUser.setSelected(false);
+        viewRdv.setSelected(false);
+        viewVisite.setSelected(false);
+
+        Vector<Permission> permissions = PermissionDAO.getPermissionsByRole(idRole);
 
         for (Permission permission : permissions) {
             switch (permission.getSubject()) {

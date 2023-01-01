@@ -72,8 +72,8 @@ public class DBUtil {
                         statusCode = 400;
                     } else {
                         int id = queryOutput.getInt(1);
-                        Utilisateur.currentUser = new Utilisateur(id, queryOutput.getString(2), queryOutput.getString(3), queryOutput.getString(4), queryOutput.getString(5), queryOutput.getString(6), queryOutput.getString(7));
-                        Utilisateur.currentPermissions = UtilisateurDAO.getUserPermissions(id);
+                        Utilisateur.currentUser = new Utilisateur(id, queryOutput.getString(2), queryOutput.getString(3), queryOutput.getString(4), queryOutput.getString(5), queryOutput.getString(6), queryOutput.getString(7), queryOutput.getInt(8));
+//                        Utilisateur.currentRole = UtilisateurDAO.getUserRole(currentUser);
 
                         System.out.println(Utilisateur.currentUser);
                         System.out.println(Utilisateur.currentPermissions);

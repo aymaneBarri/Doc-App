@@ -152,7 +152,7 @@ public class RoleDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            psLogin = connection.prepareStatement("SELECT * FROM role");
+            psLogin = connection.prepareStatement("SELECT * FROM role ORDER BY id ASC");
             queryOutput = psLogin.executeQuery();
 
             while (queryOutput.next()) {
@@ -185,5 +185,154 @@ public class RoleDAO {
         }
 
         return roles;
+    }
+
+    public static int getRoleIdByName(String name) {
+        PreparedStatement statement = null;
+        ResultSet queryOutput = null;
+        int id = 0;
+        int statusCode = 0;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            statement = connection.prepareStatement("SELECT * FROM role WHERE name = ?");
+            statement.setString(1, name);
+            queryOutput = statement.executeQuery();
+
+            while (queryOutput.next()) {
+                id = queryOutput.getInt(1);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return id;
+    }
+
+    public static String getRoleNameById(int idRole) {
+        PreparedStatement statement = null;
+        ResultSet queryOutput = null;
+        String name = null;
+        int statusCode = 0;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            statement = connection.prepareStatement("SELECT * FROM role WHERE id = ?");
+            statement.setInt(1, idRole);
+            queryOutput = statement.executeQuery();
+
+            while (queryOutput.next()) {
+                name = queryOutput.getString(1);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return name;
+    }
+
+    public static int editRolePermissions(Role role, Vector<Permission> permissions) {
+//        PreparedStatement psEditPermissions = null;
+        int statusCode = 0;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            for (Permission permission : permissions) {
+                PermissionDAO.editPermission(permission);
+            }
+
+//            assert false;
+//            psEditPermissions.executeUpdate();
+
+            Action action = new Action("Modification du rôle id = " + role.getId(), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+
+            statusCode = 201;
+        } finally {
+
+            DBUtil.stopConnection();
+        }
+
+        return statusCode;
+    }
+
+    public static Role getRoleById(int idRole) {
+        Role role = new Role();
+        PreparedStatement psGetRoleByID = null;
+        ResultSet queryOutput = null;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+            psGetRoleByID = connection.prepareStatement("SELECT * FROM role where id = ?");
+            psGetRoleByID.setInt(1, idRole);
+            queryOutput = psGetRoleByID.executeQuery();
+            if (queryOutput.next()) {
+                role.setId(queryOutput.getInt("id"));
+                role.setName(queryOutput.getString("name"));
+            }
+            System.out.println("Role retrieved" + role);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (psGetRoleByID != null) {
+                try {
+                    psGetRoleByID.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return role;
     }
 }

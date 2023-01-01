@@ -8,6 +8,7 @@ import com.example.docapp.controllers.utilisateurs.UserPermissionController;
 import com.example.docapp.controllers.visites.NewVisiteController;
 import com.example.docapp.controllers.visites.VisiteDetailsController;
 import com.example.docapp.models.Permission;
+import com.example.docapp.models.Utilisateur;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -132,7 +133,7 @@ public class ViewFactory {
     }
 
 
-    public void showUserDetails(String id) {
+    public void showUserDetails(Utilisateur utilisateur) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/userDetails.fxml"));
         try{
             BorderPane root = loader.load();
@@ -140,7 +141,7 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-            ud.setData(id);
+            ud.setData(utilisateur);
             s.setTitle("Modifier l'utilisateur");
             s.getIcons().add(appIcon);
             s.show();
@@ -149,7 +150,7 @@ public class ViewFactory {
         }
     }
 
-    public void showUserRoles(int id) {
+    public void showUserRoles() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/userPermission.fxml"));
         try{
             BorderPane root = loader.load();
@@ -157,7 +158,7 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-            ur.setData(id, null);
+//            ur.setData(UserPermissionController.currentRole.getId());
             s.setTitle("Modifier l'utilisateur");
             s.getIcons().add(appIcon);
             s.show();
@@ -174,7 +175,7 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-            ur.setData(0, permissions);
+//            ur.setData(0, permissions);
             s.setTitle("Nouveau utilisateur");
             s.getIcons().add(appIcon);
             s.show();

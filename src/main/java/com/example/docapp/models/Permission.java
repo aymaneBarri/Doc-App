@@ -30,11 +30,11 @@ public class Permission {
         this.idRole = idUtilisateur;
     }
 
-    public int getIdUtilisateur() {
+    public int getIdRole() {
         return idRole;
     }
 
-    public void setIdUtilisateur(int idUtilisateur) {
+    public void setIdRole(int idUtilisateur) {
         this.idRole = idUtilisateur;
     }
 
