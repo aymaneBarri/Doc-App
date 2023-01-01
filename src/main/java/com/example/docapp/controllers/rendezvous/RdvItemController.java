@@ -1,5 +1,7 @@
 package com.example.docapp.controllers.rendezvous;
 
+import com.example.docapp.models.Permission;
+import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -19,6 +21,12 @@ public class RdvItemController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("rendez_vous")) {
+                if (!permission.isCanModify() && !permission.isCanDelete())
+                    voirPlus.setDisable(true);
+            }
+        }
             voirPlus.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {

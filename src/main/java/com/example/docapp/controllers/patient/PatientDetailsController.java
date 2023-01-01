@@ -2,6 +2,8 @@ package com.example.docapp.controllers.patient;
 
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Patient;
+import com.example.docapp.models.Permission;
+import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -40,6 +42,14 @@ public class PatientDetailsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("patient")) {
+                if (!permission.isCanModify())
+                    editBtn.setDisable(true);
+                else if (!permission.isCanDelete())
+                    deleteBtn.setDisable(true);
+            }
+        }
 
 //            idPatient.setText("1");
         idP.setVisible(false);

@@ -4,11 +4,13 @@ import com.example.docapp.util.DBUtil;
 import com.example.docapp.util.Encryptor;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Vector;
 
 public class Utilisateur extends Personne {
     private String email;
     private String password;
     public static Utilisateur currentUser;
+    public static Vector<Permission> currentPermissions = new Vector<Permission>();
 
     public Utilisateur() {
         super();

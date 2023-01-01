@@ -3,6 +3,8 @@ package com.example.docapp.controllers.patient;
 import com.example.docapp.controllers.patient.PatientItemController;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Patient;
+import com.example.docapp.models.Permission;
+import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,10 +18,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Vector;
+import java.util.*;
 
 public class PatientsController implements Initializable {
 
@@ -33,17 +32,23 @@ public class PatientsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            HBox root = FXMLLoader.load(getClass().getResource("/com/example/docapp/view/util/topBar.fxml"));
+            HBox root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/docapp/view/util/topBar.fxml")));
             vbox.getChildren().add(0,root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        PatientDAO patientDAO = new PatientDAO();
-        Vector<Patient> patientList = patientDAO.getPatients();
+        Vector<Patient> patientList = PatientDAO.getPatients();
         for (Patient patient : patientList) {
             BorderPane bp = createCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getPhoneNumber(), patient.getId());
             listPatient.getItems().add(bp);
+        }
+
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("patient")) {
+                if (!permission.isCanAdd())
+                    newPatient.setDisable(true);
+            }
         }
 
         newPatient.setOnAction(new EventHandler<ActionEvent>() {
@@ -100,8 +105,7 @@ public class PatientsController implements Initializable {
 
 
     public void refresh() {
-        PatientDAO patientDAO = new PatientDAO();
-        Vector<Patient> patientList = patientDAO.getPatients();
+        Vector<Patient> patientList = PatientDAO.getPatients();
         for (Patient patient : patientList) {
             BorderPane bp = createCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getPhoneNumber(), patient.getId());
             listPatient.getItems().add(bp);

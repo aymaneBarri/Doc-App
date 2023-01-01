@@ -27,44 +27,48 @@ public class NewUserController implements Initializable {
     public TextField phoneField;
     public TextField cinField;
     public JFXButton rolesBtn;
-    public ComboBox<String> typeUser;
     public JFXButton saveBtn;
     public JFXButton cancelBtn;
     String errorMessage = "";
     int statusCode = 0;
-    Vector<Permission> permissions = new Vector<Permission>();
+    static Vector<Permission> permissions = new Vector<Permission>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        permissions.clear();
+        permissions.add(new Permission("patient",false,false,false,false));
+        permissions.add(new Permission("utilisateur",false,false,false,false));
+        permissions.add(new Permission("visite",false,false,false,false));
+        permissions.add(new Permission("rendez_vous",false,false,false,false));
 
-        typeUser.getItems().clear();
-        rolesBtn.setDisable(true);
-
-        typeUser.getItems().addAll(
-                "Admin",
-                "Utilisateur");
-        typeUser.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            if (newValue.equals("Admin")) {
-                permissions.clear();
-                permissions.add(new Permission("action",true,false,false,false));
-                permissions.add(new Permission("patient",true,true,true,true));
-                permissions.add(new Permission("permission",true,true,true,true));
-                permissions.add(new Permission("rendez_vous",true,true,true,true));
-                permissions.add(new Permission("utilisateur",true,true,true,true));
-                permissions.add(new Permission("visite",true,true,true,true));
-            }
-            else if (newValue.equals("Utilisateur")) {
-                permissions.clear();
-                permissions.add(new Permission("action",false,false,false,false));
-                permissions.add(new Permission("patient",true,false,false,false));
-                permissions.add(new Permission("permission",true,false,false,false));
-                permissions.add(new Permission("rendez_vous",true,false,false,false));
-                permissions.add(new Permission("utilisateur",true,false,false,false));
-                permissions.add(new Permission("visite",true,false,false,false));
-            }
-
-            rolesBtn.setDisable(newValue.equals("Admin"));
-        });
+//        typeUser.getItems().clear();
+//        rolesBtn.setDisable(true);
+//
+//        typeUser.getItems().addAll(
+//                "Admin",
+//                "Utilisateur");
+//        typeUser.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+//            if (newValue.equals("Admin")) {
+//                permissions.clear();
+////                permissions.add(new Permission("action",true,false,false,false));
+//                permissions.add(new Permission("patient",true,true,true,true));
+////                permissions.add(new Permission("permission",true,true,true,true));
+//                permissions.add(new Permission("rendez_vous",true,true,true,true));
+//                permissions.add(new Permission("utilisateur",true,true,true,true));
+//                permissions.add(new Permission("visite",true,true,true,true));
+//            }
+//            else if (newValue.equals("Utilisateur")) {
+//                permissions.clear();
+////                permissions.add(new Permission("action",false,false,false,false));
+//                permissions.add(new Permission("patient",true,false,false,false));
+////                permissions.add(new Permission("permission",true,false,false,false));
+//                permissions.add(new Permission("rendez_vous",true,false,false,false));
+//                permissions.add(new Permission("utilisateur",true,false,false,false));
+//                permissions.add(new Permission("visite",true,false,false,false));
+//            }
+//
+//            rolesBtn.setDisable(newValue.equals("Admin"));
+//        });
 
         saveBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -125,7 +129,7 @@ public class NewUserController implements Initializable {
         rolesBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ViewModel.getInstance().getViewFactory().showUserRoles();
+                ViewModel.getInstance().getViewFactory().showNewUserRoles(permissions);
             }
         });
 
@@ -141,7 +145,7 @@ public class NewUserController implements Initializable {
     }
 
     public boolean formIsValid() {
-        if (nomField.getText().trim().isEmpty() || prenomField.getText().trim().isEmpty() || emailField.getText().trim().isEmpty() || passField.getText().trim().isEmpty() || cinField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty() || typeUser.getValue() == null) {
+        if (nomField.getText().trim().isEmpty() || prenomField.getText().trim().isEmpty() || emailField.getText().trim().isEmpty() || passField.getText().trim().isEmpty() || cinField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()) {
             errorMessage = "Veuillez remplir tous les champs!";
             return false;
         }

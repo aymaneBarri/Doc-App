@@ -282,27 +282,28 @@ public class UtilisateurDAO {
 
     }
 
-    public Vector<Permission> getUtilisateurRoles(int id) {
-        Vector<Permission> rolesUtilisateur = new Vector<Permission>();
-        Permission roleUtilisateur = new Permission();
-        PreparedStatement psLogin = null;
+    public static Vector<Permission> getUserPermissions(int id) {
+        Vector<Permission> permissions = new Vector<Permission>();
+        Permission permission;
+        PreparedStatement psGetUserPermissions = null;
         ResultSet queryOutput = null;
 
         try {
             Connection connection = DBUtil.getConnection();
 
-            psLogin = connection.prepareStatement("SELECT * FROM utilisateur_role WHERE id_utilisateur=?");
-            psLogin.setInt(1, id);
-            queryOutput = psLogin.executeQuery();
+            psGetUserPermissions = connection.prepareStatement("SELECT * FROM permission WHERE id_utilisateur = ?");
+            psGetUserPermissions.setInt(1, id);
+            queryOutput = psGetUserPermissions.executeQuery();
 
             while (queryOutput.next()) {
-                roleUtilisateur.setIdUtilisateur(queryOutput.getInt("id_utilisateur"));
-                roleUtilisateur.setSubject(queryOutput.getString("subject"));
-                roleUtilisateur.setCanView(queryOutput.getInt("canView") == 1 ? true : false);
-                roleUtilisateur.setCanAdd(queryOutput.getInt("canAdd") == 1 ? true : false);
-                roleUtilisateur.setCanModify(queryOutput.getInt("canModify") == 1 ? true : false);
-                roleUtilisateur.setCanDelete(queryOutput.getInt("canDelete") == 1 ? true : false);
-                rolesUtilisateur.add(roleUtilisateur);
+                permission = new Permission();
+                permission.setIdUtilisateur(queryOutput.getInt("id_utilisateur"));
+                permission.setSubject(queryOutput.getString("subject"));
+                permission.setCanView(queryOutput.getInt("canView") == 1);
+                permission.setCanAdd(queryOutput.getInt("canAdd") == 1);
+                permission.setCanModify(queryOutput.getInt("canModify") == 1);
+                permission.setCanDelete(queryOutput.getInt("canDelete") == 1);
+                permissions.add(permission);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -315,9 +316,9 @@ public class UtilisateurDAO {
                 }
             }
 
-            if (psLogin != null) {
+            if (psGetUserPermissions != null) {
                 try {
-                    psLogin.close();
+                    psGetUserPermissions.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -325,7 +326,7 @@ public class UtilisateurDAO {
 
             DBUtil.stopConnection();
         }
-        return rolesUtilisateur;
+        return permissions;
     }
 
 
@@ -480,5 +481,53 @@ public class UtilisateurDAO {
         }
 
         return utilisateurs;
+    }
+
+    public static int editPermissions(Utilisateur utilisateur, Vector<Permission> permissions) {
+
+        PreparedStatement psEditPermissions = null;
+        int statusCode = 0;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            for (Permission permission : permissions) {
+                psEditPermissions = connection.prepareStatement("UPDATE permission SET canView = ?, canAdd = ?, canModify = ?, canDelete = ? WHERE id_utilisateur = ? AND subject = ?");
+                psEditPermissions.setBoolean(1, permission.isCanView());
+                psEditPermissions.setBoolean(2, permission.isCanAdd());
+                psEditPermissions.setBoolean(3, permission.isCanModify());
+                psEditPermissions.setBoolean(4, permission.isCanDelete());
+                psEditPermissions.setInt(5, utilisateur.getId());
+                psEditPermissions.setString(6, permission.getSubject());
+            }
+
+            assert psEditPermissions != null;
+            psEditPermissions.executeUpdate();
+
+            psEditPermissions = connection.prepareStatement("INSERT INTO action (id_utilisateur, action, action_time) VALUES (?, ?, ?)");
+            psEditPermissions.setInt(1, Utilisateur.currentUser.getId());
+            psEditPermissions.setString(2, "Modification de l'utilisateur id = " + utilisateur.getId());
+            psEditPermissions.setString(3, LocalDateTime.now().toString());
+            psEditPermissions.executeUpdate();
+
+            statusCode = 201;
+        } catch (SQLException e) {
+            statusCode = 400;
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            if (psEditPermissions != null) {
+                try {
+                    psEditPermissions.close();
+                } catch (SQLException e) {
+                    statusCode = 400;
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return statusCode;
     }
 }

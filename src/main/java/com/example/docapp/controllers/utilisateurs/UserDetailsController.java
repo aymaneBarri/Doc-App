@@ -3,6 +3,7 @@ package com.example.docapp.controllers.utilisateurs;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.models.Patient;
+import com.example.docapp.models.Permission;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.example.docapp.util.DBUtil;
@@ -29,22 +30,30 @@ public class UserDetailsController implements Initializable {
     public JFXButton rolesBtn;
     public JFXButton saveBtn;
     public TextField idField;
-    public ComboBox<String> typeUser;
     public JFXButton deleteBtn;
 
     String errorMessage = "";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        typeUser.getItems().clear();
-        rolesBtn.setDisable(true);
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("utilisateur")) {
+                if (!permission.isCanModify())
+                    saveBtn.setDisable(true);
+                else if (!permission.isCanDelete())
+                    deleteBtn.setDisable(true);
+            }
+        }
 
-        typeUser.getItems().addAll(
-                "admin",
-                "utilisateur");
-        typeUser.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            rolesBtn.setDisable(newValue.equals("admin"));
-        });
+//        typeUser.getItems().clear();
+////        rolesBtn.setDisable(true);
+//
+//        typeUser.getItems().addAll(
+//                "admin",
+//                "utilisateur");
+//        typeUser.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+//            rolesBtn.setDisable(newValue.equals("admin"));
+//        });
 
         saveBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -103,7 +112,7 @@ public class UserDetailsController implements Initializable {
         rolesBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ViewModel.getInstance().getViewFactory().showUserRoles();
+                ViewModel.getInstance().getViewFactory().showUserRoles(Integer.parseInt(idField.getText()));
             }
         });
     }

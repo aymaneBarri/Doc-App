@@ -4,10 +4,7 @@ import com.example.docapp.controllers.visites.VisiteItemController;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.RendezVousDAO;
 import com.example.docapp.dao.VisiteDAO;
-import com.example.docapp.models.Patient;
-import com.example.docapp.models.RendezVous;
-import com.example.docapp.models.ViewModel;
-import com.example.docapp.models.Visite;
+import com.example.docapp.models.*;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +18,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -35,10 +33,17 @@ public class RdvController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            HBox root = FXMLLoader.load(getClass().getResource("/com/example/docapp/view/util/topBar.fxml"));
+            HBox root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/docapp/view/util/topBar.fxml")));
             vbox.getChildren().add(0,root);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("rendez_vous")) {
+                if (!permission.isCanAdd())
+                    newRdv.setDisable(true);
+            }
         }
 
         newRdv.setOnAction(new EventHandler<ActionEvent>() {

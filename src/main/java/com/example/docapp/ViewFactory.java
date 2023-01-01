@@ -7,6 +7,7 @@ import com.example.docapp.controllers.utilisateurs.UserDetailsController;
 import com.example.docapp.controllers.utilisateurs.UserPermissionController;
 import com.example.docapp.controllers.visites.NewVisiteController;
 import com.example.docapp.controllers.visites.VisiteDetailsController;
+import com.example.docapp.models.Permission;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.util.Objects;
+import java.util.Vector;
 
 public class ViewFactory {
     public Stage stage = new Stage();
@@ -146,7 +148,7 @@ public class ViewFactory {
         }
     }
 
-    public void showUserRoles() {
+    public void showUserRoles(int id) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/userPermission.fxml"));
         try{
             BorderPane root = loader.load();
@@ -154,8 +156,25 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-           /* ur.setData(id);*/
+            ur.setData(id, null);
             s.setTitle("Modifier l'utilisateur");
+            s.getIcons().add(appIcon);
+            s.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void showNewUserRoles(Vector<Permission> permissions) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/userPermission.fxml"));
+        try{
+            BorderPane root = loader.load();
+            UserPermissionController ur = loader.getController();
+            Scene sc = new Scene(root);
+            Stage s = new Stage();
+            s.setScene(sc);
+            ur.setData(0, permissions);
+            s.setTitle("Nouveau utilisateur");
             s.getIcons().add(appIcon);
             s.show();
         }catch (Exception e){

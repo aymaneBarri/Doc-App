@@ -1,5 +1,7 @@
 package com.example.docapp.controllers.patient;
 
+import com.example.docapp.models.Permission;
+import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -34,6 +36,17 @@ public class PatientItemController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("visite")) {
+                if (!permission.isCanAdd())
+                    newVisite.setDisable(true);
+            }
+            if (permission.getSubject().equals("patient")) {
+                if (!permission.isCanModify() && !permission.isCanDelete())
+                    voirPlus.setDisable(true);
+            }
+        }
+
         voirPlus.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {

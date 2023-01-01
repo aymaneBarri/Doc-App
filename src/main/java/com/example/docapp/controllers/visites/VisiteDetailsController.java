@@ -2,9 +2,7 @@ package com.example.docapp.controllers.visites;
 
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.VisiteDAO;
-import com.example.docapp.models.Patient;
-import com.example.docapp.models.ViewModel;
-import com.example.docapp.models.Visite;
+import com.example.docapp.models.*;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -32,6 +30,14 @@ public class VisiteDetailsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("visite")) {
+                if (!permission.isCanModify())
+                    saveBtn.setDisable(true);
+                else if (!permission.isCanDelete())
+                    cancelBtn.setDisable(true);
+            }
+        }
 
         saveBtn.setOnAction(event -> {
 

@@ -1,6 +1,7 @@
 package com.example.docapp.controllers.utilisateurs;
 
 import com.example.docapp.dao.UtilisateurDAO;
+import com.example.docapp.models.Permission;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
@@ -16,6 +17,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -29,7 +31,7 @@ public class UtilisateursController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            HBox root = FXMLLoader.load(getClass().getResource("/com/example/docapp/view/util/topBar.fxml"));
+            HBox root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/docapp/view/util/topBar.fxml")));
             vbox.getChildren().add(0,root);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -40,6 +42,13 @@ public class UtilisateursController implements Initializable {
         for (Utilisateur user : userList) {
             BorderPane bp = createCard(user.getFirstName(),user.getLastName(), user.getEmail(), user.getPhoneNumber(), user.getId());
             listUser.getItems().add(bp);
+        }
+
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("utilisateur")) {
+                if (!permission.isCanAdd())
+                    newUser.setDisable(true);
+            }
         }
 
         newUser.setOnAction(new EventHandler<ActionEvent>() {

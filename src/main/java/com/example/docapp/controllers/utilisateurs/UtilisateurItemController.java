@@ -1,6 +1,7 @@
 package com.example.docapp.controllers.utilisateurs;
 
 import com.example.docapp.dao.UtilisateurDAO;
+import com.example.docapp.models.Permission;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
@@ -25,6 +26,13 @@ public class UtilisateurItemController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("utilisateur")) {
+                if (!permission.isCanModify() && !permission.isCanDelete())
+                    editBtn.setDisable(true);
+            }
+        }
+
         editBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

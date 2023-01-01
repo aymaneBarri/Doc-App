@@ -1,6 +1,7 @@
 package com.example.docapp.controllers.util;
 
 import com.example.docapp.dao.PatientDAO;
+import com.example.docapp.models.Permission;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.example.docapp.util.DBUtil;
@@ -28,6 +29,26 @@ public class MenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("patient")) {
+                if (!permission.isCanView())
+                    patientBtn.setDisable(true);
+            }
+            if (permission.getSubject().equals("visite")) {
+                if (!permission.isCanView())
+                    visiteBtn.setDisable(true);
+            }
+            if (permission.getSubject().equals("rendez_vous")) {
+                if (!permission.isCanView())
+                    rdvBtn.setDisable(true);
+            }
+            if (permission.getSubject().equals("utilisateur")) {
+                if (!permission.isCanView())
+                    userBtn.setDisable(true);
+            }
+        }
+
         patientBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

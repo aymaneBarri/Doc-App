@@ -1,5 +1,6 @@
 package com.example.docapp.util;
 
+import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.models.Utilisateur;
 import javafx.event.ActionEvent;
 
@@ -70,8 +71,12 @@ public class DBUtil {
                     if (!(queryOutput.getString("password").equals(password))){
                         statusCode = 400;
                     } else {
-                        Utilisateur utilisateur = new Utilisateur(queryOutput.getInt(1), queryOutput.getString(2), queryOutput.getString(3), queryOutput.getString(4), queryOutput.getString(5), queryOutput.getString(6), queryOutput.getString(7));
-                        Utilisateur.currentUser = utilisateur;
+                        int id = queryOutput.getInt(1);
+                        Utilisateur.currentUser = new Utilisateur(id, queryOutput.getString(2), queryOutput.getString(3), queryOutput.getString(4), queryOutput.getString(5), queryOutput.getString(6), queryOutput.getString(7));
+                        Utilisateur.currentPermissions = UtilisateurDAO.getUserPermissions(id);
+
+                        System.out.println(Utilisateur.currentUser);
+                        System.out.println(Utilisateur.currentPermissions);
 
                         statusCode = 200;
                     }

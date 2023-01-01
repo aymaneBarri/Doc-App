@@ -2,9 +2,7 @@ package com.example.docapp.controllers.rendezvous;
 
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.RendezVousDAO;
-import com.example.docapp.models.Patient;
-import com.example.docapp.models.RendezVous;
-import com.example.docapp.models.ViewModel;
+import com.example.docapp.models.*;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,6 +26,15 @@ public class RdvDetailsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        for (Permission permission : Utilisateur.currentPermissions) {
+            if (permission.getSubject().equals("rendez_vous")) {
+                if (!permission.isCanModify())
+                    saveBtn.setDisable(true);
+                else if (!permission.isCanDelete())
+                    delBtn.setDisable(true);
+            }
+        }
+
         delBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
