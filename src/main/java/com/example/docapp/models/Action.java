@@ -13,11 +13,15 @@ public class Action {
         id_utilisateur = 0;
     }
 
-    public Action(int id, String action, String actionTime, int id_utilisateur) {
-        this.id = id;
+    public Action(String action, String actionTime, int id_utilisateur) {
         this.action = action;
         this.actionTime = actionTime;
         this.id_utilisateur = id_utilisateur;
+    }
+
+    public Action(int id, String action, String actionTime, int id_utilisateur) {
+        this(action, actionTime, id_utilisateur);
+        this.id = id;
     }
 
     public int getId() {

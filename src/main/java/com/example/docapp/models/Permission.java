@@ -1,7 +1,7 @@
 package com.example.docapp.models;
 
 public class Permission {
-    private int idUtilisateur;
+    private int idRole;
     private String subject;
     private boolean canView;
     private boolean canAdd;
@@ -9,7 +9,7 @@ public class Permission {
     private boolean canDelete;
 
     public Permission() {
-        idUtilisateur = 0;
+        idRole = 0;
         subject = "";
         canView = false;
         canAdd = false;
@@ -27,15 +27,15 @@ public class Permission {
 
     public Permission(int idUtilisateur, String subject, boolean canView, boolean canAdd, boolean canModify, boolean canDelete) {
         this(subject, canView, canAdd, canModify, canDelete);
-        this.idUtilisateur = idUtilisateur;
+        this.idRole = idUtilisateur;
     }
 
     public int getIdUtilisateur() {
-        return idUtilisateur;
+        return idRole;
     }
 
     public void setIdUtilisateur(int idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
+        this.idRole = idUtilisateur;
     }
 
     public String getSubject() {
@@ -81,8 +81,8 @@ public class Permission {
 
     @Override
     public String toString() {
-        return "RolesUtilisateur{" +
-                "idUtilisateur=" + idUtilisateur +
+        return "Permission{" +
+                "idRole=" + idRole +
                 ", subject=" + subject +
                 ", canView=" + canView +
                 ", canAdd=" + canAdd +

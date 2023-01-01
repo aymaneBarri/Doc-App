@@ -63,7 +63,7 @@ public class PatientDetailsController implements Initializable {
               patient.setPhoneNumber(phoneField.getText());
               patient.setDescription(noteArea.getText());
                 patient.setId(Integer.parseInt(idP.getText()));
-              int status =  PatientDAO.editPatient(actionEvent, patient);
+              int status =  PatientDAO.editPatient(patient);
               System.out.println(status);
               if(status == 201){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

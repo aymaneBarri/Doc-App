@@ -12,7 +12,7 @@ import java.util.Vector;
 
 public class PatientDAO {
 
-    public static int addPatient(ActionEvent event, Patient patient) {
+    public static int addPatient(Patient patient) {
         PreparedStatement psAddPatient = null;
         ResultSet queryOutput = null;
         int statusCode=0;
@@ -113,7 +113,7 @@ public class PatientDAO {
     }
 
 
-    public static int editPatient(ActionEvent event, Patient patient){
+    public static int editPatient(Patient patient){
         PreparedStatement psAddP = null;
         ResultSet queryOutput = null;
         int statusCode=0;

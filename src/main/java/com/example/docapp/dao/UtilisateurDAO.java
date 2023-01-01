@@ -291,7 +291,7 @@ public class UtilisateurDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            psGetUserPermissions = connection.prepareStatement("SELECT * FROM permission WHERE id_utilisateur = ?");
+            psGetUserPermissions = connection.prepareStatement("SELECT * FROM permission WHERE id_role = ?");
             psGetUserPermissions.setInt(1, id);
             queryOutput = psGetUserPermissions.executeQuery();
 

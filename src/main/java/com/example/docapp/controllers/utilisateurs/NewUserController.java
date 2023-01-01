@@ -1,7 +1,9 @@
 package com.example.docapp.controllers.utilisateurs;
 
+import com.example.docapp.dao.RoleDAO;
 import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.models.Permission;
+import com.example.docapp.models.Role;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.example.docapp.util.DBUtil;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -29,6 +32,7 @@ public class NewUserController implements Initializable {
     public JFXButton rolesBtn;
     public JFXButton saveBtn;
     public JFXButton cancelBtn;
+    public ComboBox<Role> rolesComboBox;
     String errorMessage = "";
     int statusCode = 0;
     static Vector<Permission> permissions = new Vector<Permission>();
@@ -40,6 +44,11 @@ public class NewUserController implements Initializable {
         permissions.add(new Permission("utilisateur",false,false,false,false));
         permissions.add(new Permission("visite",false,false,false,false));
         permissions.add(new Permission("rendez_vous",false,false,false,false));
+
+        rolesComboBox.getItems().clear();
+        for (Role role : RoleDAO.getRoles()){
+            rolesComboBox.getItems().add(role);
+        }
 
 //        typeUser.getItems().clear();
 //        rolesBtn.setDisable(true);
