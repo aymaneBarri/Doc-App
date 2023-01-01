@@ -1,12 +1,22 @@
 package com.example.docapp.controllers.patient;
 
 import com.example.docapp.dao.PatientDAO;
-import com.example.docapp.models.Patient;
-import com.example.docapp.models.Permission;
-import com.example.docapp.models.Utilisateur;
-import com.example.docapp.models.ViewModel;
+import com.example.docapp.dao.VisiteDAO;
+import com.example.docapp.models.*;
+import com.example.docapp.util.Print;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.io.*;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
+import com.itextpdf.kernel.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,18 +25,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.Instant;
+
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 public class PatientDetailsController implements Initializable {
-
     @FXML
-    public Label idPatient;
-    public TextField idP;
+    public Label idP;
     public TextField nomField;
     public DatePicker birthField;
     public TextField cinField;
@@ -51,8 +61,7 @@ public class PatientDetailsController implements Initializable {
             }
         }
 
-//            idPatient.setText("1");
-        idP.setVisible(false);
+
         editBtn.setOnAction(actionEvent -> {
        if(validateForm().isEmpty()){
               Patient patient = new Patient();
@@ -107,22 +116,90 @@ public class PatientDetailsController implements Initializable {
         });
     }
 
+
+    public BorderPane createPrescriptionCard(Visite visite) {
+        BorderPane root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/com/example/docapp/view/patients/prescriptionItem.fxml"
+                    )
+            );
+
+            root = loader.load();
+            PrescriptionItemController pc = loader.getController();
+            pc.dateLabel.setText(visite.getVisit_date());
+            pc.maladieLabel.setText(visite.getIllness());
+            pc.patientID.setText(String.valueOf(visite.getId_patient()));
+            pc.printBtn.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Print.print(visite);
+                }
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return root;
+
+    }
+
+    public BorderPane createVisiteCard(Visite visite) {
+        BorderPane root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/com/example/docapp/view/patients/visiteItem.fxml"
+                    )
+            );
+
+            root = loader.load();
+            VisiteItemController vc = loader.getController();
+            vc.dateLabel.setText(visite.getVisit_date());
+            vc.amountLabel.setText(String.valueOf(visite.getAmount()));
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return root;
+
+    }
+
+    public void setPrescription(String id){
+        Vector<Visite> visiteList = VisiteDAO.getVistes(id);
+        for (Visite visite : visiteList) {
+            BorderPane bp = createPrescriptionCard(visite);
+            listOrdonnances.getItems().add(bp);
+        }
+    }
+
+    public void setVisites(String id){
+        Vector<Visite> visiteList = VisiteDAO.getRecentVistes(id);
+        for (Visite visite : visiteList) {
+            BorderPane bp = createVisiteCard(visite);
+            listVisites.getItems().add(bp);
+        }
+    }
+
     public void setData(String id){
 
         BorderPane root = null;
-        PatientDAO dao = new PatientDAO();
         try {
-            Patient patient = dao.getPatientByID(id);
-            if (patient!= null) {
-                idP.setText(patient.getId()+"");
-                nomField.setText(patient.getLastName());
-                prenomField.setText(patient.getFirstName());
-                birthField.setValue(LocalDate.parse(patient.getBirthDate()));
-                cinField.setText(patient.getCin());
-                phoneField.setText(patient.getPhoneNumber());
-/*                noteArea.setText(patient.getDescription());*/
-
-            }
+            Patient patient = PatientDAO.getPatientByID(id);
+            nomField.setText(patient.getLastName());
+            prenomField.setText(patient.getFirstName());
+            birthField.setValue(LocalDate.parse(patient.getBirthDate()));
+            cinField.setText(patient.getCin());
+            phoneField.setText(patient.getPhoneNumber());
+            idP.setText(String.valueOf(patient.getId()));
+            setPrescription(id);
+            setVisites(id);
 
         } catch (Exception e) {
             e.printStackTrace();

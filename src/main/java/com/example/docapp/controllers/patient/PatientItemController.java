@@ -50,7 +50,6 @@ public class PatientItemController implements Initializable {
         voirPlus.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
-                System.out.println(patientID.getText());
                 ViewModel.getInstance().getViewFactory().showPatientDetails(patientID.getText());
             }
         });

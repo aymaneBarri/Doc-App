@@ -201,6 +201,90 @@ public class VisiteDAO {
 
             return visites;
         }
+
+    public  static  Vector<Visite> getRecentVistes(String id) {
+        PreparedStatement psGetAllVisites = null;
+        ResultSet queryOutput = null;
+        Vector<Visite> visites = new Vector<Visite>();
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            psGetAllVisites = connection.prepareStatement("SELECT id, amount, visit_date FROM visite where id_patient like ? order by visit_date desc");
+            psGetAllVisites.setString(1, "%"+id+"%");
+
+            queryOutput = psGetAllVisites.executeQuery();
+
+            while (queryOutput.next()) {
+                Visite visite = new Visite();
+                visite.setId(queryOutput.getInt("id"));
+                visite.setVisit_date(queryOutput.getString("visit_date"));
+               /* visite.setDescription(queryOutput.getString("description"));
+                visite.setAssurance(queryOutput.getString("assurance"));
+                visite.setIllness(queryOutput.getString("illness"));*/
+                visite.setAmount(queryOutput.getDouble("amount"));
+                /*visite.setId_patient(queryOutput.getInt("id_patient"));*/
+                /*visite.setPrescription(queryOutput.getString("prescription"));*/
+                System.out.println("visite: " + visite);
+                visites.add(visite);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (psGetAllVisites != null) {
+                try {
+                    psGetAllVisites.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return visites;
+    }
+
+    public  static  Vector<Visite> getVistes(String id) {
+        PreparedStatement psGetAllVisites = null;
+        ResultSet queryOutput = null;
+        Vector<Visite> visites = new Vector<Visite>();
+        try {
+            Connection connection = DBUtil.getConnection();
+
+            psGetAllVisites = connection.prepareStatement("SELECT id, visit_date, description, assurance, illness, amount, id_patient, prescription FROM visite where id_patient like ? order by visit_date desc");
+            psGetAllVisites.setString(1, "%"+id+"%");
+
+            queryOutput = psGetAllVisites.executeQuery();
+
+            while (queryOutput.next()) {
+                Visite visite = new Visite();
+                visite.setId(queryOutput.getInt("id"));
+                visite.setVisit_date(queryOutput.getString("visit_date"));
+                visite.setDescription(queryOutput.getString("description"));
+                visite.setAssurance(queryOutput.getString("assurance"));
+                visite.setIllness(queryOutput.getString("illness"));
+                visite.setAmount(queryOutput.getDouble("amount"));
+                visite.setId_patient(queryOutput.getInt("id_patient"));
+                visite.setPrescription(queryOutput.getString("prescription"));
+
+                visites.add(visite);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (psGetAllVisites != null) {
+                try {
+                    psGetAllVisites.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return visites;
+    }
       public  static  Visite getVisiteById( String id) {
             PreparedStatement psGetAllVisites = null;
             ResultSet queryOutput = null;

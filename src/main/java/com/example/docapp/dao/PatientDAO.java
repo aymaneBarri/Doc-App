@@ -268,7 +268,6 @@ public class PatientDAO {
                 patient.setPhoneNumber(queryOutput.getString("phone"));
                 patient.setDescription(queryOutput.getString("description"));
             }
-            System.out.println("Patient retrieved" + patient);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
