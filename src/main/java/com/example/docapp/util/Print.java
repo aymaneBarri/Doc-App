@@ -4,23 +4,24 @@ import com.example.docapp.models.Visite;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import java.awt.Desktop;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
-import org.w3c.dom.Element;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 
 public class Print {
 
     public static void print(Visite visite) {
+        String url = System.getProperty("user.dir") + "\\src\\main\\resources\\com\\example\\docapp\\temp.pdf";
         try {
-
-            PdfWriter pdfWriter = new PdfWriter(System.getProperty("user.dir") + "\\ordonnances\\" + visite.getVisit_date().split(" ")[0].replace("/","") +".pdf");
+            PdfWriter pdfWriter = new PdfWriter(url);
             PdfDocument pdfdoc = new PdfDocument(pdfWriter);
             String path = System.getProperty("user.dir") + "\\src\\main\\resources\\com\\example\\docapp\\images\\logoprint.png";
             System.out.println(path);
@@ -49,11 +50,35 @@ public class Print {
             doc.add(t);
             doc.add(para);
             doc.close();
+
             System.out.println("printed");
         } catch (FileNotFoundException/* | MalformedURLException*/ e) {
             throw new RuntimeException(e);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
+
+
+        try {
+
+            File pdfFile = new File(url);
+            if (pdfFile.exists()) {
+
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(pdfFile);
+                } else {
+                    System.out.println("Awt Desktop is not supported!");
+                }
+
+            } else {
+                System.out.println("File is not exists!");
+            }
+
+            System.out.println("Done");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 }
