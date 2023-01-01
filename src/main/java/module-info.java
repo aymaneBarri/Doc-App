@@ -8,6 +8,7 @@ module com.example.docapp {
     requires kernel;
     requires layout;
     requires io;
+    requires java.desktop;
 
 
     opens com.example.docapp to javafx.fxml;

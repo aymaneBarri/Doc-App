@@ -45,7 +45,7 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <Label fx:id="idP" layoutX="60.0" layoutY="29.0" style="-fx-font-family: Inter; -fx-font-size: 18; -fx-font-weight: bold;" text="id">
+            <Label fx:id="idP" layoutX="60.0" layoutY="29.0" style="-fx-font-family: Inter; -fx-font-size: 18; -fx-font-weight: bold;" text="id" visible="false">
                <textFill>
                   <LinearGradient endX="1.0" endY="1.0">
                      <stops>
