@@ -19,8 +19,6 @@ public class VisiteDetailsController implements Initializable {
     public TextField illnessField;
     public TextArea noteArea;
     public TextField montantField;
-    public TextField montantField1;
-    public TextField montantField11;
     public TextField fullname;
     public TextField assurance;
     public TextField heureField;

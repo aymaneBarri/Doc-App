@@ -5,9 +5,14 @@ module com.example.docapp {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.feather;
     requires com.jfoenix;
+    requires kernel;
+    requires layout;
+    requires io;
+
 
     opens com.example.docapp to javafx.fxml;
     exports com.example.docapp;
+    exports com.example.docapp.models;
     exports com.example.docapp.controllers;
     opens com.example.docapp.controllers to javafx.fxml;
     exports com.example.docapp.controllers.patient;

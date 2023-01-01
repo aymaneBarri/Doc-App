@@ -29,8 +29,6 @@ public class VisiteItemController implements Initializable {
         }
 
         voirPlus.setOnAction(event -> {
-            System.out.println(patientID.getText());
-            System.out.println(visitID.getText());
             ViewModel.getInstance().getViewFactory().showVisiteDetail(patientID.getText(),visitID.getText());
 
         });
