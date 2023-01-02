@@ -65,7 +65,7 @@ public class DashboardContentController implements Initializable {
         if(!rdvList.isEmpty()){
             for (RendezVous rdv : rdvList) {
                 BorderPane bp = createRCard(rdv);
-                listRdv.getItems().add(bp);gi
+                listRdv.getItems().add(bp);
             }
         }else{
             BorderPane b = new BorderPane();
