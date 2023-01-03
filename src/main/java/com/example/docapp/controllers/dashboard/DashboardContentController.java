@@ -51,14 +51,7 @@ public class DashboardContentController implements Initializable {
             BorderPane bp = createPCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getPhoneNumber(), patient.getId());
             listPatient.getItems().add(bp);
         }
-   /*     DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        Date t = new Date();
-        Date today;
-        try {
-           today = formatter.parse(formatter.format(t));
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }*/
+
 
         Vector<RendezVous> rdvList = RendezVousDAO.getAllRendezVous(String.valueOf(LocalDate.now()));
         System.out.println(rdvList);
