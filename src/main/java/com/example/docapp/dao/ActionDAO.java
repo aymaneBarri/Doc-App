@@ -47,7 +47,7 @@ public class ActionDAO {
         return statusCode;
     }
 
-    public static Vector<Action> getActions(){
+    public static Vector<Action> getActions(Integer id){
         Vector<Action> actions = new Vector<Action>();
         Action action;
         PreparedStatement psLogin = null;
@@ -55,7 +55,9 @@ public class ActionDAO {
 
         try {
             Connection connection = DBUtil.getConnection();
-            psLogin = connection.prepareStatement("SELECT * FROM action");
+            System.out.println("heres user id= " + Utilisateur.currentUser.getId());
+            psLogin = connection.prepareStatement("SELECT * FROM action where id_utilisateur= ? order by action_time desc");
+            psLogin.setInt(1, id);
             queryOutput = psLogin.executeQuery();
             while (queryOutput.next()) {
                 action = new Action();

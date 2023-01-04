@@ -3,11 +3,13 @@ package com.example.docapp.dao;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.util.DBUtil;
 import com.example.docapp.models.Patient;
+import com.example.docapp.util.DateFormatter;
 import javafx.event.ActionEvent;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 public class PatientDAO {
@@ -34,7 +36,7 @@ public class PatientDAO {
             psAddPatient = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
             psAddPatient.setInt(1, Utilisateur.currentUser.getId());
             psAddPatient.setString(2, "Ajout d'un patient");
-            psAddPatient.setString(3, LocalDateTime.now().toString());
+            psAddPatient.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
             psAddPatient.executeUpdate();
 
             statusCode=201;
@@ -136,7 +138,7 @@ public class PatientDAO {
             psAddP = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
             psAddP.setInt(1, Utilisateur.currentUser.getId());
             psAddP.setString(2, "Modification d'un patient id : "+patient.getId());
-            psAddP.setString(3, LocalDateTime.now().toString());
+            psAddP.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
 
             psAddP.executeUpdate();
             statusCode=201;
@@ -176,7 +178,7 @@ public class PatientDAO {
             psAddP = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
             psAddP.setInt(1, Utilisateur.currentUser.getId());
             psAddP.setString(2, "Suppression d'un patient id : "+id);
-            psAddP.setString(3, LocalDateTime.now().toString());
+            psAddP.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
             psAddP.executeUpdate();
 
 

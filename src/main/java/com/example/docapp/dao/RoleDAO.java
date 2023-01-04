@@ -2,6 +2,7 @@ package com.example.docapp.dao;
 
 import com.example.docapp.models.*;
 import com.example.docapp.util.DBUtil;
+import com.example.docapp.util.DateFormatter;
 import javafx.event.ActionEvent;
 
 import java.sql.Connection;
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 public class RoleDAO {
@@ -44,7 +46,7 @@ public class RoleDAO {
                 }
             }
 
-            Action action = new Action("Ajout du rôle " + role.getName() + ", son id est " + role.getId(), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+            Action action = new Action("Ajout du rôle " + role.getName() + ", son id est " + role.getId(), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
             ActionDAO.addAction(action);
 
             statusCode=201;
@@ -80,7 +82,7 @@ public class RoleDAO {
             psEditRole.setString(1, role.getName());
             psEditRole.executeUpdate();
 
-            Action action = new Action("Modification du rôle " + oldRoleName + " en " + role.getName() + ", son id est " + role.getId(), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+            Action action = new Action("Modification du rôle " + oldRoleName + " en " + role.getName() + ", son id est " + role.getId(), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
             ActionDAO.addAction(action);
 
             statusCode = 201;
@@ -120,7 +122,7 @@ public class RoleDAO {
             statement.setInt(1, role.getId());
             statement.executeUpdate();
 
-            Action action = new Action("Suppression du rôle id = " + role.getId(), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+            Action action = new Action("Suppression du rôle id = " + role.getId(), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
             ActionDAO.addAction(action);
 
             statusCode = 200;
@@ -285,7 +287,7 @@ public class RoleDAO {
 //            assert false;
 //            psEditPermissions.executeUpdate();
 
-            Action action = new Action("Modification du rôle id = " + role.getId(), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+            Action action = new Action("Modification du rôle id = " + role.getId(), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
 
             statusCode = 201;
         } finally {

@@ -32,6 +32,7 @@ public class UserDetailsController implements Initializable {
     public JFXButton deleteBtn;
     public ComboBox<Role> rolesComboBox;
     public ListView<BorderPane> listAction;
+    public Label idLabel;
 
     String errorMessage = "";
 
@@ -119,11 +120,6 @@ public class UserDetailsController implements Initializable {
             }
         });
 
-        Vector<Action> actionList = ActionDAO.getActions();
-        for (Action action : actionList) {
-            BorderPane bp = createActionCard(action);
-            listAction.getItems().add(bp);
-        }
     }
 
     public BorderPane createActionCard(Action action) {
@@ -148,46 +144,14 @@ public class UserDetailsController implements Initializable {
 
     }
 
-    public void setData(Utilisateur user){
-        BorderPane root = null;
-        try {
-            this.setIdField(String.valueOf(user.getId()));
-            this.setNomField(user.getFirstName());
-            this.setPrenomField(user.getLastName());
-            this.setEmailField(user.getEmail());
-            this.setCinField(user.getCin());
-            this.setPhoneField(user.getPhoneNumber());
-            this.setRolesComboBox(RoleDAO.getRoleById(user.getIdRole()));
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void setActions(){
+        Vector<Action> actionList = ActionDAO.getActions(Integer.parseInt(idLabel.getText()));
+        for (Action action : actionList) {
+            BorderPane bp = createActionCard(action);
+            listAction.getItems().add(bp);
         }
     }
 
-    public void setIdField(String id) {
-        this.idField.setText(id);
-    }
-    public void setNomField(String text){
-        this.nomField.setText(text);
-    }
-    public void setPrenomField(String text){
-        this.prenomField.setText(text);
-    }
-    public void setEmailField(String text){
-        this.emailField.setText(text);
-    }
-    public void setPassField(String text){
-        this.passField.setText(text);
-    }
-    public void setPhoneField(String text){
-        this.phoneField.setText(text);
-    }
-    public void setCinField(String text){
-        this.cinField.setText(text);
-    }
-    public void setRolesComboBox(Role role){
-        this.rolesComboBox.getSelectionModel().select(role);;
-    }
 
     public boolean formIsValid() {
         if(nomField.getText().trim().isEmpty() || prenomField.getText().trim().isEmpty() || emailField.getText().trim().isEmpty() ||  cinField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()){

@@ -4,6 +4,7 @@ import com.example.docapp.models.RendezVous;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.Visite;
 import com.example.docapp.util.DBUtil;
+import com.example.docapp.util.DateFormatter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,7 +37,7 @@ public class VisiteDAO {
                 pasAddVisite = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
                 pasAddVisite.setInt(1,  Utilisateur.currentUser.getId());
                 pasAddVisite.setString(2, "Ajout d'une visite");
-                pasAddVisite.setString(3, LocalDateTime.now().toString());
+                pasAddVisite.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
                 pasAddVisite.executeUpdate();
                 statusCode=201;
             } catch (SQLException e) {
@@ -84,7 +85,7 @@ public class VisiteDAO {
                 psEditR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
                 psEditR.setInt(1,  Utilisateur.currentUser.getId());
                 psEditR.setString(2, "Modification de la visite id = "+visite.getId());
-                psEditR.setString(3, LocalDateTime.now().toString());
+                psEditR.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
                 psEditR.executeUpdate();
 
                 statusCode=201;
@@ -124,7 +125,7 @@ public class VisiteDAO {
                 psDeleteR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
                 psDeleteR.setInt(1,  Utilisateur.currentUser.getId());
                 psDeleteR.setString(2, "Suppression de la visite id = "+id);
-                psDeleteR.setString(3, LocalDateTime.now().toString());
+                psDeleteR.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
                 psDeleteR.executeUpdate();
                 
                 

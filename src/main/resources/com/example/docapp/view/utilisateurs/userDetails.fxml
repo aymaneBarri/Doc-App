@@ -46,6 +46,7 @@
                   </LinearGradient>
                </textFill>
             </Label>
+            <Label fx:id="idLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="ID" visible="false" />
          </children>
          <padding>
             <Insets left="50.0" right="50.0" />
