@@ -5,12 +5,14 @@ public class RendezVous {
     private String rendezVousDate;
     private String description;
     private int id_patient;
+    private  boolean done;
 
     public RendezVous(){
         id = 0;
         rendezVousDate = "";
         description = "";
         id_patient = 0;
+        done = false;
     }
 
     public RendezVous(String rendezVousDate, String description, int id_patient) {
@@ -52,6 +54,10 @@ public class RendezVous {
         return id_patient;
     }
 
+    public void setDone(Boolean done){
+        this.done = done;
+    }
+
     public void setId_patient(int id_patient) {
         this.id_patient = id_patient;
     }
@@ -63,6 +69,11 @@ public class RendezVous {
                 ", rendezVousDate='" + rendezVousDate + '\'' +
                 ", description='" + description + '\'' +
                 ", id_patient=" + id_patient +
+                ", done=" + done +
                 '}';
+    }
+
+    public boolean getDone() {
+        return done;
     }
 }

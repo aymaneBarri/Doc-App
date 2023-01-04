@@ -45,6 +45,7 @@ public class PatientDetailsController implements Initializable {
     public JFXButton editBtn;
     public JFXButton deleteBtn;
     public TextField prenomField;
+    public TextField joinField;
     @FXML
     private ListView<BorderPane> listOrdonnances;
     @FXML
@@ -198,6 +199,7 @@ public class PatientDetailsController implements Initializable {
             cinField.setText(patient.getCin());
             phoneField.setText(patient.getPhoneNumber());
             idP.setText(String.valueOf(patient.getId()));
+            joinField.setText(patient.getJoin_date());
             setPrescription(id);
             setVisites(id);
 

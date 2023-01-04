@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -65,6 +66,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
@@ -76,8 +78,8 @@
                   <Font name="Inter Regular" size="15.0" />
                </font>
             </TextField>
-            <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Note" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
-            <TextArea fx:id="noteArea" prefHeight="200.0" prefWidth="200.0" promptText="Entrer une note" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Label alignment="CENTER" contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Note" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
+            <TextArea fx:id="noteArea" prefHeight="200.0" prefWidth="200.0" promptText="Entrer une note" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
@@ -95,6 +97,8 @@
                   </TextField>
                </children>
             </HBox>
+            <Label contentDisplay="RIGHT" prefHeight="40.0" style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Fait" GridPane.rowIndex="3" />
+            <ComboBox fx:id="doneCombo" prefHeight="40.0" prefWidth="150.0" promptText="Choisir l'état" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
          <BorderPane.margin>
             <Insets bottom="50.0" left="100.0" right="100.0" top="40.0" />

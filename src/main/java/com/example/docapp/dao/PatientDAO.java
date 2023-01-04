@@ -20,13 +20,14 @@ public class PatientDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            psAddPatient = connection.prepareStatement("INSERT INTO patient (first_name,last_name,birth_date,cin,phone,description) VALUES (?, ?, ?, ?, ?,?)");
+            psAddPatient = connection.prepareStatement("INSERT INTO patient (first_name,last_name,birth_date,cin,phone,description, join_date) VALUES (?, ?, ?, ?, ?, ?, ?)");
             psAddPatient.setString(1, patient.getFirstName());
             psAddPatient.setString(2, patient.getLastName());
             psAddPatient.setString(3,  patient.getBirthDate());
             psAddPatient.setString(4, patient.getCin());
             psAddPatient.setString(5, patient.getPhoneNumber());
             psAddPatient.setString(6, patient.getDescription());
+            psAddPatient.setString(7, String.valueOf(LocalDate.now()));
 
             psAddPatient.executeUpdate();
 
@@ -198,8 +199,7 @@ public class PatientDAO {
 
         return statusCode;
     }
-
-    public static Vector <Patient> getPatients(){
+    public static Vector <Patient> getRecentPatients(){
         Vector<Patient> patients = new Vector<Patient>();
         Patient patient;
         PreparedStatement psLogin = null;
@@ -207,10 +207,8 @@ public class PatientDAO {
 
         try {
             Connection connection = DBUtil.getConnection();
-
-            psLogin = connection.prepareStatement("SELECT * FROM patient order by id DESC ");
+            psLogin = connection.prepareStatement("SELECT * FROM patient order by join_date DESC LIMIT 5");
             queryOutput = psLogin.executeQuery();
-
             while (queryOutput.next()) {
                 patient = new Patient();
                 patient.setId(queryOutput.getInt("id"));
@@ -220,6 +218,54 @@ public class PatientDAO {
                 patient.setCin(queryOutput.getString("cin"));
                 patient.setPhoneNumber(queryOutput.getString("phone"));
                 patient.setDescription(queryOutput.getString("description"));
+                patient.setJoin_date( queryOutput.getString("join_date"));
+
+                patients.add(patient);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (psLogin != null) {
+                try {
+                    psLogin.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DBUtil.stopConnection();
+        }
+
+        return patients;
+    }
+    public static Vector <Patient> getPatients(){
+        Vector<Patient> patients = new Vector<Patient>();
+        Patient patient;
+        PreparedStatement psLogin = null;
+        ResultSet queryOutput = null;
+
+        try {
+            Connection connection = DBUtil.getConnection();
+            psLogin = connection.prepareStatement("SELECT * FROM patient order by id DESC ");
+            queryOutput = psLogin.executeQuery();
+            while (queryOutput.next()) {
+                patient = new Patient();
+                patient.setId(queryOutput.getInt("id"));
+                patient.setFirstName(queryOutput.getString("first_name"));
+                patient.setLastName(queryOutput.getString("last_name"));
+                patient.setBirthDate(queryOutput.getString("birth_date"));
+                patient.setCin(queryOutput.getString("cin"));
+                patient.setPhoneNumber(queryOutput.getString("phone"));
+                patient.setDescription(queryOutput.getString("description"));
+                patient.setJoin_date( queryOutput.getString("join_date"));
 
                 patients.add(patient);
             }
@@ -267,6 +313,7 @@ public class PatientDAO {
                 patient.setCin(queryOutput.getString("cin"));
                 patient.setPhoneNumber(queryOutput.getString("phone"));
                 patient.setDescription(queryOutput.getString("description"));
+                patient.setJoin_date( queryOutput.getString("join_date"));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

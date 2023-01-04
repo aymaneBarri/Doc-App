@@ -90,6 +90,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                      </rowConstraints>
                      <children>
                         <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Nom " GridPane.halignment="LEFT" />
@@ -114,6 +115,12 @@
                         </TextField>
                         <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Téléphone" GridPane.rowIndex="4" />
                         <TextField fx:id="phoneField" maxWidth="250.0" prefHeight="40.0" promptText="Entrer numéro de téléphone" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Inter Regular" size="15.0" />
+                           </font>
+                        </TextField>
+                        <Label style="-fx-font-family: Inter; -fx-font-weight: bold; -fx-font-size: 15;" text="Date d'ajout" GridPane.rowIndex="5" />
+                        <TextField fx:id="joinField" disable="true" maxWidth="250.0" prefHeight="40.0" promptText="Date d'ajout" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font name="Inter Regular" size="15.0" />
                            </font>

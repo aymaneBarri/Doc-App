@@ -46,14 +46,23 @@ public class DashboardContentController implements Initializable {
         }
         revenueLabel.setText(total+"");
 
-        Vector<Patient> patientList = PatientDAO.getPatients();
-        for (Patient patient : patientList) {
-            BorderPane bp = createPCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getPhoneNumber(), patient.getId());
+        Vector<Patient> patientList = PatientDAO.getRecentPatients();
+        for (Patient p : patientList) {
+            BorderPane bp = createPCard(p);
             listPatient.getItems().add(bp);
         }
 
 
-        Vector<RendezVous> rdvList = RendezVousDAO.getAllRendezVous(String.valueOf(LocalDate.now()));
+
+        refreshList();
+
+
+    }
+
+
+    public void refreshList(){
+        listRdv.getItems().clear();
+        Vector<RendezVous> rdvList = RendezVousDAO.getDoneRendezVous(String.valueOf(LocalDate.now()), 0);
         System.out.println(rdvList);
         if(!rdvList.isEmpty()){
             for (RendezVous rdv : rdvList) {
@@ -66,11 +75,8 @@ public class DashboardContentController implements Initializable {
             b.setCenter(l);
             listRdv.getItems().add(b);
         }
-
-
-
     }
-    public BorderPane createPCard(String firstName, String lastName, String date, String phone, Integer id) {
+    public BorderPane createPCard(Patient patient) {
         BorderPane root = null;
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -81,12 +87,9 @@ public class DashboardContentController implements Initializable {
 
             root = loader.load();
             RecentPatientItemController pc = loader.getController();
-            pc.setNomPatient(lastName);
-            pc.setBirthPatient(date);
-            pc.setPrenomPatient(firstName);
-            pc.setPhonePatient(phone);
-
-
+            pc.nomPatient.setText(patient.getLastName());
+            pc.prenomPatient.setText(patient.getFirstName());
+            pc.joinLabel.setText(patient.getJoin_date());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,8 +118,11 @@ public class DashboardContentController implements Initializable {
             vc.doneBtn.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-
+                    rdv.setDone(true);
+                    RendezVousDAO.editRendezVous(rdv);
+                    refreshList();
                 }
+
             });
         } catch (Exception e) {
             e.printStackTrace();

@@ -66,11 +66,13 @@ public class RendezVousDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            psEditR = connection.prepareStatement("UPDATE rendez_vous SET rendez_vous_date = ?, id_patient = ?, description = ?  WHERE id = ?");
+            psEditR = connection.prepareStatement("UPDATE rendez_vous SET rendez_vous_date = ?, id_patient = ?, description = ?, done= ? WHERE id = ?");
             psEditR.setString(1, rendezVous.getRendezVousDate());
             psEditR.setInt(2, rendezVous.getId_patient());
             psEditR.setString(3,  rendezVous.getDescription());
-            psEditR.setInt(4, rendezVous.getId());
+            psEditR.setInt(4, rendezVous.getDone() ? 1 : 0);
+            psEditR.setInt(5, rendezVous.getId());
+
 
 
 
@@ -109,12 +111,13 @@ public class RendezVousDAO {
         ResultSet queryOutput = null;
         try {
             Connection connection = DBUtil.getConnection();
-            psGetAllRendezVous = connection.prepareStatement("SELECT * FROM rendez_vous WHERE rendez_vous_date LIKE ? OR id_patient LIKE ? OR description LIKE ? or id_patient in (select id from patient where first_name LIKE ? or last_name LIKE ?) ");
+            psGetAllRendezVous = connection.prepareStatement("SELECT * FROM rendez_vous WHERE rendez_vous_date LIKE ? OR id_patient LIKE ? OR description LIKE ? or id_patient in (select id from patient where first_name LIKE ? or last_name LIKE ?) or done LIKE ? ");
             psGetAllRendezVous.setString(1, "%"+search+"%");
             psGetAllRendezVous.setString(2, "%"+search+"%");
             psGetAllRendezVous.setString(3, "%"+search+"%");
             psGetAllRendezVous.setString(4, "%"+search+"%");
             psGetAllRendezVous.setString(5, "%"+search+"%");
+            psGetAllRendezVous.setString(6, "%"+search+"%");
 
 
             queryOutput = psGetAllRendezVous.executeQuery();
@@ -147,6 +150,50 @@ public class RendezVousDAO {
         }
         return rendezVous;
     }
+
+    public static Vector<RendezVous> getDoneRendezVous(String date, int done){
+        Vector<RendezVous> rendezVous = new Vector<RendezVous>();
+        PreparedStatement psGetAllRendezVous = null;
+        ResultSet queryOutput = null;
+        try {
+            Connection connection = DBUtil.getConnection();
+            psGetAllRendezVous = connection.prepareStatement("SELECT * FROM rendez_vous WHERE rendez_vous_date LIKE ? AND done LIKE ? ");
+            psGetAllRendezVous.setString(1, "%"+date+"%");
+            psGetAllRendezVous.setInt(2, done);
+
+
+
+            queryOutput = psGetAllRendezVous.executeQuery();
+            while (queryOutput.next()) {
+                RendezVous rendezVous1 = new RendezVous();
+                rendezVous1.setId(queryOutput.getInt("id"));
+                rendezVous1.setRendezVousDate(queryOutput.getString("rendez_vous_date"));
+                rendezVous1.setId_patient(queryOutput.getInt("id_patient"));
+                rendezVous1.setDescription(queryOutput.getString("description"));
+                rendezVous.add(rendezVous1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (psGetAllRendezVous != null) {
+                try {
+                    psGetAllRendezVous.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (queryOutput != null) {
+                try {
+                    queryOutput.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            DBUtil.stopConnection();
+        }
+        return rendezVous;
+    }
+
     public static RendezVous getRendezVousById(Integer id){
         Vector<RendezVous> rendezVous = new Vector<RendezVous>();
         PreparedStatement psGetAllRendezVous = null;

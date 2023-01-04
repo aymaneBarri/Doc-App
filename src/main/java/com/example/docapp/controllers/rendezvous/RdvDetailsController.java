@@ -23,9 +23,12 @@ public class RdvDetailsController implements Initializable {
     public TextField cinField;
     public JFXButton saveBtn;
     public JFXButton delBtn;
+    public ComboBox<String> doneCombo;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        doneCombo.getItems().add("Oui");
+        doneCombo.getItems().add("Non");
         for (Permission permission : Utilisateur.currentPermissions) {
             if (permission.getSubject().equals("rendez_vous")) {
                 if (!permission.isCanModify())
@@ -61,10 +64,12 @@ public class RdvDetailsController implements Initializable {
             public void handle(ActionEvent event) {
                 if(validateForm().isEmpty()){
                     RendezVous rdv = new RendezVous();
+                    boolean done= doneCombo.getValue().equals("Oui");
                     rdv.setId(Integer.parseInt(idField.getText()));
                     rdv.setDescription(noteArea.getText());
                     rdv.setRendezVousDate(datePicker.getValue().toString() + " " + heureField.getText());
                     rdv.setId_patient(Integer.parseInt(idField.getText()));
+                    rdv.setDone(done);
                     int status = RendezVousDAO.editRendezVous(rdv);
                     System.out.println(status);
                     if(status == 201){
@@ -91,7 +96,7 @@ public class RdvDetailsController implements Initializable {
 
     public String validateForm(){
         String errorText="";
-        if(datePicker.getValue() == null|| heureField.getText().isEmpty() || cinField.getText().isEmpty()){
+        if(datePicker.getValue() == null|| heureField.getText().isEmpty() || cinField.getText().isEmpty() || doneCombo.getValue() == null){
             errorText = "Veuillez remplir tous les champs !";
 
         }
@@ -109,6 +114,12 @@ public class RdvDetailsController implements Initializable {
                 datePicker.setValue( LocalDate.parse(rdv.getRendezVousDate().split(" ")[0]));
                 heureField.setText(rdv.getRendezVousDate().split(" ")[1]);
                 noteArea.setText(rdv.getDescription());
+                if(!rdv.getDone()){
+                    doneCombo.getSelectionModel().select("Non");
+                }else{
+                    doneCombo.getSelectionModel().select("Oui");
+                }
+
             }
 
         } catch (Exception e) {
