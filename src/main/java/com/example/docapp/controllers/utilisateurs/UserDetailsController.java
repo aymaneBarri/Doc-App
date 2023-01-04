@@ -1,13 +1,13 @@
 package com.example.docapp.controllers.utilisateurs;
 
-import com.example.docapp.dao.PatientDAO;
-import com.example.docapp.dao.RoleDAO;
-import com.example.docapp.dao.UtilisateurDAO;
+import com.example.docapp.controllers.patient.VisiteItemController;
+import com.example.docapp.dao.*;
 import com.example.docapp.models.*;
 import com.example.docapp.util.DBUtil;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -17,6 +17,7 @@ import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 public class UserDetailsController implements Initializable {
     public TextField nomField;
@@ -30,6 +31,7 @@ public class UserDetailsController implements Initializable {
     public TextField idField;
     public JFXButton deleteBtn;
     public ComboBox<Role> rolesComboBox;
+    public ListView<BorderPane> listAction;
 
     String errorMessage = "";
 
@@ -116,12 +118,39 @@ public class UserDetailsController implements Initializable {
                 ViewModel.getInstance().getViewFactory().showUserRoles();
             }
         });
+
+        Vector<Action> actionList = ActionDAO.getActions();
+        for (Action action : actionList) {
+            BorderPane bp = createActionCard(action);
+            listAction.getItems().add(bp);
+        }
+    }
+
+    public BorderPane createActionCard(Action action) {
+        BorderPane root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/com/example/docapp/view/utilisateurs/actionItem.fxml"
+                    )
+            );
+
+            root = loader.load();
+            ActionItemController it = loader.getController();
+            it.actionLabel.setText(action.getAction());
+            it.dateLabel.setText(action.getActionTime());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return root;
+
     }
 
     public void setData(Utilisateur user){
         BorderPane root = null;
         try {
-//            Utilisateur user = UtilisateurDAO.getUserByID(id);
             this.setIdField(String.valueOf(user.getId()));
             this.setNomField(user.getFirstName());
             this.setPrenomField(user.getLastName());
