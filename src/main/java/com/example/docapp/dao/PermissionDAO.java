@@ -5,6 +5,7 @@ import com.example.docapp.models.Permission;
 import com.example.docapp.models.Role;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.util.DBUtil;
+import com.example.docapp.util.DateFormatter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -105,7 +106,7 @@ public class PermissionDAO {
             statement.setInt(1, role.getId());
             statement.executeUpdate();
 
-            Action action = new Action("Suppression du rôle id = " + role.getId(), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+            Action action = new Action("Suppression du rôle id = " + role.getId(), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
             ActionDAO.addAction(action);
 
             statusCode = 200;

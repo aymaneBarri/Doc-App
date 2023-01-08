@@ -2,11 +2,13 @@ package com.example.docapp.controllers.utilisateurs;
 
 import com.example.docapp.dao.RoleDAO;
 import com.example.docapp.dao.UtilisateurDAO;
+import com.example.docapp.dao.*;
 import com.example.docapp.models.*;
 import com.example.docapp.util.DBUtil;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -14,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 public class UserDetailsController implements Initializable {
     public TextField nomField;
@@ -27,6 +30,8 @@ public class UserDetailsController implements Initializable {
     public TextField idField;
     public JFXButton deleteBtn;
     public ComboBox<Role> rolesComboBox;
+    public ListView<BorderPane> listAction;
+    public Label idLabel;
 
     String errorMessage = "";
 
@@ -116,49 +121,39 @@ public class UserDetailsController implements Initializable {
                 ViewModel.getInstance().getViewFactory().showUserRoles();
             }
         });
+
     }
 
-    public void setData(Utilisateur user){
+    public BorderPane createActionCard(Action action) {
         BorderPane root = null;
         try {
-//            Utilisateur user = UtilisateurDAO.getUserByID(id);
-            this.setIdField(String.valueOf(user.getId()));
-            this.setNomField(user.getFirstName());
-            this.setPrenomField(user.getLastName());
-            this.setEmailField(user.getEmail());
-            this.setCinField(user.getCin());
-            this.setPhoneField(user.getPhoneNumber());
-            this.setRolesComboBox(RoleDAO.getRoleById(user.getIdRole()));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/com/example/docapp/view/utilisateurs/actionItem.fxml"
+                    )
+            );
+
+            root = loader.load();
+            ActionItemController it = loader.getController();
+            it.actionLabel.setText(action.getAction());
+            it.dateLabel.setText(action.getActionTime());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return root;
+
     }
 
-    public void setIdField(String id) {
-        this.idField.setText(id);
+    public void setActions(){
+        Vector<Action> actionList = ActionDAO.getActions(Integer.parseInt(idLabel.getText()));
+        for (Action action : actionList) {
+            BorderPane bp = createActionCard(action);
+            listAction.getItems().add(bp);
+        }
     }
-    public void setNomField(String text){
-        this.nomField.setText(text);
-    }
-    public void setPrenomField(String text){
-        this.prenomField.setText(text);
-    }
-    public void setEmailField(String text){
-        this.emailField.setText(text);
-    }
-    public void setPassField(String text){
-        this.passField.setText(text);
-    }
-    public void setPhoneField(String text){
-        this.phoneField.setText(text);
-    }
-    public void setCinField(String text){
-        this.cinField.setText(text);
-    }
-    public void setRolesComboBox(Role role){
-        this.rolesComboBox.getSelectionModel().select(role);;
-    }
+
 
     public boolean formIsValid() {
         if(nomField.getText().trim().isEmpty() || prenomField.getText().trim().isEmpty() || emailField.getText().trim().isEmpty() ||  cinField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()){

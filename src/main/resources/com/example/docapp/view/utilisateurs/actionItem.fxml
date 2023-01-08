@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.utilisateurs.ActionItemController">
+   <padding>
+      <Insets left="20.0" right="20.0" />
+   </padding>
+   <center>
+      <HBox alignment="CENTER_LEFT" spacing="25.0" BorderPane.alignment="CENTER">
+         <children>
+            <FontIcon iconLiteral="fth-info" iconSize="45">
+               <iconColor>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.3019607961177826" green="0.7058823704719543" blue="0.843137264251709" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </iconColor>
+            </FontIcon>
+            <VBox alignment="CENTER_LEFT" spacing="5.0">
+               <children>
+                  <Label fx:id="actionLabel" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Action" />
+                  <Label fx:id="dateLabel" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Date" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

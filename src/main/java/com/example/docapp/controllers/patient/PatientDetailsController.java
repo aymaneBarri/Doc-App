@@ -198,6 +198,7 @@ public class PatientDetailsController implements Initializable {
             birthField.setValue(LocalDate.parse(patient.getBirthDate()));
             cinField.setText(patient.getCin());
             phoneField.setText(patient.getPhoneNumber());
+            noteArea.setText(patient.getDescription());
             idP.setText(String.valueOf(patient.getId()));
             joinField.setText(patient.getJoin_date());
             setPrescription(id);

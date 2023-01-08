@@ -4,6 +4,7 @@ import com.example.docapp.models.Patient;
 import com.example.docapp.models.RendezVous;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.util.DBUtil;
+import com.example.docapp.util.DateFormatter;
 import javafx.event.ActionEvent;
 
 import java.sql.Connection;
@@ -33,7 +34,7 @@ public class RendezVousDAO {
                 psAddRendezVous = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
                 psAddRendezVous.setInt(1,  Utilisateur.currentUser.getId());
                 psAddRendezVous.setString(2, "Ajout d'un rendez vous");
-                psAddRendezVous.setString(3, LocalDateTime.now().toString());
+                psAddRendezVous.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
                 psAddRendezVous.executeUpdate();
 
 
@@ -81,7 +82,7 @@ public class RendezVousDAO {
             psEditR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
             psEditR.setInt(1,  Utilisateur.currentUser.getId());
             psEditR.setString(2, "Edit Rendez Vous "+rendezVous.getId());
-            psEditR.setString(3,  LocalDateTime.now().toString());
+            psEditR.setString(3,  LocalDateTime.now().format(DateFormatter.formatter));
             psEditR.executeUpdate();
 
             statusCode=201;
@@ -250,7 +251,7 @@ public class RendezVousDAO {
             psDeleteR = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
             psDeleteR.setInt(1, Utilisateur.currentUser.getId());
             psDeleteR.setString(2, "Delete Rendez Vous id =  "+id);
-            psDeleteR.setString(3,  LocalDateTime.now().toString());
+            psDeleteR.setString(3,  LocalDateTime.now().format(DateFormatter.formatter));
             psDeleteR.executeUpdate();
 
             statusCode=201;

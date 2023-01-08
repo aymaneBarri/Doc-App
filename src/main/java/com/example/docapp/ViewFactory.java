@@ -7,6 +7,7 @@ import com.example.docapp.controllers.utilisateurs.UserDetailsController;
 import com.example.docapp.controllers.utilisateurs.UserPermissionController;
 import com.example.docapp.controllers.visites.NewVisiteController;
 import com.example.docapp.controllers.visites.VisiteDetailsController;
+import com.example.docapp.dao.RoleDAO;
 import com.example.docapp.models.Permission;
 import com.example.docapp.models.Utilisateur;
 import javafx.application.Platform;
@@ -47,10 +48,11 @@ public class ViewFactory {
         stage.getIcons().add(appIcon);
         stage.setScene(scene);
         stage.setTitle("Login");
-        stage.centerOnScreen();
 
         stage.setMinHeight(760);
         stage.setMinWidth(760);
+
+        stage.centerOnScreen();
 
         stage.show();
 //        stage.setMaximized(true);
@@ -74,7 +76,7 @@ public class ViewFactory {
         stage.setScene(scene);
         stage.setTitle("Acceuil - DocAssistant");
 
-//        stage.setMinHeight(760);
+        stage.setMinHeight(760);
         stage.setMinWidth(1296);
         stage.centerOnScreen();
     }
@@ -150,8 +152,17 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-            ud.setData(utilisateur);
-            s.setTitle("Modifier l'utilisateur");
+            System.out.println("heres id in vf "+utilisateur.getId());
+            ud.idLabel.setText(String.valueOf(utilisateur.getId()));
+            ud.idField.setText(String.valueOf(utilisateur.getId()));
+            ud.nomField.setText(utilisateur.getLastName());
+            ud.prenomField.setText(utilisateur.getFirstName());
+            ud.emailField.setText(utilisateur.getEmail());
+            ud.cinField.setText(utilisateur.getCin());
+            ud.phoneField.setText(utilisateur.getPhoneNumber());
+            ud.setActions();
+            ud.rolesComboBox.getSelectionModel().select(RoleDAO.getRoleById(utilisateur.getIdRole()));
+            s.setTitle("Détails de l'utilisateur");
             s.getIcons().add(appIcon);
             s.show();
         }catch (Exception e){
@@ -167,7 +178,6 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-//            ur.setData(UserPermissionController.currentRole.getId());
             s.setTitle("Modifier l'utilisateur");
             s.getIcons().add(appIcon);
             s.show();
@@ -184,7 +194,6 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-//            ur.setData(0, permissions);
             s.setTitle("Nouveau utilisateur");
             s.getIcons().add(appIcon);
             s.show();

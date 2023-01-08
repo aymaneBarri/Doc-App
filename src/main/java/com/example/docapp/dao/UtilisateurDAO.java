@@ -2,12 +2,14 @@ package com.example.docapp.dao;
 
 import com.example.docapp.models.*;
 import com.example.docapp.util.DBUtil;
+import com.example.docapp.util.DateFormatter;
 import com.example.docapp.util.Encryptor;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 public class UtilisateurDAO {
@@ -77,7 +79,7 @@ public class UtilisateurDAO {
 //                        psAddUserRole.close();
 //                    }
 
-                    Action action = new Action("Ajout d'un nouveau utilisateur, son id est " + generatedKeys.getInt(1), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+                    Action action = new Action("Ajout d'un nouveau utilisateur id: " + generatedKeys.getInt(1), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
                     ActionDAO.addAction(action);
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");
@@ -199,7 +201,7 @@ public class UtilisateurDAO {
             psDeleteUser.setInt(1, id);
             psDeleteUser.executeUpdate();
 
-            Action action = new Action("Suppression de l'utilisateur id = " + id, LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+            Action action = new Action("Suppression de l'utilisateur id = " + id, LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
             ActionDAO.addAction(action);
 
             statusCode = 200;
@@ -538,7 +540,7 @@ public class UtilisateurDAO {
             psEditPermissions = connection.prepareStatement("INSERT INTO action (id_utilisateur, action, action_time) VALUES (?, ?, ?)");
             psEditPermissions.setInt(1, Utilisateur.currentUser.getId());
             psEditPermissions.setString(2, "Modification de l'utilisateur id = " + utilisateur.getId());
-            psEditPermissions.setString(3, LocalDateTime.now().toString());
+            psEditPermissions.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
             psEditPermissions.executeUpdate();
 
             statusCode = 201;
