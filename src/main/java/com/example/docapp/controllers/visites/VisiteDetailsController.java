@@ -28,7 +28,7 @@ public class VisiteDetailsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (Permission permission : Utilisateur.currentPermissions) {
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("visite")) {
                 if (!permission.isCanModify())
                     saveBtn.setDisable(true);

@@ -1,6 +1,9 @@
 package com.example.docapp.util;
 
+import com.example.docapp.dao.PermissionDAO;
+import com.example.docapp.dao.RoleDAO;
 import com.example.docapp.dao.UtilisateurDAO;
+import com.example.docapp.models.Role;
 import com.example.docapp.models.Utilisateur;
 import javafx.event.ActionEvent;
 
@@ -72,11 +75,11 @@ public class DBUtil {
                         statusCode = 400;
                     } else {
                         int id = queryOutput.getInt(1);
-                        Utilisateur.currentUser = new Utilisateur(id, queryOutput.getString(2), queryOutput.getString(3), queryOutput.getString(4), queryOutput.getString(5), queryOutput.getString(6), queryOutput.getString(7), queryOutput.getInt(8));
-//                        Utilisateur.currentRole = UtilisateurDAO.getUserRole(currentUser);
-
-                        System.out.println(Utilisateur.currentUser);
-                        System.out.println(Utilisateur.currentPermissions);
+                        int idRole = queryOutput.getInt(8);
+                        Utilisateur.currentUser = new Utilisateur(id, queryOutput.getString(2), queryOutput.getString(3), queryOutput.getString(4), queryOutput.getString(5), queryOutput.getString(6), queryOutput.getString(7), idRole);
+                        Role role = RoleDAO.getRoleById(idRole);
+                        role.setPermissions(PermissionDAO.getPermissionsByRole(idRole));
+                        Utilisateur.currentUser.setRole(role);
 
                         statusCode = 200;
                     }

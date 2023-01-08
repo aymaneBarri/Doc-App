@@ -23,41 +23,41 @@ public class RoleDAO {
             psAddRole.setString(1, role.getName());
             psAddRole.executeUpdate();
 
-            try (ResultSet generatedKeys = psAddRole.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    role.setId(generatedKeys.getInt(1));
-
-                    for (Permission permission : permissions) {
-                        String query = "INSERT INTO permission VALUES (?, ?, ?, ?, ?, ?)";
-                        PreparedStatement psAddUserRole = connection.prepareStatement(query);
-                        psAddUserRole.setInt(1, role.getId());
-                        psAddUserRole.setString(2, permission.getSubject());
-                        psAddUserRole.setInt(3, permission.isCanView() ? 1 : 0);
-                        psAddUserRole.setInt(4, permission.isCanAdd() ? 1 : 0);
-                        psAddUserRole.setInt(5, permission.isCanModify() ? 1 : 0);
-                        psAddUserRole.setInt(6, permission.isCanDelete() ? 1 : 0);
-                        psAddUserRole.executeUpdate();
-                        psAddUserRole.close();
-                    }
-                } else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
-                }
-            }
+//            try (ResultSet generatedKeys = psAddRole.getGeneratedKeys()) {
+//                if (generatedKeys.next()) {
+//                    role.setId(generatedKeys.getInt(1));
+//
+//                    for (Permission permission : permissions) {
+//                        String query = "INSERT INTO permission VALUES (?, ?, ?, ?, ?, ?)";
+//                        PreparedStatement psAddUserRole = connection.prepareStatement(query);
+//                        psAddUserRole.setInt(1, role.getId());
+//                        psAddUserRole.setString(2, permission.getSubject());
+//                        psAddUserRole.setInt(3, permission.isCanView() ? 1 : 0);
+//                        psAddUserRole.setInt(4, permission.isCanAdd() ? 1 : 0);
+//                        psAddUserRole.setInt(5, permission.isCanModify() ? 1 : 0);
+//                        psAddUserRole.setInt(6, permission.isCanDelete() ? 1 : 0);
+//                        psAddUserRole.executeUpdate();
+//                        psAddUserRole.close();
+//                    }
+//                } else {
+//                    throw new SQLException("Creating user failed, no ID obtained.");
+//                }
+//            }
 
             Action action = new Action("Ajout du rôle " + role.getName() + ", son id est " + role.getId(), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
             ActionDAO.addAction(action);
 
             statusCode=201;
         } catch (SQLException e) {
-            statusCode = 400;
-            throw new RuntimeException(e);
+            statusCode = 401;
+//            throw new RuntimeException(e);
 
         } finally {
             if (psAddRole != null) {
                 try {
                     psAddRole.close();
                 } catch (SQLException e) {
-                    statusCode = 400;
+                    statusCode = 401;
                     e.printStackTrace();
                 }
             }
@@ -123,7 +123,7 @@ public class RoleDAO {
             Action action = new Action("Suppression du rôle id = " + role.getId(), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
             ActionDAO.addAction(action);
 
-            statusCode = 200;
+            statusCode = 201;
         } catch (SQLException e) {
             statusCode = 400;
             throw new RuntimeException(e);
@@ -276,7 +276,6 @@ public class RoleDAO {
         int statusCode = 0;
 
         try {
-            Connection connection = DBUtil.getConnection();
 
             for (Permission permission : permissions) {
                 PermissionDAO.editPermission(permission);
@@ -286,6 +285,7 @@ public class RoleDAO {
 //            psEditPermissions.executeUpdate();
 
             Action action = new Action("Modification du rôle id = " + role.getId(), LocalDateTime.now().toString(), Utilisateur.currentUser.getId());
+            ActionDAO.addAction(action);
 
             statusCode = 201;
         } finally {
@@ -310,7 +310,7 @@ public class RoleDAO {
                 role.setId(queryOutput.getInt("id"));
                 role.setName(queryOutput.getString("name"));
             }
-            System.out.println("Role retrieved" + role);
+            System.out.println("Role retrieved " + role);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

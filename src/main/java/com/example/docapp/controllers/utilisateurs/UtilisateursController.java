@@ -37,14 +37,13 @@ public class UtilisateursController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        UtilisateurDAO userDao = new UtilisateurDAO();
-        Vector<Utilisateur> userList = userDao.getUtilisateurs();
+        Vector<Utilisateur> userList = UtilisateurDAO.getUtilisateurs();
         for (Utilisateur user : userList) {
             BorderPane bp = createCard(user.getFirstName(),user.getLastName(), user.getEmail(), user.getPhoneNumber(), user.getId());
             listUser.getItems().add(bp);
         }
 
-        for (Permission permission : Utilisateur.currentPermissions) {
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("utilisateur")) {
                 if (!permission.isCanAdd())
                     newUser.setDisable(true);
@@ -87,6 +86,8 @@ public class UtilisateursController implements Initializable {
             uc.setEmail(email);
             uc.setPhone(phone);
             uc.setId(id.toString());
+            if(id == Utilisateur.currentUser.getId())
+                uc.editBtn.setDisable(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

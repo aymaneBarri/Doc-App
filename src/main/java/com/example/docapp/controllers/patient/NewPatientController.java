@@ -52,7 +52,7 @@ public class NewPatientController implements Initializable {
                     patient.setLastName(nomField.getText());
                     patient.setPhoneNumber(phoneField.getText());
                     patient.setDescription(noteArea.getText());
-                   int status =  PatientDAO.addPatient(patient);
+                    int status =  PatientDAO.addPatient(patient);
                     System.out.println(status);
                     if(status == 201){
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

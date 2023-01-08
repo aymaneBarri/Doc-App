@@ -39,6 +39,13 @@ public class NewUserController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
+            if (permission.getSubject().equals("role")) {
+                if (!permission.isCanView())
+                    rolesBtn.setDisable(true);
+            }
+        }
+
         permissions.clear();
         permissions.add(new Permission("patient",false,false,false,false));
         permissions.add(new Permission("utilisateur",false,false,false,false));

@@ -1,8 +1,11 @@
 package com.example.docapp.models;
 
+import java.util.Vector;
+
 public class Role {
     private int id;
     private String name;
+    private Vector<Permission> permissions;
 
     public Role() {
     }
@@ -13,6 +16,11 @@ public class Role {
 
     public Role(int id, String name) {
         this(name);
+    }
+
+    public Role(int id, String name, Vector<Permission> permissions) {
+        this(id, name);
+        this.permissions = permissions;
     }
 
     public int getId() {
@@ -29,6 +37,14 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Vector<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Vector<Permission> permissions) {
+        this.permissions = permissions;
     }
 
     @Override

@@ -53,7 +53,7 @@ public class PatientDetailsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (Permission permission : Utilisateur.currentPermissions) {
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("patient")) {
                 if (!permission.isCanModify())
                     editBtn.setDisable(true);

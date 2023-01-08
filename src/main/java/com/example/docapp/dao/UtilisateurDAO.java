@@ -222,7 +222,7 @@ public class UtilisateurDAO {
         return statusCode;
     }
 
-    public Vector<Utilisateur> getUtilisateurs() {
+    public static Vector<Utilisateur> getUtilisateurs() {
         Vector<Utilisateur> utilisateurs = new Vector<Utilisateur>();
         Utilisateur utilisateur;
         PreparedStatement psLogin = null;
