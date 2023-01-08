@@ -53,9 +53,9 @@ public class ViewFactory {
         stage.setMinWidth(760);
 
         stage.centerOnScreen();
+//        stage.setMaximized(true);
 
         stage.show();
-//        stage.setMaximized(true);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -78,7 +78,9 @@ public class ViewFactory {
 
         stage.setMinHeight(760);
         stage.setMinWidth(1296);
+
         stage.centerOnScreen();
+        stage.setMaximized(true);
     }
 
     public void showPatient(){
