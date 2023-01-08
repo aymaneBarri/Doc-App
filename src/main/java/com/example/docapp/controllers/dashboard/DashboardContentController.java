@@ -15,13 +15,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -32,10 +36,18 @@ public class DashboardContentController implements Initializable {
     public Label revenueLabel;
     public ListView<BorderPane> listRdv;
     public ListView<BorderPane> listPatient;
+    public VBox vbox;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            HBox root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/docapp/view/util/topBar.fxml")));
+            vbox.getChildren().add(0,root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         ;
         nbPatientLabel.setText(PatientDAO.getPatients().size()+"");
         nbVisiteLabel.setText(VisiteDAO.getAllVisites("").size()+"");

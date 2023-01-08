@@ -19,7 +19,7 @@ import java.net.MalformedURLException;
 public class Print {
 
     public static void print(Visite visite) {
-        String url = System.getProperty("user.dir") + "\\src\\main\\resources\\com\\example\\docapp\\temp.pdf";
+        String url = System.getProperty("user.dir") + "\\src\\main\\resources\\com\\example\\docapp\\ordonnance.pdf";
         try {
             PdfWriter pdfWriter = new PdfWriter(url);
             PdfDocument pdfdoc = new PdfDocument(pdfWriter);
@@ -27,7 +27,7 @@ public class Print {
             System.out.println(path);
 
             Paragraph p = new Paragraph("Date de prescription:  " + visite.getVisit_date());
-            Paragraph t = new Paragraph("Ordonnace");
+            Paragraph t = new Paragraph("Ordonnance");
             t.setBold();
             t.setFontSize(30.0F);
             t.setTextAlignment(TextAlignment.CENTER);
@@ -38,9 +38,9 @@ public class Print {
             Image img = new Image(d);
             img.scaleToFit(500.0F,50.0F);
             img.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            para.setBold();
+            para.setFontSize(15.0F);
             img.setMargins(10.0F, 10.0F, 10.0F, 10.0F);
-            para.setMargins(20.0F, 50.0F, 10.0F, 50.0F);
+            para.setMargins(50.0F, 50.0F, 10.0F, 50.0F);
             t.setMargins(50.0F, 10.0F, 10.0F, 10.0F);
             p.setMargins(10.0F, 10.0F, 10.0F, 10.0F);
             para.setHorizontalAlignment(HorizontalAlignment.CENTER);

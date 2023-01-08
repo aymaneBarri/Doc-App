@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="1050.0" spacing="30.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.util.TopBarController">
+<HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="1050.0" spacing="10.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.util.TopBarController">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0" HBox.hgrow="ALWAYS">
          <children>
@@ -28,23 +28,24 @@
          <HBox.margin>
             <Insets left="30.0" />
          </HBox.margin></HBox>
-        <Label fx:id="userName" contentDisplay="RIGHT" style="-fx-font-family: Inter;" text="New User">
+        <Label fx:id="userName" contentDisplay="RIGHT" style="-fx-font-family: Inter;" text=" User">
             <HBox.margin>
-                <Insets right="20.0" />
+                <Insets />
             </HBox.margin>
          <font>
             <Font size="14.0" />
          </font>
-         <graphic>
-            <JFXButton contentDisplay="CENTER" style="-fx-background-color: transparent; -jfx-disable-visual-focus: true;" text=" ">
-               <graphic>
-                  <FontIcon fx:id="profileBtn" iconLiteral="fth-user" iconSize="20" />
-               </graphic>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-         </graphic>
         </Label>
+      <JFXButton fx:id="profileBtn" contentDisplay="CENTER" style="-fx-background-color: transparent; -jfx-disable-visual-focus: true;" text=" ">
+         <graphic>
+            <FontIcon iconLiteral="fth-user" iconSize="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <HBox.margin>
+            <Insets right="30.0" />
+         </HBox.margin>
+      </JFXButton>
     </children>
 </HBox>
