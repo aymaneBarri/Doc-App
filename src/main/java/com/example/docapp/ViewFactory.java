@@ -53,7 +53,7 @@ public class ViewFactory {
         stage.setMinWidth(760);
 
         stage.centerOnScreen();
-//        stage.setMaximized(true);
+        stage.setMaximized(true);
 
         stage.show();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -78,9 +78,7 @@ public class ViewFactory {
 
         stage.setMinHeight(760);
         stage.setMinWidth(1296);
-
         stage.centerOnScreen();
-        stage.setMaximized(true);
     }
 
     public void showPatient(){
@@ -217,19 +215,6 @@ public class ViewFactory {
         stage.setTitle("Visites - DocAssistant");
     }
 
-    public void showProfile() {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/profile.fxml"));
-        try{
-            Scene oldScene = stage.getScene();
-            scene = new Scene(loader.load(), oldScene.getWidth(), oldScene.getHeight());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        stage.setScene(scene);
-        stage.setTitle("Profile - DocAssistant");
-    }
-
 
     public void showRdv() {
 
@@ -324,6 +309,18 @@ public class ViewFactory {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+     public void showProfile() {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/profile.fxml"));
+        try{
+            Scene oldScene = stage.getScene();
+            scene = new Scene(loader.load(), oldScene.getWidth(), oldScene.getHeight());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        stage.setScene(scene);
+        stage.setTitle("Profile - DocAssistant");
     }
 
     public void showRdvDetails(String idRdv, String idPatient){
