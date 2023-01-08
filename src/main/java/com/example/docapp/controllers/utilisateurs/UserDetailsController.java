@@ -1,6 +1,7 @@
 package com.example.docapp.controllers.utilisateurs;
 
-import com.example.docapp.controllers.patient.VisiteItemController;
+import com.example.docapp.dao.RoleDAO;
+import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.dao.*;
 import com.example.docapp.models.*;
 import com.example.docapp.util.DBUtil;
@@ -14,8 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -38,12 +37,15 @@ public class UserDetailsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (Permission permission : Utilisateur.currentPermissions) {
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("utilisateur")) {
                 if (!permission.isCanModify())
                     saveBtn.setDisable(true);
                 else if (!permission.isCanDelete())
                     deleteBtn.setDisable(true);
+            } else if (permission.getSubject().equals("role")) {
+                if (!permission.isCanView())
+                    rolesBtn.setDisable(true);
             }
         }
 

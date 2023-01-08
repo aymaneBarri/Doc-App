@@ -44,7 +44,7 @@ public class PatientsController implements Initializable {
             listPatient.getItems().add(bp);
         }
 
-        for (Permission permission : Utilisateur.currentPermissions) {
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("patient")) {
                 if (!permission.isCanAdd())
                     newPatient.setDisable(true);

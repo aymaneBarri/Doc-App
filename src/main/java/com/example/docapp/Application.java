@@ -1,17 +1,8 @@
 package com.example.docapp;
 
-import com.example.docapp.dao.PatientDAO;
-import com.example.docapp.dao.RendezVousDAO;
-import com.example.docapp.dao.UtilisateurDAO;
-import com.example.docapp.dao.VisiteDAO;
-import com.example.docapp.models.*;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
+import com.example.docapp.models.ViewModel;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Vector;
 
 public class Application extends javafx.application.Application {
     @Override
@@ -21,8 +12,5 @@ public class Application extends javafx.application.Application {
 
     public static void main(String[] args) {
         launch();
-
-
-
     }
 }

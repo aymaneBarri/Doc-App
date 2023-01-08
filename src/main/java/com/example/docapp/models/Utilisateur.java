@@ -6,8 +6,8 @@ public class Utilisateur extends Personne {
     private String email;
     private String password;
     private int idRole;
+    private Role role;
     public static Utilisateur currentUser;
-    public static Vector<Permission> currentPermissions = new Vector<Permission>();
 
     public Utilisateur() {
         super();
@@ -26,6 +26,11 @@ public class Utilisateur extends Personne {
     public Utilisateur(int id, String firstName, String lastName, String email, String password, String cin, String phoneNumber, int idRole) {
         this(firstName, lastName, email, password, cin, phoneNumber, idRole);
         this.setId(id);
+    }
+
+    public Utilisateur(int id, String firstName, String lastName, String email, String password, String cin, String phoneNumber, int idRole, Role role) {
+        this(id, firstName, lastName, email, password, cin, phoneNumber, idRole);
+        this.setRole(role);
     }
 
     public String getEmail() {
@@ -50,6 +55,14 @@ public class Utilisateur extends Personne {
 
     public void setIdRole(int idRole) {
         this.idRole = idRole;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

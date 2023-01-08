@@ -59,6 +59,7 @@ public class PermissionDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
+            System.out.println("Permission: " + permission);
             psEditPermission = connection.prepareStatement("UPDATE permission SET canView = ?, canAdd = ?, canModify = ?, canDelete = ? WHERE id_role = ? AND subject = ?");
             psEditPermission.setInt(1, permission.isCanView() ? 1 : 0);
             psEditPermission.setInt(2, permission.isCanAdd() ? 1 : 0);

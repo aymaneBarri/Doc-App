@@ -1,11 +1,13 @@
 package com.example.docapp.controllers.util;
 
+import com.example.docapp.Application;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Permission;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
 import com.example.docapp.util.DBUtil;
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
@@ -30,7 +32,7 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        for (Permission permission : Utilisateur.currentPermissions) {
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("patient")) {
                 if (!permission.isCanView())
                     patientBtn.setDisable(true);
@@ -80,13 +82,6 @@ public class MenuController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 ViewModel.getInstance().getViewFactory().showRdv();
-            }
-        });
-
-        logoutBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
             }
         });
 

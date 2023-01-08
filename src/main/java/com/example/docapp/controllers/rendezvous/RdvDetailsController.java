@@ -29,7 +29,7 @@ public class RdvDetailsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         doneCombo.getItems().add("Oui");
         doneCombo.getItems().add("Non");
-        for (Permission permission : Utilisateur.currentPermissions) {
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("rendez_vous")) {
                 if (!permission.isCanModify())
                     saveBtn.setDisable(true);

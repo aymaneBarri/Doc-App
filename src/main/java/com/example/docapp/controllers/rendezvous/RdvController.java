@@ -39,7 +39,7 @@ public class RdvController implements Initializable {
             throw new RuntimeException(e);
         }
 
-        for (Permission permission : Utilisateur.currentPermissions) {
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("rendez_vous")) {
                 if (!permission.isCanAdd())
                     newRdv.setDisable(true);

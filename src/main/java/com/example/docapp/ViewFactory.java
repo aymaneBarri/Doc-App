@@ -27,7 +27,9 @@ public class ViewFactory {
 
     Scene scene = null;
     public ViewFactory() {}
+
     Image appIcon = new Image(Objects.requireNonNull(Application.class.getResourceAsStream("images/icon.png")));
+
     public void showLogin(){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/login.fxml"));
 
@@ -46,10 +48,14 @@ public class ViewFactory {
         stage.getIcons().add(appIcon);
         stage.setScene(scene);
         stage.setTitle("Login");
+
+        stage.setMinHeight(760);
+        stage.setMinWidth(760);
+
         stage.centerOnScreen();
 
         stage.show();
-        stage.setMaximized(true);
+//        stage.setMaximized(true);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -69,6 +75,10 @@ public class ViewFactory {
         }
         stage.setScene(scene);
         stage.setTitle("Acceuil - DocAssistant");
+
+        stage.setMinHeight(760);
+        stage.setMinWidth(1296);
+        stage.centerOnScreen();
     }
 
     public void showPatient(){

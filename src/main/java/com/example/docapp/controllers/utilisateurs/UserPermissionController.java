@@ -5,20 +5,17 @@ import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.PermissionDAO;
 import com.example.docapp.dao.RoleDAO;
 import com.example.docapp.dao.UtilisateurDAO;
-import com.example.docapp.models.Patient;
-import com.example.docapp.models.Permission;
-import com.example.docapp.models.Role;
-import com.example.docapp.models.Utilisateur;
+import com.example.docapp.models.*;
 import com.jfoenix.controls.JFXButton;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -49,12 +46,26 @@ public class UserPermissionController implements Initializable {
     public JFXButton deleteBtn;
     public static Role currentRole;
     public ListView<Role> listRole;
+    public CheckBox viewRole;
+    public CheckBox addRole;
+    public CheckBox editRole;
+    public CheckBox deleteRole;
+    public JFXButton addBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        for (Role role : RoleDAO.getRoles()) {
-            listRole.getItems().add(role);
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
+            if (permission.getSubject().equals("role")) {
+                if (!permission.isCanAdd())
+                    addBtn.setVisible(true);
+                if (!permission.isCanModify())
+                    saveBtn.setDisable(true);
+                if (!permission.isCanDelete())
+                    deleteBtn.setDisable(true);
+            }
         }
+
+        refreshRolesList();
 
         listRole.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Role>() {
             @Override
@@ -216,11 +227,116 @@ public class UserPermissionController implements Initializable {
             }
         });
 
+        viewRole.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if(!viewRole.isSelected()) {
+                    addRole.setSelected(false);
+                    editRole.setSelected(false);
+                    deleteRole.setSelected(false);
+                }
+            }
+        });
+
+        addRole.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if(addRole.isSelected()) {
+                    viewRole.setSelected(true);
+                }
+            }
+        });
+
+        editRole.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if(editRole.isSelected()) {
+                    viewRole.setSelected(true);
+                }
+            }
+        });
+
+        deleteRole.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if(deleteRole.isSelected()) {
+                    viewRole.setSelected(true);
+                }
+            }
+        });
+
+        addBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                TextInputDialog tid = new TextInputDialog();
+                tid.setHeaderText("Entrez le nom du rôle");
+                tid.setTitle("Nouveau rôle");
+
+                Button okButton = (Button) tid.getDialogPane().lookupButton(ButtonType.OK);
+                TextField inputField = tid.getEditor();
+                BooleanBinding isInvalid = Bindings.createBooleanBinding(() -> inputField.getText().trim().isEmpty(), inputField.textProperty());
+                okButton.disableProperty().bind(isInvalid);
+
+                tid.showAndWait();
+                Role role = new Role(tid.getEditor().getText().trim());
+                System.out.println(tid.getEditor().getText());
+
+                int statusCode = RoleDAO.addRole(role, null);
+
+                if (statusCode == 201) {
+                    refreshRolesList();
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Rôle ajouté avec succès!");
+                    alert.show();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Erreur lors de l'ajout du rôle!");
+                    alert.show();
+                }
+//                ButtonType okButton = new ButtonType("Oui", ButtonBar.ButtonData.YES);
+//                ButtonType cancelButton = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
+//                dialog.getClass().get.setAll(okButton, cancelButton);
+//                dialog.showAndWait().ifPresent(type -> {
+//                    if (type == okButton) {
+//                        System.out.println(okButton.getText());
+//                        System.out.println("nononon");
+//                        System.out.println(UtilisateurDAO.deleteUtilisateur(Integer.parseInt(idField.getText())));
+//                        Stage s = (Stage) deleteBtn.getScene().getWindow();
+//                        s.close();
+//
+//                        ViewModel.getInstance().getViewFactory().showUser();
+//                    }
+//                });
+            }
+        });
+
         deleteBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage s = (Stage) deleteBtn.getScene().getWindow();
-                s.hide();
+                Alert warning = new Alert(Alert.AlertType.WARNING);
+                warning.setTitle("Vous risquez la perte des données");
+                warning.setContentText("Ce rôle va être supprimé, continuer?");
+                ButtonType okButton = new ButtonType("Oui", ButtonBar.ButtonData.YES);
+                ButtonType cancelButton = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
+                warning.getButtonTypes().setAll(okButton, cancelButton);
+                warning.showAndWait().ifPresent(type -> {
+                    if (type == okButton) {
+                        int statusCode = RoleDAO.deleteRole(currentRole);
+
+                        if (statusCode == 201) {
+                            refreshRolesList();
+
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setContentText("Rôle supprimé avec succès!");
+                            alert.show();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setContentText("Erreur lors de la suppression du rôle!");
+                            alert.show();
+                        }
+                    }
+                });
             }
         });
 
@@ -228,21 +344,29 @@ public class UserPermissionController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 Vector<Permission> permissions = new Vector<Permission>();
-                Permission permissionPatient = new Permission("patient", viewPatient.isSelected(), addPatient.isSelected(), editPatient.isSelected(), deletePatient.isSelected());
-                Permission permissionVisite = new Permission("visite", viewVisite.isSelected(), addVisite.isSelected(), editVisite.isSelected(), deleteVisite.isSelected());
-                Permission permissionUtilisateur = new Permission("utilisateur", viewUser.isSelected(), addUser.isSelected(), editUser.isSelected(), deleteUser.isSelected());
-                Permission permissionRdv = new Permission("rendez_vous", viewRdv.isSelected(), addRdv.isSelected(), editRdv.isSelected(), deleteRdv.isSelected());
+                Permission permissionPatient = new Permission(currentRole.getId(), "patient", viewPatient.isSelected(), addPatient.isSelected(), editPatient.isSelected(), deletePatient.isSelected());
+                Permission permissionVisite = new Permission(currentRole.getId(), "visite", viewVisite.isSelected(), addVisite.isSelected(), editVisite.isSelected(), deleteVisite.isSelected());
+                Permission permissionUtilisateur = new Permission(currentRole.getId(), "utilisateur", viewUser.isSelected(), addUser.isSelected(), editUser.isSelected(), deleteUser.isSelected());
+                Permission permissionRdv = new Permission(currentRole.getId(), "rendez_vous", viewRdv.isSelected(), addRdv.isSelected(), editRdv.isSelected(), deleteRdv.isSelected());
+                Permission permissionRole = new Permission(currentRole.getId(), "role", viewRole.isSelected(), addRole.isSelected(), editRole.isSelected(), deleteRole.isSelected());
                 permissions.add(permissionPatient);
                 permissions.add(permissionVisite);
                 permissions.add(permissionUtilisateur);
                 permissions.add(permissionRdv);
+                permissions.add(permissionRole);
 
                 RoleDAO.editRolePermissions(currentRole, permissions);
 
-                Stage s = (Stage) saveBtn.getScene().getWindow();
-                s.hide();
+                refreshRolesList();
             }
         });
+    }
+
+    public void refreshRolesList(){
+        listRole.getItems().clear();
+        for (Role role : RoleDAO.getRoles()) {
+            listRole.getItems().add(role);
+        }
     }
 
     public void setData(int idRole) {
@@ -250,6 +374,7 @@ public class UserPermissionController implements Initializable {
         viewUser.setSelected(false);
         viewRdv.setSelected(false);
         viewVisite.setSelected(false);
+        viewRole.setSelected(false);
 
         Vector<Permission> permissions = PermissionDAO.getPermissionsByRole(idRole);
 
@@ -278,6 +403,12 @@ public class UserPermissionController implements Initializable {
                     addRdv.setSelected(permission.isCanAdd());
                     editRdv.setSelected(permission.isCanModify());
                     deleteRdv.setSelected(permission.isCanDelete());
+                }
+                case "role" -> {
+                    viewRole.setSelected(permission.isCanView());
+                    addRole.setSelected(permission.isCanAdd());
+                    editRole.setSelected(permission.isCanModify());
+                    deleteRole.setSelected(permission.isCanDelete());
                 }
             }
         }
