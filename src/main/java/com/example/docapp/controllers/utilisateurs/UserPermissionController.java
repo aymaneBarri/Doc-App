@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -277,11 +278,21 @@ public class UserPermissionController implements Initializable {
                 BooleanBinding isInvalid = Bindings.createBooleanBinding(() -> inputField.getText().trim().isEmpty(), inputField.textProperty());
                 okButton.disableProperty().bind(isInvalid);
 
-                tid.showAndWait();
-                Role role = new Role(tid.getEditor().getText().trim());
+//                tid.showAndWait();
+                Optional<String> result = tid.showAndWait();
+
+                int statusCode = 0;
+                if (result.isPresent()) {
+                    // ok was pressed.
+                    Role role = new Role(result.get().trim());
+                    statusCode = RoleDAO.addRole(role, null);
+                } else {
+                    // cancel might have been pressed.
+                    return;
+                }
+
                 System.out.println(tid.getEditor().getText());
 
-                int statusCode = RoleDAO.addRole(role, null);
 
                 if (statusCode == 201) {
                     refreshRolesList();
@@ -355,7 +366,19 @@ public class UserPermissionController implements Initializable {
                 permissions.add(permissionRdv);
                 permissions.add(permissionRole);
 
-                RoleDAO.editRolePermissions(currentRole, permissions);
+                int statusCode = RoleDAO.editRolePermissions(currentRole, permissions);
+
+                if (statusCode == 201) {
+                    refreshRolesList();
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Rôle modifié avec succès!");
+                    alert.show();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Erreur lors de la modification du rôle!");
+                    alert.show();
+                }
 
                 refreshRolesList();
             }
