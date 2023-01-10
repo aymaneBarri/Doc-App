@@ -67,7 +67,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GridPane hgap="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <GridPane fx:id="permissionCheckBoxes" hgap="100.0" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" />
                </columnConstraints>

@@ -1,10 +1,7 @@
 package com.example.docapp.controllers.utilisateurs;
 
-import com.example.docapp.controllers.visites.VisiteItemController;
-import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.PermissionDAO;
 import com.example.docapp.dao.RoleDAO;
-import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.models.*;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.binding.Bindings;
@@ -13,11 +10,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
 
 import java.net.URL;
 import java.util.Optional;
@@ -52,6 +48,7 @@ public class UserPermissionController implements Initializable {
     public CheckBox editRole;
     public CheckBox deleteRole;
     public JFXButton addBtn;
+    public GridPane permissionCheckBoxes;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,8 +68,12 @@ public class UserPermissionController implements Initializable {
         listRole.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Role>() {
             @Override
             public void changed(ObservableValue<? extends Role> observableValue, Role role, Role t1) {
-                currentRole = t1;
-                setData(t1.getId());
+                permissionCheckBoxes.setVisible(true);
+
+                if(t1 != null){
+                    currentRole = t1;
+                    setData(t1.getId());
+                }
             }
         });
 
@@ -278,24 +279,21 @@ public class UserPermissionController implements Initializable {
                 BooleanBinding isInvalid = Bindings.createBooleanBinding(() -> inputField.getText().trim().isEmpty(), inputField.textProperty());
                 okButton.disableProperty().bind(isInvalid);
 
-//                tid.showAndWait();
                 Optional<String> result = tid.showAndWait();
 
-                int statusCode = 0;
+                Role role;
+                int statusCode;
                 if (result.isPresent()) {
-                    // ok was pressed.
-                    Role role = new Role(result.get().trim());
+                    role = new Role(result.get().trim());
                     statusCode = RoleDAO.addRole(role, null);
                 } else {
-                    // cancel might have been pressed.
                     return;
                 }
-
-                System.out.println(tid.getEditor().getText());
 
 
                 if (statusCode == 201) {
                     refreshRolesList();
+                    listRole.getSelectionModel().select(listRole.getItems().size() - 1);
 
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setContentText("Rôle ajouté avec succès!");
@@ -305,20 +303,6 @@ public class UserPermissionController implements Initializable {
                     alert.setContentText("Erreur lors de l'ajout du rôle!");
                     alert.show();
                 }
-//                ButtonType okButton = new ButtonType("Oui", ButtonBar.ButtonData.YES);
-//                ButtonType cancelButton = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
-//                dialog.getClass().get.setAll(okButton, cancelButton);
-//                dialog.showAndWait().ifPresent(type -> {
-//                    if (type == okButton) {
-//                        System.out.println(okButton.getText());
-//                        System.out.println("nononon");
-//                        System.out.println(UtilisateurDAO.deleteUtilisateur(Integer.parseInt(idField.getText())));
-//                        Stage s = (Stage) deleteBtn.getScene().getWindow();
-//                        s.close();
-//
-//                        ViewModel.getInstance().getViewFactory().showUser();
-//                    }
-//                });
             }
         });
 
@@ -337,6 +321,7 @@ public class UserPermissionController implements Initializable {
 
                         if (statusCode == 201) {
                             refreshRolesList();
+                            permissionCheckBoxes.setVisible(false);
 
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setContentText("Rôle supprimé avec succès!");
