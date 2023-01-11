@@ -53,32 +53,7 @@ public class DashboardContentController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
-            if (permission.getSubject().equals("patient")) {
-                if (!permission.isCanView()){
-                    patientCard.setDisable(true);
-                    nbPatientLabel.setText("-");
-                    patientLabel.setText("Vous n'avez pas le droit pour consulter les patients");
-                }
-            }
-            if (permission.getSubject().equals("rendez_vous")) {
-                if (!permission.isCanView()){
-                    rdvCard.setDisable(true);
-                    nbRdvLabel.setText("-");
-                    rdvLabel.setText("Vous n'avez pas le droit pour consulter les rendez-vous");
-                }
 
-            }
-            if (permission.getSubject().equals("visite")) {
-                if (!permission.isCanView()){
-                    moneyCard.setDisable(true);
-                    nbRdvLabel.setText("-");
-                    moneyLabel.setText("Vous n'avez pas le droit de consulter les paiements");
-                }
-
-            }
-
-        }
 
         nbPatientLabel.setText(PatientDAO.getPatients().size()+"");
         System.out.println(LocalDateTime.now().format(DateFormatter.formatter));
@@ -105,13 +80,35 @@ public class DashboardContentController implements Initializable {
                 listPatient.getItems().add(bp);
             }
         }
-
-
-
-
         refreshList();
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
+            if (permission.getSubject().equals("patient")) {
+                if (!permission.isCanView()){
+                    patientCard.setDisable(true);
+                    nbPatientLabel.setText("-");
+                    patientLabel.setText("Vous n'avez pas le droit pour consulter les patients");
+                    listPatient.getItems().clear();
+                }
+            }
+            if (permission.getSubject().equals("rendez_vous")) {
+                if (!permission.isCanView()){
+                    rdvCard.setDisable(true);
+                    nbRdvLabel.setText("-");
+                    rdvLabel.setText("Vous n'avez pas le droit pour consulter les rendez-vous");
+                    listRdv.getItems().clear();
+                }
 
+            }
+            if (permission.getSubject().equals("visite")) {
+                if (!permission.isCanView()){
+                    moneyCard.setDisable(true);
+                    nbMoneyLabel.setText("-");
+                    moneyLabel.setText("Vous n'avez pas le droit de consulter les paiements");
+                }
 
+            }
+
+        }
     }
 
 
