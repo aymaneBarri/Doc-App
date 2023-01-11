@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -31,6 +32,7 @@ public class VisitesController implements Initializable {
     public TextField searchField;
     public JFXButton searchBtn;
     public VBox vbox;
+    public Label totalLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +45,7 @@ public class VisitesController implements Initializable {
         }
 
         Vector<Visite> visiteList = VisiteDAO.getAllVisites("");
+        totalLabel.setText(String.valueOf(visiteList.size()));
         for (Visite visite : visiteList) {
             BorderPane bp = createCard(visite.getVisit_date(),visite.getId()+"",visite.getAmount()+"", visite.getIllness(), visite.getId_patient());
             listVisite.getItems().add(bp);

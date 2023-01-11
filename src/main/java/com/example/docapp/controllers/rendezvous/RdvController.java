@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -29,6 +30,7 @@ public class RdvController implements Initializable {
     public JFXButton searchBtn;
     public JFXButton newRdv;
     public ListView<BorderPane> listRdv;
+    public Label totalLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,6 +56,7 @@ public class RdvController implements Initializable {
         });
 
         Vector<RendezVous> rdvList = RendezVousDAO.getAllRendezVous("");
+        totalLabel.setText(String.valueOf(rdvList.size()));
         for (RendezVous rdv : rdvList) {
             BorderPane bp = createCard(rdv.getRendezVousDate(),String.valueOf(rdv.getId()), rdv.getId_patient());
             listRdv.getItems().add(bp);

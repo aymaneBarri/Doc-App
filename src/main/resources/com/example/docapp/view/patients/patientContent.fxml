@@ -26,9 +26,59 @@
          <top>
             <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: white; -fx-background-radius: 17; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER_LEFT" layoutX="50.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Label alignment="CENTER" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Liste des patients">
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="0.006711409395973154">
+                                       <color>
+                                          <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.3019607961177826" green="0.7058823704719543" blue="0.843137264251709" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label alignment="CENTER" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Total :  ">
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="0.006711409395973154">
+                                       <color>
+                                          <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.3019607961177826" green="0.7058823704719543" blue="0.843137264251709" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Label>
+                        <Label fx:id="totalLabel" alignment="CENTER" layoutX="10.0" layoutY="31.0" style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="0">
                            <textFill>
                               <LinearGradient endX="1.0" endY="1.0">
                                  <stops>
@@ -55,6 +105,9 @@
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <padding>
+                        <Insets right="15.0" />
+                     </padding>
                   </HBox>
                   <HBox alignment="CENTER" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);">
                      <children>

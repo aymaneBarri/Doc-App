@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -27,6 +28,7 @@ public class PatientsController implements Initializable {
     public JFXButton newPatient;
     public JFXButton searchBtn;
     public VBox vbox;
+    public Label totalLabel;
 
 
     @Override
@@ -39,6 +41,7 @@ public class PatientsController implements Initializable {
         }
 
         Vector<Patient> patientList = PatientDAO.getPatients();
+        totalLabel.setText(String.valueOf(patientList.size()));
         for (Patient patient : patientList) {
             BorderPane bp = createCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getPhoneNumber(), patient.getId());
             listPatient.getItems().add(bp);

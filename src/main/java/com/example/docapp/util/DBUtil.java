@@ -6,6 +6,7 @@ import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.models.Role;
 import com.example.docapp.models.Utilisateur;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.regex.Pattern;
@@ -25,7 +26,12 @@ public class DBUtil {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, databaseUser, databasePassword);
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur de connexion");
+            alert.setContentText("Veuillez lancer le serveur et la base de données.");
+            alert.showAndWait();
+
         }
 
         return connection;

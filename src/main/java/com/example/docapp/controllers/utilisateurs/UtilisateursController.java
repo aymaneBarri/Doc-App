@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +28,7 @@ public class UtilisateursController implements Initializable {
     public JFXButton newUser;
     public JFXButton searchBtn;
     public VBox vbox;
+    public Label totalLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,6 +40,7 @@ public class UtilisateursController implements Initializable {
         }
 
         Vector<Utilisateur> userList = UtilisateurDAO.getUtilisateurs();
+        totalLabel.setText(String.valueOf(userList.size()));
         for (Utilisateur user : userList) {
             BorderPane bp = createCard(user.getFirstName(),user.getLastName(), user.getEmail(), user.getPhoneNumber(), user.getId());
             listUser.getItems().add(bp);

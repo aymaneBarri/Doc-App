@@ -9,6 +9,7 @@ module com.example.docapp {
     requires layout;
     requires io;
     requires java.desktop;
+    requires mysql.connector.j;
 
 
     opens com.example.docapp to javafx.fxml;
