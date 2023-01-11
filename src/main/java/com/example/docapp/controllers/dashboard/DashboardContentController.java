@@ -88,6 +88,10 @@ public class DashboardContentController implements Initializable {
                     nbPatientLabel.setText("-");
                     patientLabel.setText("Vous n'avez pas le droit pour consulter les patients");
                     listPatient.getItems().clear();
+                    BorderPane b = new BorderPane();
+                    Label l = new Label("Vous n'avez pas le droit pour consulter les patients");
+                    b.setCenter(l);
+                    listPatient.getItems().add(b);
                 }
             }
             if (permission.getSubject().equals("rendez_vous")) {
@@ -96,6 +100,11 @@ public class DashboardContentController implements Initializable {
                     nbRdvLabel.setText("-");
                     rdvLabel.setText("Vous n'avez pas le droit pour consulter les rendez-vous");
                     listRdv.getItems().clear();
+                    BorderPane b = new BorderPane();
+                    Label l = new Label("Vous n'avez pas le droit pour consulter les rendez-vous");
+                    b.setCenter(l);
+                    listRdv.getItems().add(b);
+
                 }
 
             }
