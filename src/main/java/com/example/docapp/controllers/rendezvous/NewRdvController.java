@@ -5,6 +5,7 @@ import com.example.docapp.dao.RendezVousDAO;
 import com.example.docapp.models.Patient;
 import com.example.docapp.models.RendezVous;
 import com.example.docapp.models.ViewModel;
+import com.example.docapp.util.DateFormatter;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -37,7 +38,7 @@ public class NewRdvController implements Initializable {
                 if(validateForm().isEmpty()){
                     RendezVous rdv = new RendezVous();
                     rdv.setDescription(noteArea.getText());
-                    rdv.setRendezVousDate(datePicker.getValue().toString() + " " + heureField.getText());
+                    rdv.setRendezVousDate(datePicker.getValue().format(DateFormatter.dateformatter) + " " + heureField.getText());
                     rdv.setId_patient(Integer.parseInt(idField.getText()));
                     int status = RendezVousDAO.addRendezVous(rdv);
                     System.out.println(status);

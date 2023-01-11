@@ -3,6 +3,7 @@ package com.example.docapp.controllers.patient;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Patient;
 import com.example.docapp.models.ViewModel;
+import com.example.docapp.util.DateFormatter;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -46,7 +47,7 @@ public class NewPatientController implements Initializable {
 
                 if(validateForm().isEmpty()){
                     Patient patient = new Patient();
-                    patient.setBirthDate(birthPicker.getValue().toString());
+                    patient.setBirthDate(birthPicker.getValue().format(DateFormatter.dateformatter));
                     patient.setCin(cinField.getText());
                     patient.setFirstName(prenomField.getText());
                     patient.setLastName(nomField.getText());

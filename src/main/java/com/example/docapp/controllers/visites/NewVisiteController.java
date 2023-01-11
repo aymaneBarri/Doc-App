@@ -4,6 +4,7 @@ import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.VisiteDAO;
 import com.example.docapp.models.Patient;
 import com.example.docapp.models.Visite;
+import com.example.docapp.util.DateFormatter;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -35,7 +36,7 @@ public class NewVisiteController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        montantField.setText("300");
         addBtn.setOnAction(event -> {
         if(!Objects.equals(validateInformation(), "")){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -48,7 +49,7 @@ public class NewVisiteController implements Initializable {
             visite.setId_patient(Integer.parseInt(idPatient.getText()));
             visite.setIllness(illnessField.getText());
             visite.setAmount(Float.parseFloat(montantField.getText()));
-            visite.setVisit_date(datePicker.getValue()+" "+hourField.getText());
+            visite.setVisit_date(datePicker.getValue().format(DateFormatter.dateformatter)+" "+hourField.getText());
             visite.setDescription(noteArea.getText());
             visite.setPrescription(prescriptionField.getText());
             visite.setAssurance(assuranceField.getText());
@@ -94,20 +95,24 @@ public class NewVisiteController implements Initializable {
     public String validateInformation(){
         String error = "";
         if(idPatient.getText().isEmpty()) {
-            error += " ID Patient is empty";
+            error += "\n ID Patient est vide";
         }
         if(datePicker.getValue().isAfter(LocalDate.now())){
-            error += " Date is not valid";
+            error += "\n Date est invalide";
         }
 
         if(hourField.getText().isEmpty()){
-            error += " Hour is empty";
+            error += "\n Heure est vide";
         }
 
         if(montantField.getText().isEmpty()){
-            error += " Montant is empty";
+            error += "\n Montant est vide";
         }
-
+        try{
+            Float.parseFloat(montantField.getText());
+        }catch(NumberFormatException e){
+            error += "\n Veuilez entre un nombre valide comme montant";
+        }
 
 
 

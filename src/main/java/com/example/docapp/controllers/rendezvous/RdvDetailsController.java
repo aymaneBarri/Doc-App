@@ -3,6 +3,7 @@ package com.example.docapp.controllers.rendezvous;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.RendezVousDAO;
 import com.example.docapp.models.*;
+import com.example.docapp.util.DateFormatter;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,6 +25,7 @@ public class RdvDetailsController implements Initializable {
     public JFXButton saveBtn;
     public JFXButton delBtn;
     public ComboBox<String> doneCombo;
+    public TextField idPatient;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,7 +70,7 @@ public class RdvDetailsController implements Initializable {
                     rdv.setId(Integer.parseInt(idField.getText()));
                     rdv.setDescription(noteArea.getText());
                     rdv.setRendezVousDate(datePicker.getValue().toString() + " " + heureField.getText());
-                    rdv.setId_patient(Integer.parseInt(idField.getText()));
+                    rdv.setId_patient(Integer.parseInt(idPatient.getText()));
                     rdv.setDone(done);
                     int status = RendezVousDAO.editRendezVous(rdv);
                     System.out.println(status);
@@ -104,16 +106,18 @@ public class RdvDetailsController implements Initializable {
 
     }
 
-    public void setData(String idRdv, String idPatient) {
+    public void setData(String idRdv, String idP) {
         try {
             RendezVous rdv = RendezVousDAO.getRendezVousById(Integer.valueOf(idRdv));
-            Patient patient = PatientDAO.getPatientByID(String.valueOf(idPatient));
+            Patient patient = PatientDAO.getPatientByID(String.valueOf(idP));
             if (rdv!= null) {
                 idField.setText(rdv.getId()+"");
                 cinField.setText(patient.getCin());
-                datePicker.setValue( LocalDate.parse(rdv.getRendezVousDate().split(" ")[0]));
+                datePicker.setValue( LocalDate.parse(rdv.getRendezVousDate().split(" ")[0], DateFormatter.dateformatter));
                 heureField.setText(rdv.getRendezVousDate().split(" ")[1]);
                 noteArea.setText(rdv.getDescription());
+                idPatient.setText(idP);
+                System.out.println(rdv.getDone());
                 if(!rdv.getDone()){
                     doneCombo.getSelectionModel().select("Non");
                 }else{

@@ -3,6 +3,7 @@ package com.example.docapp.controllers.patient;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.VisiteDAO;
 import com.example.docapp.models.*;
+import com.example.docapp.util.DateFormatter;
 import com.example.docapp.util.Print;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -66,7 +67,7 @@ public class PatientDetailsController implements Initializable {
         editBtn.setOnAction(actionEvent -> {
        if(validateForm().isEmpty()){
               Patient patient = new Patient();
-              patient.setBirthDate(birthField.getValue().toString());
+              patient.setBirthDate(birthField.getValue().format(DateFormatter.dateformatter));
               patient.setCin(cinField.getText());
               patient.setFirstName(prenomField.getText());
               patient.setLastName(nomField.getText());
@@ -195,7 +196,7 @@ public class PatientDetailsController implements Initializable {
             Patient patient = PatientDAO.getPatientByID(id);
             nomField.setText(patient.getLastName());
             prenomField.setText(patient.getFirstName());
-            birthField.setValue(LocalDate.parse(patient.getBirthDate()));
+            birthField.setValue(LocalDate.parse(patient.getBirthDate(), DateFormatter.dateformatter));
             cinField.setText(patient.getCin());
             phoneField.setText(patient.getPhoneNumber());
             noteArea.setText(patient.getDescription());

@@ -66,7 +66,7 @@ public class RendezVousDAO {
 
         try {
             Connection connection = DBUtil.getConnection();
-
+            System.out.println(rendezVous);
             psEditR = connection.prepareStatement("UPDATE rendez_vous SET rendez_vous_date = ?, id_patient = ?, description = ?, done= ? WHERE id = ?");
             psEditR.setString(1, rendezVous.getRendezVousDate());
             psEditR.setInt(2, rendezVous.getId_patient());
@@ -211,6 +211,7 @@ public class RendezVousDAO {
                 rendezVous1.setRendezVousDate(queryOutput.getString("rendez_vous_date"));
                 rendezVous1.setId_patient(queryOutput.getInt("id_patient"));
                 rendezVous1.setDescription(queryOutput.getString("description"));
+                rendezVous1.setDone(queryOutput.getBoolean("done"));
                 rendezVous.add(rendezVous1);
             }
         } catch (SQLException e) {

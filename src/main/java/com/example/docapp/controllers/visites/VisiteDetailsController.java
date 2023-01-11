@@ -3,6 +3,7 @@ package com.example.docapp.controllers.visites;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.VisiteDAO;
 import com.example.docapp.models.*;
+import com.example.docapp.util.DateFormatter;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -108,7 +109,7 @@ public class VisiteDetailsController implements Initializable {
         montantField.setText(visite.getAmount()+"");
         String date_visite= visite.getVisit_date().split(" ")[0];
         String heure_visite= visite.getVisit_date().split(" ")[1];
-        datePicker.setValue(LocalDate.parse(date_visite));
+        datePicker.setValue(LocalDate.parse(date_visite, DateFormatter.dateformatter));
         heureField.setText(heure_visite);
         fullname.setText(patient.getFirstName()+" "+patient.getLastName());
         assurance.setText(visite.getAssurance());

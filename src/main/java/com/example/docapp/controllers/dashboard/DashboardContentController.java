@@ -5,9 +5,7 @@ import com.example.docapp.controllers.patient.VisiteItemController;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.RendezVousDAO;
 import com.example.docapp.dao.VisiteDAO;
-import com.example.docapp.models.Patient;
-import com.example.docapp.models.RendezVous;
-import com.example.docapp.models.Visite;
+import com.example.docapp.models.*;
 import com.example.docapp.util.DateFormatter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,11 +32,17 @@ import java.util.Vector;
 public class DashboardContentController implements Initializable {
 
     public Label nbPatientLabel;
-    public Label nbVisiteLabel;
-    public Label revenueLabel;
     public ListView<BorderPane> listRdv;
     public ListView<BorderPane> listPatient;
     public VBox vbox;
+    public BorderPane patientCard;
+    public Label patientLabel;
+    public BorderPane rdvCard;
+    public Label nbRdvLabel;
+    public Label rdvLabel;
+    public BorderPane moneyCard;
+    public Label nbMoneyLabel;
+    public Label moneyLabel;
 
 
     @Override
@@ -49,17 +53,45 @@ public class DashboardContentController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
+            if (permission.getSubject().equals("patient")) {
+                if (!permission.isCanView()){
+                    patientCard.setDisable(true);
+                    nbPatientLabel.setText("-");
+                    patientLabel.setText("Vous n'avez pas le droit pour consulter les patients");
+                }
+            }
+            if (permission.getSubject().equals("rendez_vous")) {
+                if (!permission.isCanView()){
+                    rdvCard.setDisable(true);
+                    nbRdvLabel.setText("-");
+                    rdvLabel.setText("Vous n'avez pas le droit pour consulter les rendez-vous");
+                }
 
-        ;
-        nbPatientLabel.setText(PatientDAO.getPatients().size()+"");
-        System.out.println(LocalDateTime.now().format(DateFormatter.formatter));
-        nbVisiteLabel.setText(RendezVousDAO.getAllRendezVous(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]).size()+"");
-        double total = 0.0;
-        for (int i = 0; i <VisiteDAO.getAllVisites("").size() ; i++) {
-            total += VisiteDAO.getAllVisites(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]).get(i).getAmount();
+            }
+            if (permission.getSubject().equals("visite")) {
+                if (!permission.isCanView()){
+                    moneyCard.setDisable(true);
+                    nbRdvLabel.setText("-");
+                    moneyLabel.setText("Vous n'avez pas le droit de consulter les paiements");
+                }
+
+            }
 
         }
-        revenueLabel.setText(total+"");
+
+        nbPatientLabel.setText(PatientDAO.getPatients().size()+"");
+        System.out.println(LocalDateTime.now().format(DateFormatter.formatter));
+        nbRdvLabel.setText(RendezVousDAO.getAllRendezVous(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]).size()+"");
+        double total = 0.0;
+        Vector<Visite> visites=VisiteDAO.getAllVisites(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]);
+
+        for (Visite visite : visites) {
+            System.out.println(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]);
+            total += visite.getAmount();
+
+        }
+        nbMoneyLabel.setText(total+"");
 
         Vector<Patient> patientList = PatientDAO.getRecentPatients();
         if (patientList.isEmpty()){
@@ -85,7 +117,7 @@ public class DashboardContentController implements Initializable {
 
     public void refreshList(){
         listRdv.getItems().clear();
-        Vector<RendezVous> rdvList = RendezVousDAO.getDoneRendezVous(LocalDateTime.now().format(DateFormatter.formatter), 0);
+        Vector<RendezVous> rdvList = RendezVousDAO.getDoneRendezVous(LocalDateTime.now().format(DateFormatter.dateformatter), 0);
         System.out.println(rdvList);
         if(!rdvList.isEmpty()){
             for (RendezVous rdv : rdvList) {
