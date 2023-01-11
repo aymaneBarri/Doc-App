@@ -163,7 +163,7 @@ public class UtilisateurDAO {
             }
             psEditUtilisateur.executeUpdate();
 
-            Action action = new Action("Modification de l'utilisateur id = " + utilisateur.getId(), LocalDate.now().toString(), Utilisateur.currentUser.getId());
+            Action action = new Action("Modification de l'utilisateur id = " + utilisateur.getId(), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
             ActionDAO.addAction(action);
 
             statusCode = 201;

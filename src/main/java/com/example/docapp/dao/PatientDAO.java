@@ -29,7 +29,7 @@ public class PatientDAO {
             psAddPatient.setString(4, patient.getCin());
             psAddPatient.setString(5, patient.getPhoneNumber());
             psAddPatient.setString(6, patient.getDescription());
-            psAddPatient.setString(7, String.valueOf(LocalDate.now()));
+            psAddPatient.setString(7, LocalDateTime.now().format(DateFormatter.formatter));
 
             psAddPatient.executeUpdate();
 

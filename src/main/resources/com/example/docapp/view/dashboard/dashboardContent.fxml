@@ -15,11 +15,11 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox fx:id="vbox" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.dashboard.DashboardContentController">
+<VBox fx:id="vbox" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.dashboard.DashboardContentController">
    <children>
       <BorderPane style="-fx-background-color: #F3F3F3;" VBox.vgrow="ALWAYS">
          <top>
-            <Label contentDisplay="RIGHT" text="Acceuil" BorderPane.alignment="CENTER_LEFT">
+            <Label contentDisplay="RIGHT" styleClass="bold" text="Acceuil" BorderPane.alignment="CENTER_LEFT">
                <font>
                   <Font name="Inter Bold" size="20.0" />
                </font>
@@ -76,14 +76,14 @@
                            <center>
                               <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label fx:id="nbPatientLabel" text="0">
+                                    <Label fx:id="nbPatientLabel" style="-fx-wrap-text: true;" styleClass="bold" text="0">
                                        <font>
                                           <Font name="Inter Bold" size="40.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Nombre de patients">
+                                    <Label style="-fx-wrap-text: true;" styleClass="regular" text="Nombre de patients">
                                        <font>
-                                          <Font name="Inter Regular" size="20.0" />
+                                          <Font name="Inter Regular" size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -103,17 +103,17 @@
                                              <stops>
                                                 <Stop>
                                                    <color>
-                                                      <Color red="0.2549019753932953" green="0.7960784435272217" blue="0.5686274766921997" />
+                                                      <Color green="0.4627451002597809" blue="0.7450980544090271" />
                                                    </color>
                                                 </Stop>
                                                 <Stop offset="0.006711409395973154">
                                                    <color>
-                                                      <Color red="0.2549019753932953" green="0.7960784435272217" blue="0.5686274766921997" />
+                                                      <Color green="0.4627451002597809" blue="0.7450980544090271" />
                                                    </color>
                                                 </Stop>
                                                 <Stop offset="1.0">
                                                    <color>
-                                                      <Color green="0.4627451002597809" blue="0.7450980544090271" />
+                                                      <Color red="0.2549019753932953" green="0.7960784435272217" blue="0.5686274766921997" />
                                                    </color>
                                                 </Stop>
                                              </stops>
@@ -126,14 +126,14 @@
                            <center>
                               <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label fx:id="nbVisiteLabel" text="0">
+                                    <Label fx:id="nbVisiteLabel" style="-fx-wrap-text: true;" styleClass="bold" text="0">
                                        <font>
                                           <Font name="Inter Bold" size="40.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Total des visites">
+                                    <Label style="-fx-wrap-text: true;" styleClass="regular" text="Rendez-vous aujourd'hui">
                                        <font>
-                                          <Font name="Inter Regular" size="20.0" />
+                                          <Font name="Inter Regular" size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -176,14 +176,14 @@
                            <center>
                               <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label fx:id="revenueLabel" text="0">
+                                    <Label fx:id="revenueLabel" style="-fx-wrap-text: true;" styleClass="bold" text="0">
                                        <font>
                                           <Font name="Inter Bold" size="40.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Revenue mensuel">
+                                    <Label style="-fx-wrap-text: true;" styleClass="regular" text="Paiements aujourd'hui">
                                        <font>
-                                          <Font name="Inter Regular" size="20.0" />
+                                          <Font name="Inter Regular" size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -214,7 +214,7 @@
                            <top>
                               <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: white; -fx-background-radius: 17; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Nouveau patients">
+                                    <Label style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold; -fx-wrap-text: true;" text="Nouveau patients">
                                        <textFill>
                                           <LinearGradient endX="1.0" endY="1.0">
                                              <stops>
@@ -255,7 +255,7 @@
                            <top>
                               <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: white; -fx-background-radius: 17; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0.0, 1.0);" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label style="-fx-font-family: Inter; -fx-font-size: 15; -fx-font-weight: bold;" text="Rendez-vous d'aujourd'hui">
+                                    <Label style="-fx-font-size: 15; -fx-wrap-text: true;" styleClass="bold" text="Rendez-vous d'aujourd'hui">
                                        <textFill>
                                           <LinearGradient endX="1.0" endY="1.0">
                                              <stops>

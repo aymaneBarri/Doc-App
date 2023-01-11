@@ -8,6 +8,7 @@ import com.example.docapp.dao.VisiteDAO;
 import com.example.docapp.models.Patient;
 import com.example.docapp.models.RendezVous;
 import com.example.docapp.models.Visite;
+import com.example.docapp.util.DateFormatter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -50,19 +52,28 @@ public class DashboardContentController implements Initializable {
 
         ;
         nbPatientLabel.setText(PatientDAO.getPatients().size()+"");
-        nbVisiteLabel.setText(VisiteDAO.getAllVisites("").size()+"");
+        System.out.println(LocalDateTime.now().format(DateFormatter.formatter));
+        nbVisiteLabel.setText(RendezVousDAO.getAllRendezVous(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]).size()+"");
         double total = 0.0;
         for (int i = 0; i <VisiteDAO.getAllVisites("").size() ; i++) {
-            total += VisiteDAO.getAllVisites("").get(i).getAmount();
+            total += VisiteDAO.getAllVisites(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]).get(i).getAmount();
 
         }
         revenueLabel.setText(total+"");
 
         Vector<Patient> patientList = PatientDAO.getRecentPatients();
-        for (Patient p : patientList) {
-            BorderPane bp = createPCard(p);
-            listPatient.getItems().add(bp);
+        if (patientList.isEmpty()){
+            BorderPane b = new BorderPane();
+            Label l = new Label("Pas de nouveaux patients");
+            b.setCenter(l);
+            listPatient.getItems().add(b);
+        }else{
+            for (Patient p : patientList) {
+                BorderPane bp = createPCard(p);
+                listPatient.getItems().add(bp);
+            }
         }
+
 
 
 
@@ -74,7 +85,7 @@ public class DashboardContentController implements Initializable {
 
     public void refreshList(){
         listRdv.getItems().clear();
-        Vector<RendezVous> rdvList = RendezVousDAO.getDoneRendezVous(String.valueOf(LocalDate.now()), 0);
+        Vector<RendezVous> rdvList = RendezVousDAO.getDoneRendezVous(LocalDateTime.now().format(DateFormatter.formatter), 0);
         System.out.println(rdvList);
         if(!rdvList.isEmpty()){
             for (RendezVous rdv : rdvList) {

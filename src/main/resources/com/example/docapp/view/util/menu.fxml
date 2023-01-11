@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" style="-fx-background-color: linear-gradient(to bottom, #4DB4D7, #0076BE);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.util.MenuController">
+<VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" stylesheets="@../../css/style.css" style="-fx-background-color: linear-gradient(to bottom, #4DB4D7, #0076BE);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.util.MenuController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>

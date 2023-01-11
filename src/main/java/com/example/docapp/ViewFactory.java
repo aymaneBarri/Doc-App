@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -66,10 +67,12 @@ public class ViewFactory {
     }
 
     public void showDashboard(){
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/dashboard/dashboard.fxml"));
         try{
             Scene oldScene = stage.getScene();
             scene = new Scene(loader.load(), oldScene.getWidth(), oldScene.getHeight());
+            scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
         }catch (Exception e){
             e.printStackTrace();
         }

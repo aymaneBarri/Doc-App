@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox fx:id="vbox" maxHeight="Infinity" style="-fx-background-color: #F3F3F3;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.utilisateurs.ProfileController">
+<VBox fx:id="vbox" maxHeight="Infinity" style="-fx-background-color: #F3F3F3;" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.utilisateurs.ProfileController">
     <children>
       <Label style="-fx-font-family: Inter; -fx-font-size: 20; -fx-font-weight: bold;" text="Profile" VBox.vgrow="ALWAYS">
          <VBox.margin>
