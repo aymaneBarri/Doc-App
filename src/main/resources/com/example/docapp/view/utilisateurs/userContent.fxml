@@ -174,7 +174,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <JFXButton fx:id="newUser" alignment="CENTER" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 10; -fx-background-color: linear-gradient(to left, #4DB4D7, #0076BE); -fx-font-family: Inter; -jfx-disable-visual-focus: true;" text="Nouveau utilisateur" textFill="WHITE">
+                        <JFXButton fx:id="newUser" alignment="CENTER" prefHeight="40.0" style="-fx-font-size: 13; -fx-background-radius: 10; -fx-background-color: linear-gradient(to left, #4DB4D7, #0076BE); -fx-font-family: Inter; -jfx-disable-visual-focus: true;" text="Nouvel utilisateur" textFill="WHITE">
                            <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="fth-user-plus" iconSize="15" />
                            </graphic>

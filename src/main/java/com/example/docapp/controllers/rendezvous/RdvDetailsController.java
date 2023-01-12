@@ -69,7 +69,7 @@ public class RdvDetailsController implements Initializable {
                     boolean done= doneCombo.getValue().equals("Oui");
                     rdv.setId(Integer.parseInt(idField.getText()));
                     rdv.setDescription(noteArea.getText());
-                    rdv.setRendezVousDate(datePicker.getValue().toString() + " " + heureField.getText());
+                    rdv.setRendezVousDate(datePicker.getValue().format(DateFormatter.dateformatter) + " " + heureField.getText());
                     rdv.setId_patient(Integer.parseInt(idPatient.getText()));
                     rdv.setDone(done);
                     int status = RendezVousDAO.editRendezVous(rdv);

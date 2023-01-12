@@ -79,7 +79,7 @@ public class UtilisateurDAO {
 //                        psAddUserRole.close();
 //                    }
 
-                    Action action = new Action("Ajout d'un nouveau utilisateur id: " + generatedKeys.getInt(1), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
+                    Action action = new Action("Ajout d'un nouvel utilisateur id: " + generatedKeys.getInt(1), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
                     ActionDAO.addAction(action);
                 } else {
                     throw new SQLException("Creating user failed, no ID obtained.");

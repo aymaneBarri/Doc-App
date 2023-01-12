@@ -176,8 +176,10 @@ public class PatientDetailsController implements Initializable {
     public void setPrescription(String id){
         Vector<Visite> visiteList = VisiteDAO.getVistes(id);
         for (Visite visite : visiteList) {
-            BorderPane bp = createPrescriptionCard(visite);
-            listOrdonnances.getItems().add(bp);
+            if (!visite.getPrescription().isEmpty()){
+                BorderPane bp = createPrescriptionCard(visite);
+                listOrdonnances.getItems().add(bp);
+            }
         }
     }
 

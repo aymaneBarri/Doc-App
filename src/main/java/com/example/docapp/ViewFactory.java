@@ -197,7 +197,7 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-            s.setTitle("Nouveau utilisateur");
+            s.setTitle("Nouvel utilisateur");
             s.getIcons().add(appIcon);
             s.show();
         }catch (Exception e){
@@ -240,7 +240,7 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-            s.setTitle("Nouveau utilisateur");
+            s.setTitle("Nouvel utilisateur");
             s.getIcons().add(appIcon);
             s.show();
         }catch (Exception e){

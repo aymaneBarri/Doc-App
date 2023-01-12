@@ -51,7 +51,7 @@ public class VisiteDetailsController implements Initializable {
                 visite.setId_patient(Integer.parseInt(patientId.getText()));
                 visite.setIllness(illnessField.getText());
                 visite.setAmount(Float.parseFloat(montantField.getText()));
-                visite.setVisit_date(datePicker.getValue()+" "+heureField.getText());
+                visite.setVisit_date(datePicker.getValue().format(DateFormatter.dateformatter)+" "+heureField.getText());
                 visite.setDescription(noteArea.getText());
                 visite.setPrescription(prescriptionField.getText());
                 visite.setAssurance(assurance.getText());
@@ -63,7 +63,7 @@ public class VisiteDetailsController implements Initializable {
                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                    alert.setTitle("Confirmation");
                    alert.setHeaderText("Confirmation");
-                   alert.setContentText("Visite updated successfully");
+                   alert.setContentText("Visite modifié avec succés");
                    alert.showAndWait();
                    ViewModel.getInstance().getViewFactory().showVisite();
                    Stage stage = (Stage) saveBtn.getScene().getWindow();
@@ -72,7 +72,7 @@ public class VisiteDetailsController implements Initializable {
                      Alert alert = new Alert(Alert.AlertType.ERROR);
                      alert.setTitle("Error");
                      alert.setHeaderText("Error");
-                     alert.setContentText("Error while updating visite");
+                     alert.setContentText("Erreur veuillez réessayer.");
                      alert.showAndWait();
                }
 
