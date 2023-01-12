@@ -8,6 +8,7 @@ import com.example.docapp.models.ViewModel;
 import com.example.docapp.util.DBUtil;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
@@ -15,10 +16,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 
+import javax.swing.text.View;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 public class MenuController implements Initializable {
     public JFXButton acceuilBtn;
@@ -97,7 +101,13 @@ public class MenuController implements Initializable {
                 alert.showAndWait().ifPresent(type -> {
                     if (type == okButton) {
                         Utilisateur.currentUser = null;
+                        while(Window.getWindows().size() !=0){
+                            Window win = Window.getWindows().get(0);
+                            win.hide();
+                        }
+                        System.gc();
                         ViewModel.getInstance().getViewFactory().showLogin();
+
                     }
                 });
             }

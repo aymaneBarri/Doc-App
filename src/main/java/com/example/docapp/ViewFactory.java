@@ -32,6 +32,7 @@ public class ViewFactory {
     Image appIcon = new Image(Objects.requireNonNull(Application.class.getResourceAsStream("images/icon.png")));
 
     public void showLogin(){
+        stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/login.fxml"));
 
         try{

@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -54,6 +55,8 @@ public class PatientDetailsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("patient")) {
                 if (!permission.isCanModify())
@@ -62,6 +65,7 @@ public class PatientDetailsController implements Initializable {
                     deleteBtn.setDisable(true);
             }
         }
+
 
 
         editBtn.setOnAction(actionEvent -> {
@@ -116,6 +120,7 @@ public class PatientDetailsController implements Initializable {
                     }
             });
         });
+
     }
 
 
@@ -204,8 +209,31 @@ public class PatientDetailsController implements Initializable {
             noteArea.setText(patient.getDescription());
             idP.setText(String.valueOf(patient.getId()));
             joinField.setText(patient.getJoin_date());
-            setPrescription(id);
-            setVisites(id);
+            for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
+
+                if(permission.getSubject().equals("visite")){
+                    if (!permission.isCanView()){
+                        listOrdonnances.getItems().clear();
+                        listVisites.getItems().clear();
+                        BorderPane bp = new BorderPane();
+                        Label l = new Label("Vous n'avez pas le droit pour consulter les ordonnances");
+                        l.setWrapText(true);
+                        bp.setPrefWidth(Region.USE_COMPUTED_SIZE);
+                        bp.setCenter(l);
+                        BorderPane b = new BorderPane();
+                        Label la = new Label("Vous n'avez pas le droit pour consulter les visites");
+                        la.setWrapText(true);
+                        b.setPrefWidth(Region.USE_COMPUTED_SIZE);
+                        b.setCenter(la);
+                        listOrdonnances.getItems().add(bp);
+                        listVisites.getItems().add(b);
+                    }else{
+                        setPrescription(id);
+                        setVisites(id);
+                    }
+                }
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
