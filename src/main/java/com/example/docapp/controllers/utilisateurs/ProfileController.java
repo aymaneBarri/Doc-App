@@ -77,9 +77,6 @@ public class ProfileController implements Initializable {
                         alert.setContentText("Profile edité avec succés");
                         alert.show();
                         Utilisateur.currentUser = user;
-//                        Utilisateur.currentUser.setFirstName(user.getFirstName());
-//                        Utilisateur.currentUser.setLastName(user.getLastName());
-//                        Utilisateur.currentUser.setFirstName(user.getFirstName());
                         ViewModel.getInstance().getViewFactory().showProfile();
                     }else{
                         Alert alert = new Alert(Alert.AlertType.ERROR);
