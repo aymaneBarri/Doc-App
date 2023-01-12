@@ -65,6 +65,7 @@ public class ProfileController implements Initializable {
                     user.setCin(cinField.getText());
                     user.setPhoneNumber(phoneField.getText());
                     user.setIdRole(Utilisateur.currentUser.getIdRole());
+                    user.setRole(Utilisateur.currentUser.getRole());
                     if (passField.getText().isEmpty()){
                         status = UtilisateurDAO.editUtilisateur(user, false);
                     }else{
@@ -76,6 +77,9 @@ public class ProfileController implements Initializable {
                         alert.setContentText("Profile edité avec succés");
                         alert.show();
                         Utilisateur.currentUser = user;
+//                        Utilisateur.currentUser.setFirstName(user.getFirstName());
+//                        Utilisateur.currentUser.setLastName(user.getLastName());
+//                        Utilisateur.currentUser.setFirstName(user.getFirstName());
                         ViewModel.getInstance().getViewFactory().showProfile();
                     }else{
                         Alert alert = new Alert(Alert.AlertType.ERROR);
