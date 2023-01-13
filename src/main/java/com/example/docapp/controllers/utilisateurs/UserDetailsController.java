@@ -49,21 +49,7 @@ public class UserDetailsController implements Initializable {
             }
         }
 
-        rolesComboBox.getItems().clear();
-        for (Role role : RoleDAO.getRoles()){
-            rolesComboBox.getItems().add(role);
-        }
-        rolesComboBox.getSelectionModel().select(0);
-
-//        typeUser.getItems().clear();
-////        rolesBtn.setDisable(true);
-//
-//        typeUser.getItems().addAll(
-//                "admin",
-//                "utilisateur");
-//        typeUser.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-//            rolesBtn.setDisable(newValue.equals("admin"));
-//        });
+        populateRolesComboBox();
 
         saveBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -74,12 +60,7 @@ public class UserDetailsController implements Initializable {
                     alert.show();
                 } else {
                     Utilisateur utilisateur = new Utilisateur(Integer.parseInt(idField.getText().trim()), prenomField.getText().trim(), nomField.getText().trim(), emailField.getText().trim(), passField.getText().trim(), cinField.getText().trim(), phoneField.getText().trim(), rolesComboBox.getSelectionModel().getSelectedItem().getId());
-                    if (passField.getText().isEmpty()){
-                        UtilisateurDAO.editUtilisateur(utilisateur,false);
-                    }
-                    else {
-                        UtilisateurDAO.editUtilisateur(utilisateur,true);
-                    }
+                    UtilisateurDAO.editUtilisateur(utilisateur, !passField.getText().isEmpty());
 
                     ViewModel.getInstance().getViewFactory().showUser();
 
@@ -96,15 +77,13 @@ public class UserDetailsController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Current project is modified");
+                alert.setTitle("Suppression d'utilisateur");
                 alert.setContentText("Cet utilisateur va être supprimé, continuer?");
                 ButtonType okButton = new ButtonType("Oui", ButtonBar.ButtonData.YES);
                 ButtonType cancelButton = new ButtonType("Non", ButtonBar.ButtonData.CANCEL_CLOSE);
                 alert.getButtonTypes().setAll(okButton, cancelButton);
                 alert.showAndWait().ifPresent(type -> {
                     if (type == okButton) {
-                        System.out.println(okButton.getText());
-                        System.out.println("nononon");
                         System.out.println(UtilisateurDAO.deleteUtilisateur(Integer.parseInt(idField.getText())));
                         Stage s = (Stage) deleteBtn.getScene().getWindow();
                         s.close();
@@ -122,6 +101,15 @@ public class UserDetailsController implements Initializable {
             }
         });
 
+        rolesComboBox.addEventHandler(ComboBox.ON_SHOWN, event -> populateRolesComboBox());
+    }
+
+    public void populateRolesComboBox() {
+        rolesComboBox.getItems().clear();
+        for (Role role : RoleDAO.getRoles()){
+            rolesComboBox.getItems().add(role);
+        }
+        rolesComboBox.getSelectionModel().select(0);
     }
 
     public BorderPane createActionCard(Action action) {

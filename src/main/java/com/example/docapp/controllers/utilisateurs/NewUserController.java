@@ -17,8 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -52,11 +50,7 @@ public class NewUserController implements Initializable {
         permissions.add(new Permission("visite",false,false,false,false));
         permissions.add(new Permission("rendez_vous",false,false,false,false));
 
-        rolesComboBox.getItems().clear();
-        for (Role role : RoleDAO.getRoles()){
-            rolesComboBox.getItems().add(role.getName());
-        }
-        rolesComboBox.getSelectionModel().select(0);
+        populateRolesComboBox();
 
 //        typeUser.getItems().clear();
 //        rolesBtn.setDisable(true);
@@ -140,6 +134,8 @@ public class NewUserController implements Initializable {
             }
         });
 
+        rolesComboBox.addEventHandler(ComboBox.ON_SHOWN, event -> populateRolesComboBox());
+
         rolesBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -156,6 +152,14 @@ public class NewUserController implements Initializable {
         });
 
 
+    }
+
+    public void populateRolesComboBox() {
+        rolesComboBox.getItems().clear();
+        for (Role role : RoleDAO.getRoles()){
+            rolesComboBox.getItems().add(role.getName());
+        }
+        rolesComboBox.getSelectionModel().select(0);
     }
 
     public boolean formIsValid() {
