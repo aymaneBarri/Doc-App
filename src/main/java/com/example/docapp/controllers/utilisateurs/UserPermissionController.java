@@ -399,8 +399,10 @@ public class UserPermissionController implements Initializable {
     }
 
     public void setData(int idRole) {
-        deleteBtn.setDisable(idRole == 1 || idRole == 2);
-        saveBtn.setDisable(idRole == 1 || idRole == 2);
+        if(canModify)
+            saveBtn.setDisable(rights[2] && (idRole == 1 || idRole == 2));
+        if(canDelete)
+            deleteBtn.setDisable(rights[3] && (idRole == 1 || idRole == 2));
 
         viewPatient.setSelected(false);
         viewUser.setSelected(false);
