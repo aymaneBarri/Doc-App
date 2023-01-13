@@ -1,7 +1,6 @@
 package com.example.docapp.dao;
 
 import com.example.docapp.models.Action;
-import com.example.docapp.models.Patient;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.util.DBUtil;
 
@@ -9,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.Vector;
 
 public class ActionDAO {
@@ -55,7 +53,6 @@ public class ActionDAO {
 
         try {
             Connection connection = DBUtil.getConnection();
-            System.out.println("heres user id= " + Utilisateur.currentUser.getId());
             psLogin = connection.prepareStatement("SELECT * FROM action where id_utilisateur= ? order by action_time desc");
             psLogin.setInt(1, id);
             queryOutput = psLogin.executeQuery();
@@ -68,7 +65,6 @@ public class ActionDAO {
 
 
                 actions.add(action);
-                System.out.println(action);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

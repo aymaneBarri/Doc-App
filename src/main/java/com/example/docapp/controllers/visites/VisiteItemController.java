@@ -32,6 +32,5 @@ public class VisiteItemController implements Initializable {
             ViewModel.getInstance().getViewFactory().showVisiteDetail(patientID.getText(),visitID.getText());
 
         });
-        
     }
 }

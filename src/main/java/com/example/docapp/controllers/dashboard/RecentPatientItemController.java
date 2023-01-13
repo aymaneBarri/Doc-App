@@ -11,12 +11,6 @@ public class RecentPatientItemController implements Initializable {
     public Label prenomPatient;
     public Label joinLabel;
 
-
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
-    }
-
-
-
+    public void initialize(URL location, ResourceBundle resources) {}
 }

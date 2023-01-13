@@ -1,14 +1,11 @@
 package com.example.docapp.models;
 
-import java.sql.Date;
 import java.util.Vector;
 
 public class Patient extends Personne {
     private String birthDate;
     private String description;
-
     private String join_date;
-
     private static Vector<Patient> patientList ;
 
     public Patient() {
@@ -17,7 +14,6 @@ public class Patient extends Personne {
         description = "";
         join_date="";
     }
-
 
     public static Vector<Patient> getPatientList() {
         return patientList;

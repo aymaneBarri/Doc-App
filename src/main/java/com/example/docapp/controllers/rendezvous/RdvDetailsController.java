@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -72,8 +71,8 @@ public class RdvDetailsController implements Initializable {
                     rdv.setRendezVousDate(datePicker.getValue().format(DateFormatter.dateformatter) + " " + heureField.getText());
                     rdv.setId_patient(Integer.parseInt(idPatient.getText()));
                     rdv.setDone(done);
+
                     int status = RendezVousDAO.editRendezVous(rdv);
-                    System.out.println(status);
                     if(status == 201){
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("Rendez-vous modifié avec succés");
@@ -102,8 +101,8 @@ public class RdvDetailsController implements Initializable {
             errorText = "Veuillez remplir tous les champs !";
 
         }
-        return errorText;
 
+        return errorText;
     }
 
     public void setData(String idRdv, String idP) {
@@ -117,18 +116,14 @@ public class RdvDetailsController implements Initializable {
                 heureField.setText(rdv.getRendezVousDate().split(" ")[1]);
                 noteArea.setText(rdv.getDescription());
                 idPatient.setText(idP);
-                System.out.println(rdv.getDone());
                 if(!rdv.getDone()){
                     doneCombo.getSelectionModel().select("Non");
                 }else{
                     doneCombo.getSelectionModel().select("Oui");
                 }
-
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

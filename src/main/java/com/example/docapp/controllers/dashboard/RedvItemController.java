@@ -16,7 +16,5 @@ public class RedvItemController implements Initializable {
     public JFXButton doneBtn;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 }

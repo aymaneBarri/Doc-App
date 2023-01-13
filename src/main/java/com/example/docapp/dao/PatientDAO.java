@@ -4,16 +4,12 @@ import com.example.docapp.models.Utilisateur;
 import com.example.docapp.util.DBUtil;
 import com.example.docapp.models.Patient;
 import com.example.docapp.util.DateFormatter;
-import javafx.event.ActionEvent;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 public class PatientDAO {
-
     public static int addPatient(Patient patient) {
         PreparedStatement psAddPatient = null;
         ResultSet queryOutput = null;
@@ -59,8 +55,8 @@ public class PatientDAO {
 
         return statusCode;
     }
-    public static Vector<Patient> searchPatients(String search) {
 
+    public static Vector<Patient> searchPatients(String search) {
         Vector<Patient> patients = new Vector<Patient>();
         Patient patient;
         PreparedStatement psLogin = null;
@@ -86,7 +82,6 @@ public class PatientDAO {
                 patient.setCin(queryOutput.getString("cin"));
                 patient.setPhoneNumber(queryOutput.getString("phone"));
                 patient.setDescription(queryOutput.getString("description"));
-
 
                 patients.add(patient);
             }
@@ -114,7 +109,6 @@ public class PatientDAO {
 
         return patients;
     }
-
 
     public static int editPatient(Patient patient){
         PreparedStatement psAddP = null;
@@ -181,7 +175,6 @@ public class PatientDAO {
             psAddP.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
             psAddP.executeUpdate();
 
-
             statusCode=200;
         } catch (SQLException e) {
             statusCode = 400;
@@ -201,6 +194,7 @@ public class PatientDAO {
 
         return statusCode;
     }
+
     public static Vector <Patient> getRecentPatients(){
         Vector<Patient> patients = new Vector<Patient>();
         Patient patient;
@@ -248,6 +242,7 @@ public class PatientDAO {
 
         return patients;
     }
+
     public static Vector <Patient> getPatients(){
         Vector<Patient> patients = new Vector<Patient>();
         Patient patient;
@@ -341,5 +336,4 @@ public class PatientDAO {
 
         return patient;
     }
-
 }

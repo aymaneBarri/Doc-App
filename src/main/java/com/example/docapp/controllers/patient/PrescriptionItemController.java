@@ -14,7 +14,5 @@ public class PrescriptionItemController implements Initializable {
     public JFXButton printBtn;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 }

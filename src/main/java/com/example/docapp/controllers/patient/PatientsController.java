@@ -1,6 +1,5 @@
 package com.example.docapp.controllers.patient;
 
-import com.example.docapp.controllers.patient.PatientItemController;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Patient;
 import com.example.docapp.models.Permission;
@@ -18,18 +17,15 @@ import com.jfoenix.controls.JFXButton;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.*;
 
 public class PatientsController implements Initializable {
-
     public ListView<BorderPane> listPatient;
     public TextField searchField;
     public JFXButton newPatient;
     public JFXButton searchBtn;
     public VBox vbox;
     public Label totalLabel;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,8 +57,6 @@ public class PatientsController implements Initializable {
             }
         });
 
-
-
         searchBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -75,9 +69,7 @@ public class PatientsController implements Initializable {
                 }
             }
         });
-
     }
-
 
     public BorderPane createCard(String firstName, String lastName, String date, String phone, Integer id) {
         BorderPane root = null;
@@ -102,10 +94,7 @@ public class PatientsController implements Initializable {
         }
 
         return root;
-
     }
-
-
 
     public void refresh() {
         Vector<Patient> patientList = PatientDAO.getPatients();
@@ -114,5 +103,4 @@ public class PatientsController implements Initializable {
             listPatient.getItems().add(bp);
         }
     }
-
 }

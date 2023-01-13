@@ -15,10 +15,5 @@ public class RoleItemController implements Initializable {
     public CheckBox deleteBox;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-   public void setRoleLabel(String text) {
-        roleLabel.setText(text);
-   }
+    public void initialize(URL location, ResourceBundle resources) {}
 }

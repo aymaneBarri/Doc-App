@@ -37,58 +37,55 @@ public class NewVisiteController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         montantField.setText("300");
+
         addBtn.setOnAction(event -> {
-        if(!Objects.equals(validateInformation(), "")){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText(validateInformation());
-            alert.showAndWait();
-        }else{
-            Visite visite = new Visite();
-            visite.setId_patient(Integer.parseInt(idPatient.getText()));
-            visite.setIllness(illnessField.getText());
-            visite.setAmount(Float.parseFloat(montantField.getText()));
-            visite.setVisit_date(datePicker.getValue().format(DateFormatter.dateformatter)+" "+hourField.getText());
-            visite.setDescription(noteArea.getText());
-            visite.setPrescription(prescriptionField.getText());
-            visite.setAssurance(assuranceField.getText());
-
-
-         if(VisiteDAO.addVisite(visite)==201){
-             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-             alert.setTitle("Confirmation");
-             alert.setHeaderText("Confirmation");
-             alert.setContentText("Visite ajoutée avec succès!");
-             alert.showAndWait();
-
-             Stage stage = (Stage) addBtn.getScene().getWindow();
-                stage.close();
-
-         }else {
+            if(!Objects.equals(validateInformation(), "")){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Error");
-                alert.setContentText("Une erreur s'est produite lors de l'ajout de la visite!");
+                alert.setContentText(validateInformation());
                 alert.showAndWait();
-         }
+            } else {
+                Visite visite = new Visite();
+                visite.setId_patient(Integer.parseInt(idPatient.getText()));
+                visite.setIllness(illnessField.getText());
+                visite.setAmount(Float.parseFloat(montantField.getText()));
+                visite.setVisit_date(datePicker.getValue().format(DateFormatter.dateformatter) + " " + hourField.getText());
+                visite.setDescription(noteArea.getText());
+                visite.setPrescription(prescriptionField.getText());
+                visite.setAssurance(assuranceField.getText());
 
+                if(VisiteDAO.addVisite(visite)==201){
+                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                     alert.setTitle("Confirmation");
+                     alert.setHeaderText("Confirmation");
+                     alert.setContentText("Visite ajoutée avec succès!");
+                     alert.showAndWait();
 
-        }
+                     Stage stage = (Stage) addBtn.getScene().getWindow();
+                     stage.close();
 
+                }else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Une erreur s'est produite lors de l'ajout de la visite!");
+                    alert.showAndWait();
+                }
+            }
         });
+
         cancelBtn.setOnAction(event -> {
             Stage stage = (Stage) cancelBtn.getScene().getWindow();
             stage.close();
         });
-
     }
     public void setData(String id){
 
         idPatient.setText(id+"");
         Patient patient = new Patient();
         patient=PatientDAO.getPatientByID(id);
-        fullName.setText(patient.getFirstName()+ " " + patient.getLastName());
+        fullName.setText(patient.getFirstName() + " " + patient.getLastName());
         datePicker.setValue(LocalDate.now());
         hourField.setText(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm")));
     }
@@ -113,9 +110,6 @@ public class NewVisiteController implements Initializable {
         }catch(NumberFormatException e){
             error += "\n Veuilez entre un nombre valide comme montant";
         }
-
-
-
 
         return error;
     }

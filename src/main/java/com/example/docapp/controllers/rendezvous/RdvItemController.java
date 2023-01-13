@@ -27,12 +27,12 @@ public class RdvItemController implements Initializable {
                     voirPlus.setDisable(true);
             }
         }
-            voirPlus.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    ViewModel.getInstance().getViewFactory().showRdvDetails(rdvID.getText(), patientID.getText());
-                }
-            });
 
+        voirPlus.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ViewModel.getInstance().getViewFactory().showRdvDetails(rdvID.getText(), patientID.getText());
+            }
+        });
     }
 }

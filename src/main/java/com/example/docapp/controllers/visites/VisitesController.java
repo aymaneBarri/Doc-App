@@ -1,13 +1,8 @@
 package com.example.docapp.controllers.visites;
 
-
-import com.example.docapp.controllers.patient.PatientItemController;
 import com.example.docapp.dao.PatientDAO;
-import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.dao.VisiteDAO;
 import com.example.docapp.models.Patient;
-import com.example.docapp.models.Permission;
-import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.Visite;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -36,7 +31,6 @@ public class VisitesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         try {
             HBox root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/example/docapp/view/util/topBar.fxml")));
             vbox.getChildren().add(0,root);
@@ -57,6 +51,7 @@ public class VisitesController implements Initializable {
 
             }
         });
+
         searchBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -68,10 +63,7 @@ public class VisitesController implements Initializable {
                 }
             }
         });
-
-
     }
-
 
     public BorderPane createCard(String date,String visiteId, String amount, String maladie, Integer id) {
         BorderPane root = null;
@@ -97,6 +89,5 @@ public class VisitesController implements Initializable {
         }
 
         return root;
-
     }
 }

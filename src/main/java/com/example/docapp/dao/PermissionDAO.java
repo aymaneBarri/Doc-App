@@ -59,7 +59,6 @@ public class PermissionDAO {
         try {
             Connection connection = DBUtil.getConnection();
 
-            System.out.println("Permission: " + permission);
             psEditPermission = connection.prepareStatement("UPDATE permission SET canView = ?, canAdd = ?, canModify = ?, canDelete = ? WHERE id_role = ? AND subject = ?");
             psEditPermission.setInt(1, permission.isCanView() ? 1 : 0);
             psEditPermission.setInt(2, permission.isCanAdd() ? 1 : 0);
@@ -72,7 +71,6 @@ public class PermissionDAO {
             statusCode = 201;
         } catch (SQLException e) {
             statusCode = 400;
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         } finally {
             if (psEditPermission != null) {
@@ -97,10 +95,6 @@ public class PermissionDAO {
 
         try {
             Connection connection = DBUtil.getConnection();
-
-//            statement = connection.prepareStatement("DELETE FROM permission WHERE id_utilisateur=?");
-//            statement.setInt(1, role.getId());
-//            statement.executeUpdate();
 
             statement = connection.prepareStatement("DELETE FROM role WHERE id = ?");
             statement.setInt(1, role.getId());
@@ -177,47 +171,5 @@ public class PermissionDAO {
         }
 
         return permissions;
-    }
-
-    public static String getRoleNameById(int idRole) {
-        PreparedStatement statement = null;
-        ResultSet queryOutput = null;
-        String name = null;
-        int statusCode = 0;
-
-        try {
-            Connection connection = DBUtil.getConnection();
-
-            statement = connection.prepareStatement("SELECT * FROM role WHERE id = ?");
-            statement.setInt(1, idRole);
-            queryOutput = statement.executeQuery();
-
-            while (queryOutput.next()) {
-                name = queryOutput.getString(1);
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (queryOutput != null) {
-                try {
-                    queryOutput.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            DBUtil.stopConnection();
-        }
-
-        return name;
     }
 }

@@ -1,7 +1,5 @@
 package com.example.docapp.models;
 
-import java.util.Vector;
-
 public class Utilisateur extends Personne {
     private String email;
     private String password;

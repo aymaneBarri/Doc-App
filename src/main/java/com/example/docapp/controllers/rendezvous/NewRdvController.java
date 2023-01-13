@@ -1,8 +1,6 @@
 package com.example.docapp.controllers.rendezvous;
 
-import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.RendezVousDAO;
-import com.example.docapp.models.Patient;
 import com.example.docapp.models.RendezVous;
 import com.example.docapp.models.ViewModel;
 import com.example.docapp.util.DateFormatter;
@@ -31,7 +29,6 @@ public class NewRdvController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         addBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -40,8 +37,8 @@ public class NewRdvController implements Initializable {
                     rdv.setDescription(noteArea.getText());
                     rdv.setRendezVousDate(datePicker.getValue().format(DateFormatter.dateformatter) + " " + heureField.getText());
                     rdv.setId_patient(Integer.parseInt(idField.getText()));
+
                     int status = RendezVousDAO.addRendezVous(rdv);
-                    System.out.println(status);
                     if(status == 201){
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("Rendez-vous ajouté avec succés");
@@ -69,9 +66,7 @@ public class NewRdvController implements Initializable {
                 ViewModel.getInstance().getViewFactory().showPatientSelect();
             }
         });
-
     }
-
 
     public String validateForm(){
         String errorText="";
@@ -79,7 +74,7 @@ public class NewRdvController implements Initializable {
             errorText = "Veuillez remplir tous les champs !";
 
         }
-        return errorText;
 
+        return errorText;
     }
 }

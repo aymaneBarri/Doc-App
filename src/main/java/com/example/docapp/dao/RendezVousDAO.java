@@ -1,11 +1,9 @@
 package com.example.docapp.dao;
 
-import com.example.docapp.models.Patient;
 import com.example.docapp.models.RendezVous;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.util.DBUtil;
 import com.example.docapp.util.DateFormatter;
-import javafx.event.ActionEvent;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,50 +13,48 @@ import java.time.LocalDateTime;
 import java.util.Vector;
 
 public class RendezVousDAO {
+    public static int addRendezVous(RendezVous rendezVous ) {
+        PreparedStatement psAddRendezVous = null;
+        ResultSet queryOutput = null;
+        int statusCode=0;
 
-        public static int addRendezVous(RendezVous rendezVous ) {
-            PreparedStatement psAddRendezVous = null;
-            ResultSet queryOutput = null;
-            int statusCode=0;
+        try {
+            Connection connection = DBUtil.getConnection();
 
-            try {
-                Connection connection = DBUtil.getConnection();
+            psAddRendezVous = connection.prepareStatement("INSERT INTO rendez_vous (rendez_vous_date,id_patient,description) VALUES (?, ?, ?)");
+            psAddRendezVous.setString(1, rendezVous.getRendezVousDate());
+            psAddRendezVous.setInt(2, rendezVous.getId_patient());
+            psAddRendezVous.setString(3,  rendezVous.getDescription());
 
-                psAddRendezVous = connection.prepareStatement("INSERT INTO rendez_vous (rendez_vous_date,id_patient,description) VALUES (?, ?, ?)");
-                psAddRendezVous.setString(1, rendezVous.getRendezVousDate());
-                psAddRendezVous.setInt(2, rendezVous.getId_patient());
-                psAddRendezVous.setString(3,  rendezVous.getDescription());
+            psAddRendezVous.executeUpdate();
 
-                psAddRendezVous.executeUpdate();
+            psAddRendezVous = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
+            psAddRendezVous.setInt(1,  Utilisateur.currentUser.getId());
+            psAddRendezVous.setString(2, "Ajout d'un rendez vous");
+            psAddRendezVous.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
+            psAddRendezVous.executeUpdate();
 
-                psAddRendezVous = connection.prepareStatement("insert into action  (id_utilisateur,action,action_time) values (?,?,?)");
-                psAddRendezVous.setInt(1,  Utilisateur.currentUser.getId());
-                psAddRendezVous.setString(2, "Ajout d'un rendez vous");
-                psAddRendezVous.setString(3, LocalDateTime.now().format(DateFormatter.formatter));
-                psAddRendezVous.executeUpdate();
+            statusCode=201;
+        } catch (SQLException e) {
+            statusCode = 400;
+            throw new RuntimeException(e);
 
-
-
-                statusCode=201;
-            } catch (SQLException e) {
-                statusCode = 400;
-                throw new RuntimeException(e);
-
-            } finally {
-                if (psAddRendezVous != null) {
-                    try {
-                        psAddRendezVous.close();
-                    } catch (SQLException e) {
-                        statusCode = 400;
-                        e.printStackTrace();
-                    }
+        } finally {
+            if (psAddRendezVous != null) {
+                try {
+                    psAddRendezVous.close();
+                } catch (SQLException e) {
+                    statusCode = 400;
+                    e.printStackTrace();
                 }
-
-                DBUtil.stopConnection();
             }
 
-            return statusCode;
+            DBUtil.stopConnection();
         }
+
+        return statusCode;
+    }
+
     public static int editRendezVous( RendezVous rendezVous ){
         PreparedStatement psEditR = null;
         ResultSet queryOutput = null;
@@ -66,16 +62,13 @@ public class RendezVousDAO {
 
         try {
             Connection connection = DBUtil.getConnection();
-            System.out.println(rendezVous);
+
             psEditR = connection.prepareStatement("UPDATE rendez_vous SET rendez_vous_date = ?, id_patient = ?, description = ?, done= ? WHERE id = ?");
             psEditR.setString(1, rendezVous.getRendezVousDate());
             psEditR.setInt(2, rendezVous.getId_patient());
             psEditR.setString(3,  rendezVous.getDescription());
             psEditR.setInt(4, rendezVous.getDone() ? 1 : 0);
             psEditR.setInt(5, rendezVous.getId());
-
-
-
 
             psEditR.executeUpdate();
 
@@ -88,7 +81,6 @@ public class RendezVousDAO {
             statusCode=201;
         } catch (SQLException e) {
             statusCode = 400;
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         } finally {
             if (psEditR != null) {
@@ -161,8 +153,6 @@ public class RendezVousDAO {
             psGetAllRendezVous = connection.prepareStatement("SELECT * FROM rendez_vous WHERE rendez_vous_date LIKE ? AND done LIKE ? ");
             psGetAllRendezVous.setString(1, "%"+date+"%");
             psGetAllRendezVous.setInt(2, done);
-
-
 
             queryOutput = psGetAllRendezVous.executeQuery();
             while (queryOutput.next()) {
@@ -258,7 +248,6 @@ public class RendezVousDAO {
             statusCode=201;
         } catch (SQLException e) {
             statusCode = 400;
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         } finally {
             if (psDeleteR != null) {
@@ -275,6 +264,4 @@ public class RendezVousDAO {
 
         return statusCode;
     }
-
-
 }

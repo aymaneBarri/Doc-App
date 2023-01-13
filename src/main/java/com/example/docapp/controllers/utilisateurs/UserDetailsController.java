@@ -84,7 +84,7 @@ public class UserDetailsController implements Initializable {
                 alert.getButtonTypes().setAll(okButton, cancelButton);
                 alert.showAndWait().ifPresent(type -> {
                     if (type == okButton) {
-                        System.out.println(UtilisateurDAO.deleteUtilisateur(Integer.parseInt(idField.getText())));
+                        UtilisateurDAO.deleteUtilisateur(Integer.parseInt(idField.getText()));
                         Stage s = (Stage) deleteBtn.getScene().getWindow();
                         s.close();
 
@@ -142,7 +142,6 @@ public class UserDetailsController implements Initializable {
         }
     }
 
-
     public boolean formIsValid() {
         if(nomField.getText().trim().isEmpty() || prenomField.getText().trim().isEmpty() || emailField.getText().trim().isEmpty() ||  cinField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()){
             errorMessage = "Veuillez remplir tous les champs!";
@@ -163,5 +162,4 @@ public class UserDetailsController implements Initializable {
 
         return true;
     }
-
 }

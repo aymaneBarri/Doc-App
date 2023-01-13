@@ -16,7 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -156,7 +155,6 @@ public class ViewFactory {
             Scene sc = new Scene(root);
             Stage s = new Stage();
             s.setScene(sc);
-            System.out.println("heres id in vf "+utilisateur.getId());
             ud.idLabel.setText(String.valueOf(utilisateur.getId()));
             ud.idField.setText(String.valueOf(utilisateur.getId()));
             ud.nomField.setText(utilisateur.getLastName());

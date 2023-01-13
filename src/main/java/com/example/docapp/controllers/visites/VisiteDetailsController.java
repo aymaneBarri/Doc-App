@@ -75,12 +75,10 @@ public class VisiteDetailsController implements Initializable {
                      alert.setContentText("Erreur veuillez réessayer.");
                      alert.showAndWait();
                }
-
             }
         });
+
         cancelBtn.setOnAction(event -> {
-
-
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Current project is modified");
             alert.setContentText("Save?");
@@ -114,11 +112,8 @@ public class VisiteDetailsController implements Initializable {
         fullname.setText(patient.getFirstName()+" "+patient.getLastName());
         assurance.setText(visite.getAssurance());
         prescriptionField.setText(visite.getPrescription());
-
-
-
-
     }
+
     public String validateInformation(){
         String error = "";
 
@@ -134,13 +129,6 @@ public class VisiteDetailsController implements Initializable {
             error += " Montant is empty";
         }
 
-
-
-
-
         return error;
     }
-
-
-    }
-
+}

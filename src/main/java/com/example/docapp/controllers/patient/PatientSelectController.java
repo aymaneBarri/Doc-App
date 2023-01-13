@@ -26,8 +26,7 @@ public class PatientSelectController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        PatientDAO patientDAO = new PatientDAO();
-        Vector<Patient> patientList = patientDAO.getPatients();
+        Vector<Patient> patientList = PatientDAO.getPatients();
         for (Patient patient : patientList) {
             BorderPane bp = createCard(patient.getFirstName(),patient.getLastName(), patient.getBirthDate(), patient.getCin(), patient.getId());
             listPatient.getItems().add(bp);
@@ -57,7 +56,6 @@ public class PatientSelectController implements Initializable {
         });
     }
 
-
     public BorderPane createCard(String firstName, String lastName, String date, String cin, Integer id) {
         BorderPane root = null;
         try {
@@ -79,6 +77,5 @@ public class PatientSelectController implements Initializable {
         }
 
         return root;
-
     }
 }

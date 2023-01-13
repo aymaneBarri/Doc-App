@@ -9,11 +9,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
 public class UtilisateurItemController implements Initializable {
     public Label nom;
@@ -22,7 +20,6 @@ public class UtilisateurItemController implements Initializable {
     public Label phone;
     public Label id;
     public JFXButton editBtn;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,7 +33,6 @@ public class UtilisateurItemController implements Initializable {
         editBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println(id.getText());
                 ViewModel.getInstance().getViewFactory().showUserDetails(UtilisateurDAO.getUserByID(Integer.parseInt(id.getText())));
             }
         });
@@ -61,6 +57,4 @@ public class UtilisateurItemController implements Initializable {
     public void setId(String id) {
         this.id.setText(id);
     }
-
-
 }

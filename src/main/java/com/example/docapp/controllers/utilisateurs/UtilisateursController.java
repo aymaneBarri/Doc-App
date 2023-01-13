@@ -96,6 +96,5 @@ public class UtilisateursController implements Initializable {
         }
 
         return root;
-
     }
 }

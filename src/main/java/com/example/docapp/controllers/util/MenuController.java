@@ -1,28 +1,19 @@
 package com.example.docapp.controllers.util;
 
-import com.example.docapp.Application;
-import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Permission;
 import com.example.docapp.models.Utilisateur;
 import com.example.docapp.models.ViewModel;
-import com.example.docapp.util.DBUtil;
 import com.jfoenix.controls.JFXButton;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
-
-import javax.swing.text.View;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
 public class MenuController implements Initializable {
     public JFXButton acceuilBtn;
@@ -32,10 +23,8 @@ public class MenuController implements Initializable {
     public JFXButton rdvBtn;
     public JFXButton logoutBtn;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("patient")) {
                 if (!permission.isCanView())
@@ -61,6 +50,7 @@ public class MenuController implements Initializable {
               ViewModel.getInstance().getViewFactory().showPatient();
             }
         });
+
         acceuilBtn.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -112,8 +102,5 @@ public class MenuController implements Initializable {
                 });
             }
         });
-
     }
-
-
 }

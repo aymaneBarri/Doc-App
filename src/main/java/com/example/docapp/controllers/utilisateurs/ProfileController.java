@@ -14,7 +14,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,6 +47,7 @@ public class ProfileController implements Initializable {
         emailField.setText(Utilisateur.currentUser.getEmail());
         phoneField.setText(Utilisateur.currentUser.getPhoneNumber());
         cinField.setText(Utilisateur.currentUser.getCin());
+
         saveBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -94,7 +94,7 @@ public class ProfileController implements Initializable {
             return false;
         }
 
-        if (!DBUtil.isValid(emailField.getText())) {
+        else if (!DBUtil.isValid(emailField.getText())) {
             errorMessage = "Veuillez entrer une adresse email valide!";
             return false;
         }

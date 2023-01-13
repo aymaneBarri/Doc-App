@@ -52,35 +52,6 @@ public class NewUserController implements Initializable {
 
         populateRolesComboBox();
 
-//        typeUser.getItems().clear();
-//        rolesBtn.setDisable(true);
-//
-//        typeUser.getItems().addAll(
-//                "Admin",
-//                "Utilisateur");
-//        typeUser.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-//            if (newValue.equals("Admin")) {
-//                permissions.clear();
-////                permissions.add(new Permission("action",true,false,false,false));
-//                permissions.add(new Permission("patient",true,true,true,true));
-////                permissions.add(new Permission("permission",true,true,true,true));
-//                permissions.add(new Permission("rendez_vous",true,true,true,true));
-//                permissions.add(new Permission("utilisateur",true,true,true,true));
-//                permissions.add(new Permission("visite",true,true,true,true));
-//            }
-//            else if (newValue.equals("Utilisateur")) {
-//                permissions.clear();
-////                permissions.add(new Permission("action",false,false,false,false));
-//                permissions.add(new Permission("patient",true,false,false,false));
-////                permissions.add(new Permission("permission",true,false,false,false));
-//                permissions.add(new Permission("rendez_vous",true,false,false,false));
-//                permissions.add(new Permission("utilisateur",true,false,false,false));
-//                permissions.add(new Permission("visite",true,false,false,false));
-//            }
-//
-//            rolesBtn.setDisable(newValue.equals("Admin"));
-//        });
-
         saveBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -88,29 +59,6 @@ public class NewUserController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(errorMessage);
                     alert.show();
-
-//                        Patient patient = new Patient();
-//                        patient.setBirthDate(birthPicker.getValue().toString());
-//                        patient.setCin(cinField.getText());
-//                        patient.setFirstName(prenomField.getText());
-//                        patient.setLastName(nomField.getText());
-//                        patient.setPhoneNumber(phoneField.getText());
-//                        patient.setDescription(noteArea.getText());
-//                        int status =  PatientDAO.addPatient(actionEvent, patient);
-//                        System.out.println(status);
-//                        if(status == 201){
-//                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//                            alert.setContentText("good");
-//                            alert.show();
-//                            Stage s = (Stage) cancelBtn.getScene().getWindow();
-//                            s.close();
-//
-//                            ViewModel.getInstance().getViewFactory().showPatient();
-//                        }else{
-//                            Alert alert = new Alert(Alert.AlertType.ERROR);
-//                            alert.setContentText("not good");
-//                            alert.show();
-//                        }
                 } else {
                     int idRole = RoleDAO.getRoleIdByName(rolesComboBox.getSelectionModel().getSelectedItem());
                     Utilisateur utilisateur = new Utilisateur(prenomField.getText().trim(), nomField.getText().trim(), emailField.getText().trim(), passField.getText().trim(), cinField.getText().trim(), phoneField.getText().trim(), idRole);
@@ -150,8 +98,6 @@ public class NewUserController implements Initializable {
                 s.hide();
             }
         });
-
-
     }
 
     public void populateRolesComboBox() {
@@ -182,5 +128,4 @@ public class NewUserController implements Initializable {
 
         return true;
     }
-
 }

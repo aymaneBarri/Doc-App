@@ -3,14 +3,12 @@ package com.example.docapp.dao;
 import com.example.docapp.models.*;
 import com.example.docapp.util.DBUtil;
 import com.example.docapp.util.DateFormatter;
-import javafx.event.ActionEvent;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 public class RoleDAO {
@@ -25,34 +23,12 @@ public class RoleDAO {
             psAddRole.setString(1, role.getName());
             psAddRole.executeUpdate();
 
-//            try (ResultSet generatedKeys = psAddRole.getGeneratedKeys()) {
-//                if (generatedKeys.next()) {
-//                    role.setId(generatedKeys.getInt(1));
-//
-//                    for (Permission permission : permissions) {
-//                        String query = "INSERT INTO permission VALUES (?, ?, ?, ?, ?, ?)";
-//                        PreparedStatement psAddUserRole = connection.prepareStatement(query);
-//                        psAddUserRole.setInt(1, role.getId());
-//                        psAddUserRole.setString(2, permission.getSubject());
-//                        psAddUserRole.setInt(3, permission.isCanView() ? 1 : 0);
-//                        psAddUserRole.setInt(4, permission.isCanAdd() ? 1 : 0);
-//                        psAddUserRole.setInt(5, permission.isCanModify() ? 1 : 0);
-//                        psAddUserRole.setInt(6, permission.isCanDelete() ? 1 : 0);
-//                        psAddUserRole.executeUpdate();
-//                        psAddUserRole.close();
-//                    }
-//                } else {
-//                    throw new SQLException("Creating user failed, no ID obtained.");
-//                }
-//            }
-
             Action action = new Action("Ajout du rôle " + role.getName() + ", son id est " + role.getId(), LocalDateTime.now().format(DateFormatter.formatter), Utilisateur.currentUser.getId());
             ActionDAO.addAction(action);
 
             statusCode=201;
         } catch (SQLException e) {
             statusCode = 401;
-//            throw new RuntimeException(e);
 
         } finally {
             if (psAddRole != null) {
@@ -88,7 +64,6 @@ public class RoleDAO {
             statusCode = 201;
         } catch (SQLException e) {
             statusCode = 400;
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         } finally {
             if (psEditRole != null) {
@@ -113,10 +88,6 @@ public class RoleDAO {
 
         try {
             Connection connection = DBUtil.getConnection();
-
-//            statement = connection.prepareStatement("DELETE FROM permission WHERE id_utilisateur=?");
-//            statement.setInt(1, role.getId());
-//            statement.executeUpdate();
 
             statement = connection.prepareStatement("DELETE FROM role WHERE id = ?");
             statement.setInt(1, role.getId());
@@ -274,7 +245,6 @@ public class RoleDAO {
     }
 
     public static int editRolePermissions(Role role, Vector<Permission> permissions) {
-//        PreparedStatement psEditPermissions = null;
         int statusCode = 0;
 
         try {
@@ -309,7 +279,6 @@ public class RoleDAO {
                 role.setId(queryOutput.getInt("id"));
                 role.setName(queryOutput.getString("name"));
             }
-            System.out.println("Role retrieved " + role);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

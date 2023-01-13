@@ -1,14 +1,11 @@
 package com.example.docapp.controllers.patient;
 
-import com.example.docapp.ViewFactory;
-import com.example.docapp.controllers.rendezvous.NewRdvController;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.models.Patient;
 import com.example.docapp.models.ViewModel;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 

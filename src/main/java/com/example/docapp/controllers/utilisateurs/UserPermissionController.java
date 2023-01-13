@@ -23,7 +23,6 @@ import java.util.Vector;
 public class UserPermissionController implements Initializable {
     public JFXButton saveBtn;
     public JFXButton cancelBtn;
-    public ListView<BorderPane> listRoles;
     public CheckBox viewPatient;
     public CheckBox addPatient;
     public CheckBox editPatient;

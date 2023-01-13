@@ -5,17 +5,7 @@ import com.example.docapp.dao.VisiteDAO;
 import com.example.docapp.models.*;
 import com.example.docapp.util.DateFormatter;
 import com.example.docapp.util.Print;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.io.*;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
 import com.jfoenix.controls.JFXButton;
-import javafx.application.Platform;
-import com.itextpdf.kernel.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,12 +13,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.time.LocalDate;
@@ -55,8 +42,6 @@ public class PatientDetailsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("patient")) {
                 if (!permission.isCanModify())
@@ -66,42 +51,39 @@ public class PatientDetailsController implements Initializable {
             }
         }
 
-
-
         editBtn.setOnAction(actionEvent -> {
-       if(validateForm().isEmpty()){
-              Patient patient = new Patient();
-              patient.setBirthDate(birthField.getValue().format(DateFormatter.dateformatter));
-              patient.setCin(cinField.getText());
-              patient.setFirstName(prenomField.getText());
-              patient.setLastName(nomField.getText());
-              patient.setPhoneNumber(phoneField.getText());
-              patient.setDescription(noteArea.getText());
+            if(validateForm().isEmpty()){
+                Patient patient = new Patient();
+                patient.setBirthDate(birthField.getValue().format(DateFormatter.dateformatter));
+                patient.setCin(cinField.getText());
+                patient.setFirstName(prenomField.getText());
+                patient.setLastName(nomField.getText());
+                patient.setPhoneNumber(phoneField.getText());
+                patient.setDescription(noteArea.getText());
                 patient.setId(Integer.parseInt(idP.getText()));
-              int status =  PatientDAO.editPatient(patient);
-              System.out.println(status);
-              if(status == 201){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("Patient edité avec succés");
-                alert.show();
 
-                  ViewModel.getInstance().getViewFactory().showPatient();
+                int status = PatientDAO.editPatient(patient);
+                if(status == 201){
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Patient edité avec succés");
+                    alert.show();
 
-                  Stage s = (Stage) editBtn.getScene().getWindow();
-                  s.close();
-              }else{
+                    ViewModel.getInstance().getViewFactory().showPatient();
+
+                    Stage s = (Stage) editBtn.getScene().getWindow();
+                    s.close();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Erreur, veuillez réessayer");
+                    alert.show();
+                }
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Erreur, veuillez réessayer");
+                alert.setContentText(validateForm());
                 alert.show();
-              }
-
-
-       }else{
-           Alert alert = new Alert(Alert.AlertType.ERROR);
-           alert.setContentText(validateForm());
-           alert.show();
-       }
+            }
         });
+
         deleteBtn.setOnAction(actionEvent -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Supprimer");
@@ -111,13 +93,12 @@ public class PatientDetailsController implements Initializable {
             alert.getButtonTypes().setAll(okButton, cancelButton);
             alert.showAndWait().ifPresent(type -> {
                 if (type == okButton) {
-
-                   PatientDAO.deletePatient( Integer.parseInt(idP.getText()));
+                    PatientDAO.deletePatient( Integer.parseInt(idP.getText()));
                     Stage s = (Stage) editBtn.getScene().getWindow();
                     s.close();
 
                     ViewModel.getInstance().getViewFactory().showPatient();
-                    }
+                }
             });
         });
 

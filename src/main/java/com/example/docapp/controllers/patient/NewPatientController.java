@@ -15,9 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class NewPatientController implements Initializable {
@@ -53,8 +51,8 @@ public class NewPatientController implements Initializable {
                     patient.setLastName(nomField.getText());
                     patient.setPhoneNumber(phoneField.getText());
                     patient.setDescription(noteArea.getText());
-                    int status =  PatientDAO.addPatient(patient);
-                    System.out.println(status);
+
+                    int status = PatientDAO.addPatient(patient);
                     if(status == 201){
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                         alert.setContentText("good");
@@ -68,42 +66,28 @@ public class NewPatientController implements Initializable {
                         alert.setContentText("not good");
                         alert.show();
                     }
-
-
                 }else{
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(validateForm());
                     alert.show();
                 }
-
-
-
-
             }
         });
-
-
-
-
-
     }
+
     public String validateForm(){
-        String errorText="";
+        String errorText = "";
         if(nomField.getText().isEmpty()||prenomField.getText().isEmpty()||cinField.getText().isEmpty()||birthPicker.getValue()==null||phoneField.getText().isEmpty()){
             errorText = "Veuillez remplir tous les champs !";
-
         }
         else {
-
             try{
                 Integer.parseInt(phoneField.getText().trim());
-
             }catch (Exception e){
-
                 errorText = "Veuillez entrer un nombre de telephone valide !";
             }
         }
-        return errorText;
 
+        return errorText;
     }
 }

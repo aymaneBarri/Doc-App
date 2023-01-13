@@ -1,9 +1,7 @@
 package com.example.docapp.controllers.rendezvous;
 
-import com.example.docapp.controllers.visites.VisiteItemController;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.RendezVousDAO;
-import com.example.docapp.dao.VisiteDAO;
 import com.example.docapp.models.*;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -24,7 +22,6 @@ import java.util.ResourceBundle;
 import java.util.Vector;
 
 public class RdvController implements Initializable {
-
     public VBox vbox;
     public TextField searchField;
     public JFXButton searchBtn;
@@ -76,11 +73,7 @@ public class RdvController implements Initializable {
                 }
             }
         });
-
-
-
     }
-
 
     public BorderPane createCard(String date,String rdvID, Integer id) {
         BorderPane root = null;
@@ -103,6 +96,5 @@ public class RdvController implements Initializable {
         }
 
         return root;
-
     }
 }

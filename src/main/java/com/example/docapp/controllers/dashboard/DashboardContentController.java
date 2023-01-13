@@ -1,7 +1,5 @@
 package com.example.docapp.controllers.dashboard;
 
-import com.example.docapp.controllers.patient.PatientItemController;
-import com.example.docapp.controllers.patient.VisiteItemController;
 import com.example.docapp.dao.PatientDAO;
 import com.example.docapp.dao.RendezVousDAO;
 import com.example.docapp.dao.VisiteDAO;
@@ -16,21 +14,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
 public class DashboardContentController implements Initializable {
-
     public Label nbPatientLabel;
     public ListView<BorderPane> listRdv;
     public ListView<BorderPane> listPatient;
@@ -44,7 +35,6 @@ public class DashboardContentController implements Initializable {
     public Label nbMoneyLabel;
     public Label moneyLabel;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -54,19 +44,15 @@ public class DashboardContentController implements Initializable {
             throw new RuntimeException(e);
         }
 
-
-        nbPatientLabel.setText(PatientDAO.getPatients().size()+"");
-        System.out.println(LocalDateTime.now().format(DateFormatter.formatter));
+        nbPatientLabel.setText(PatientDAO.getPatients().size() + "");
         nbRdvLabel.setText(RendezVousDAO.getAllRendezVous(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]).size()+"");
         double total = 0.0;
-        Vector<Visite> visites=VisiteDAO.getAllVisites(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]);
+        Vector<Visite> visites = VisiteDAO.getAllVisites(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]);
 
         for (Visite visite : visites) {
-            System.out.println(LocalDateTime.now().format(DateFormatter.formatter).split(" ")[0]);
             total += visite.getAmount();
-
         }
-        nbMoneyLabel.setText(total+"");
+        nbMoneyLabel.setText(total + "");
 
         Vector<Patient> patientList = PatientDAO.getRecentPatients();
         if (patientList.isEmpty()){
@@ -114,17 +100,13 @@ public class DashboardContentController implements Initializable {
                     nbMoneyLabel.setText("-");
                     moneyLabel.setText("Vous n'avez pas le droit de consulter les paiements");
                 }
-
             }
-
         }
     }
-
 
     public void refreshList(){
         listRdv.getItems().clear();
         Vector<RendezVous> rdvList = RendezVousDAO.getDoneRendezVous(LocalDateTime.now().format(DateFormatter.dateformatter), 0);
-        System.out.println(rdvList);
         if(!rdvList.isEmpty()){
             for (RendezVous rdv : rdvList) {
                 BorderPane bp = createRCard(rdv);
@@ -157,7 +139,6 @@ public class DashboardContentController implements Initializable {
         }
 
         return root;
-
     }
 
     public BorderPane createRCard(RendezVous rdv) {
@@ -190,9 +171,5 @@ public class DashboardContentController implements Initializable {
         }
 
         return root;
-
     }
-
-
-
 }
