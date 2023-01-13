@@ -1,5 +1,6 @@
 package com.example.docapp.controllers.utilisateurs;
 
+import com.example.docapp.controllers.patient.PatientSelectItemController;
 import com.example.docapp.dao.PermissionDAO;
 import com.example.docapp.dao.RoleDAO;
 import com.example.docapp.models.*;
@@ -10,6 +11,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -48,17 +50,25 @@ public class UserPermissionController implements Initializable {
     public CheckBox deleteRole;
     public JFXButton addBtn;
     public GridPane permissionCheckBoxes;
+    public boolean canModify = true;
+    public boolean canDelete = true;
+    boolean[] rights;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("role")) {
+                rights = new boolean[]{permission.isCanView(), permission.isCanAdd(), permission.isCanModify(), permission.isCanDelete()};
                 if (!permission.isCanAdd())
-                    addBtn.setVisible(true);
-                if (!permission.isCanModify())
+                    addBtn.setDisable(true);
+                if (!permission.isCanModify()){
                     saveBtn.setDisable(true);
-                if (!permission.isCanDelete())
+                    canModify = false;
+                }
+                if (!permission.isCanDelete()){
                     deleteBtn.setDisable(true);
+                    canDelete = false;
+                }
             }
         }
 
@@ -68,7 +78,6 @@ public class UserPermissionController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Role> observableValue, Role role, Role t1) {
                 permissionCheckBoxes.setVisible(true);
-
                 if(t1 != null){
                     currentRole = t1;
                     setData(t1.getId());
@@ -317,14 +326,27 @@ public class UserPermissionController implements Initializable {
                 warning.showAndWait().ifPresent(type -> {
                     if (type == okButton) {
                         int statusCode = RoleDAO.deleteRole(currentRole);
-
                         if (statusCode == 201) {
                             refreshRolesList();
                             permissionCheckBoxes.setVisible(false);
-
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setContentText("Rôle supprimé avec succès!");
                             alert.show();
+                            try {
+                                FXMLLoader loader = new FXMLLoader(
+                                        getClass().getResource(
+                                                "/com/example/docapp/view/utilisateurs/userDetails.fxml"
+                                        )
+                                );
+                                BorderPane root;
+                                root = loader.load();
+                                UserDetailsController ud = loader.getController();
+                                ud.rolesComboBox.getItems().clear();
+                                ud.populateRolesComboBox();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                         } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setContentText("Erreur lors de la suppression du rôle!");

@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 import java.util.Vector;
 
 public class UserDetailsController implements Initializable {
+    public Utilisateur user;
     public TextField nomField;
     public TextField prenomField;
     public TextField emailField;
@@ -97,7 +98,9 @@ public class UserDetailsController implements Initializable {
         rolesBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ViewModel.getInstance().getViewFactory().showUserRoles();
+
+                ViewModel.getInstance().getViewFactory().showUserRoles(user);
+                ViewModel.getInstance().getViewFactory().closeUserDetails();
             }
         });
 
@@ -105,6 +108,7 @@ public class UserDetailsController implements Initializable {
     }
 
     public void populateRolesComboBox() {
+        System.out.println("populated");
         rolesComboBox.getItems().clear();
         for (Role role : RoleDAO.getRoles()){
             rolesComboBox.getItems().add(role);

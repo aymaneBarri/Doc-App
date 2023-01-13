@@ -102,6 +102,7 @@ public class NewUserController implements Initializable {
 
     public void populateRolesComboBox() {
         rolesComboBox.getItems().clear();
+        rolesComboBox.getSelectionModel().select(0);
         for (Role role : RoleDAO.getRoles()){
             rolesComboBox.getItems().add(role.getName());
         }

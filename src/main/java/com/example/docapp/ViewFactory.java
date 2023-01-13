@@ -8,6 +8,7 @@ import com.example.docapp.controllers.utilisateurs.UserPermissionController;
 import com.example.docapp.controllers.visites.NewVisiteController;
 import com.example.docapp.controllers.visites.VisiteDetailsController;
 import com.example.docapp.dao.RoleDAO;
+import com.example.docapp.dao.UtilisateurDAO;
 import com.example.docapp.models.Permission;
 import com.example.docapp.models.Utilisateur;
 import javafx.application.Platform;
@@ -146,15 +147,16 @@ public class ViewFactory {
 
     }
 
-
+    Stage se = new Stage();
     public void showUserDetails(Utilisateur utilisateur) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/userDetails.fxml"));
         try{
             BorderPane root = loader.load();
             UserDetailsController ud = loader.getController();
             Scene sc = new Scene(root);
-            Stage s = new Stage();
-            s.setScene(sc);
+
+            se.setScene(sc);
+            ud.user = utilisateur;
             ud.idLabel.setText(String.valueOf(utilisateur.getId()));
             ud.idField.setText(String.valueOf(utilisateur.getId()));
             ud.nomField.setText(utilisateur.getLastName());
@@ -163,16 +165,22 @@ public class ViewFactory {
             ud.cinField.setText(utilisateur.getCin());
             ud.phoneField.setText(utilisateur.getPhoneNumber());
             ud.setActions();
-            ud.rolesComboBox.getSelectionModel().select(RoleDAO.getRoleById(utilisateur.getIdRole()));
-            s.setTitle("Détails de l'utilisateur");
-            s.getIcons().add(appIcon);
-            s.show();
+            int id = UtilisateurDAO.getUserByID(utilisateur.getId()).getIdRole();
+            System.out.println(RoleDAO.getRoleById(utilisateur.getIdRole()));
+            ud.rolesComboBox.getSelectionModel().select(RoleDAO.getRoleById(id));
+            se.setTitle("Détails de l'utilisateur");
+            se.getIcons().add(appIcon);
+            se.show();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void showUserRoles() {
+    public void closeUserDetails(){
+        se.close();
+    }
+
+    public void showUserRoles(Utilisateur user) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/docapp/view/utilisateurs/userPermission.fxml"));
         try{
             BorderPane root = loader.load();
@@ -183,6 +191,12 @@ public class ViewFactory {
             s.setTitle("Modifier l'utilisateur");
             s.getIcons().add(appIcon);
             s.show();
+            s.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    showUserDetails(user);
+                }
+            });
         }catch (Exception e){
             e.printStackTrace();
         }
