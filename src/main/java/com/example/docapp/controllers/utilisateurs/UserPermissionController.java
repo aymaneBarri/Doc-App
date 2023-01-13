@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
@@ -48,17 +47,25 @@ public class UserPermissionController implements Initializable {
     public CheckBox deleteRole;
     public JFXButton addBtn;
     public GridPane permissionCheckBoxes;
+    public boolean canModify = true;
+    public boolean canDelete = true;
+    boolean[] rights;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         for (Permission permission : Utilisateur.currentUser.getRole().getPermissions()) {
             if (permission.getSubject().equals("role")) {
+                rights = new boolean[]{permission.isCanView(), permission.isCanAdd(), permission.isCanModify(), permission.isCanDelete()};
                 if (!permission.isCanAdd())
-                    addBtn.setVisible(true);
-                if (!permission.isCanModify())
+                    addBtn.setDisable(true);
+                if (!permission.isCanModify()){
                     saveBtn.setDisable(true);
-                if (!permission.isCanDelete())
+                    canModify = false;
+                }
+                if (!permission.isCanDelete()){
                     deleteBtn.setDisable(true);
+                    canDelete = false;
+                }
             }
         }
 
@@ -377,8 +384,10 @@ public class UserPermissionController implements Initializable {
     }
 
     public void setData(int idRole) {
-        deleteBtn.setDisable(idRole == 1 || idRole == 2);
-        saveBtn.setDisable(idRole == 1 || idRole == 2);
+        if(canModify)
+            saveBtn.setDisable(rights[2] && (idRole == 1 || idRole == 2));
+        if(canDelete)
+            deleteBtn.setDisable(rights[3] && (idRole == 1 || idRole == 2));
 
         viewPatient.setSelected(false);
         viewUser.setSelected(false);
