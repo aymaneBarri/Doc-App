@@ -19,6 +19,11 @@ src: url("../fonts/interbold.ttf");
 -fx-font-family: 'Inter';
 }
 
+.textf{
+-fx-font-family: 'Inter';
+-fx-font-size: 15px;
+}
+
 .label{
 -fx-font-family: 'Inter';
 }

@@ -15,9 +15,7 @@
 <VBox alignment="CENTER" prefHeight="600.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: linear-gradient(to bottom , #4DB4D7, #0076BE);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.docapp.controllers.LoginController">
    <children>
       <ImageView fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/logo.png" />
-         </image>
+         <Image url="@../images/logo.png"/>
       </ImageView>
       <Label alignment="CENTER" styleClass="bold" text="Bienvenue" textFill="WHITE">
          <font>
@@ -29,7 +27,7 @@
             <Font name="Inter Regular" size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="emailTextField" alignment="CENTER" maxWidth="300.0" prefHeight="50.0" prefWidth="200.0" promptText="Entrer votre email" style="-fx-background-color: white; -fx-background-radius: 5 5 5 5;" styleClass="regular" VBox.vgrow="ALWAYS">
+      <TextField fx:id="emailTextField" alignment="CENTER" maxWidth="300.0" prefHeight="50.0" prefWidth="200.0" promptText="Entrer votre email" style="-fx-background-color: white; -fx-background-radius: 5 5 5 5;" styleClass="textf" VBox.vgrow="ALWAYS">
          <font>
             <Font name="Inter Regular" size="15.0" />
          </font>
@@ -37,7 +35,7 @@
             <Insets top="10.0" />
          </VBox.margin>
       </TextField>
-      <PasswordField fx:id="passwordTextField" alignment="CENTER" maxWidth="300.0" prefHeight="50.0" prefWidth="200.0" promptText="Entrer votre mot de passe" style="-fx-background-color: white; -fx-background-radius: 5 5 5 5;" styleClass="regular">
+      <PasswordField fx:id="passwordTextField" alignment="CENTER" maxWidth="300.0" prefHeight="50.0" prefWidth="200.0" promptText="Entrer votre mot de passe" style="-fx-background-color: white; -fx-background-radius: 5 5 5 5;" styleClass="textf">
          <font>
             <Font name="Inter Regular" size="15.0" />
          </font>

@@ -55,7 +55,7 @@ public class NewPatientController implements Initializable {
                     int status = PatientDAO.addPatient(patient);
                     if(status == 201){
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setContentText("good");
+                        alert.setContentText("Patient ajouté avec succès!");
                         alert.show();
                         Stage s = (Stage) cancelBtn.getScene().getWindow();
                         s.close();
@@ -63,7 +63,7 @@ public class NewPatientController implements Initializable {
                         ViewModel.getInstance().getViewFactory().showPatient();
                     }else{
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("not good");
+                        alert.setContentText("Erreur lors de l'ajout du patient");
                         alert.show();
                     }
                 }else{
